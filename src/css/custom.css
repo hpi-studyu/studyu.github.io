@@ -73,14 +73,6 @@ html[data-theme='dark'] .dropdown__menu {
   background-color: #0f2f48; /* 1b3a51 */
 }
 
-html[data-theme='light'] .dropdown__link--active {
- background-color: #fff;
-}
-
-html[data-theme='dark'] .dropdown__link--active {
- background-color: #0f2f48;
-}
-
 html[data-theme='light'] header {
   --ifm-hero-background-color: #fff;
 }
@@ -137,10 +129,6 @@ html[data-theme='dark'] footer {
 
 .footer__links {
   margin-bottom: 1.5rem;
-}
-
-.navbar__link--active, .dropdown__link--active {
-  color: var(--ifm-navbar-link-color);
 }
 
 .dropdown__link:hover {

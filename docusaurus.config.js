@@ -76,12 +76,13 @@ const config = {
         to: '/',
         position: 'left',
         label: 'Home',
+        activeBaseRegex: '\A(?!x)x',
       },
       {
-        type: 'doc',
-        docId: 'overview',
+        to: 'docs/overview',
         position: 'left',
         label: 'About',
+        activeBaseRegex: 'docs/overview',
       },
       {
         type: 'dropdown',
@@ -89,23 +90,23 @@ const config = {
         position: 'left',
         items: [
         {
-         type: 'doc',
-         docId: 'basics/n-of-1-trials',
+         to: 'docs/basics/n-of-1-trials',
          label: 'The N-of-1 Concept',
+         activeBaseRegex: 'docs/basics/n-of-1-trials',
        },
        {
-         type: 'doc',
-         docId: 'basics/studyu-platform',
+         to: 'docs/basics/studyu-platform',
          label: 'StudyU Platform',
+         activeBaseRegex: 'docs/basics/studyu-platform',
        },
             // ... more items
        ],
       },
       {
-        type: 'doc',
-        docId: 'basics/studyu-platform',
+        to: 'docs/basics/studyu-platform',
         position: 'left',
         label: 'Publications',
+        activeBaseRegex: 'docs/basics/studyu-platform',
       },
       {to: '/blog', label: 'Blog', position: 'left'},
       {
