@@ -26,14 +26,14 @@ const config = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'de'],
-	localeConfigs: {
+    localeConfigs: {
       en: {
         htmlLang: 'en-US',
       },
-	  de: {
+      de: {
         htmlLang: 'de-DE',
       },
-	},
+    },
   },
 
   presets: [
@@ -59,125 +59,130 @@ const config = {
           customCss: require.resolve('./src/css/custom.css'),
         },
       }),
+      ],
     ],
-  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      navbar: {
-        title: '',
-        logo: {
-          alt: 'StudyU Logo',
-          src: 'img/icon_wide.png',
-        },
+  ({
+    navbar: {
+      title: '',
+      logo: {
+        alt: 'StudyU Logo',
+        src: 'img/icon_wide.png',
+      },
+      items: [
+      {
+        to: '/',
+        position: 'left',
+        label: 'Home',
+      },
+      {
+        type: 'doc',
+        docId: 'overview',
+        position: 'left',
+        label: 'About',
+      },
+      {
+        type: 'dropdown',
+        label: 'Learning Center',
+        position: 'left',
         items: [
         {
-          type: 'dropdown',
-          label: 'Learning Center',
-          position: 'left',
-          items: [
-            {
-			  type: 'doc',
-              docId: 'basics/n-of-1-trials',
-              label: 'The N-of-1 Concept',
-            },
-            {
-			  type: 'doc',
-              docId: 'basics/studyu-platform',
-              label: 'StudyU Platform',
-            },
+         type: 'doc',
+         docId: 'basics/n-of-1-trials',
+         label: 'The N-of-1 Concept',
+       },
+       {
+         type: 'doc',
+         docId: 'basics/studyu-platform',
+         label: 'StudyU Platform',
+       },
             // ... more items
-          ],
+       ],
+      },
+      {
+        type: 'doc',
+        docId: 'basics/studyu-platform',
+        position: 'left',
+        label: 'Publications',
+      },
+      {to: '/blog', label: 'Blog', position: 'left'},
+      {
+        label: 'StudyU App',
+        href: 'https://app2.studyu.health',
+        position: 'right',
+      },
+      {
+        label: 'StudyU Designer',
+        href: 'https://designer2.studyu.health',
+        position: 'right',
+      },
+      {
+        type: 'localeDropdown',
+        position: 'right',
+      },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+      {
+        title: 'Docs',
+        items: [
+        {
+          label: 'Tutorial',
+          to: '/docs/intro',
         },
-		{
-		  type: 'doc',
-		  docId: 'intro',
-		  position: 'left',
-		  label: 'Documentation',
-		},
-		{
-		  type: 'doc',
-		  docId: 'history',
-		  position: 'left',
-		  label: 'Publications',
-		},
-		{to: '/blog', label: 'Blog', position: 'left'},
-	    {
-          label: 'StudyU App',
-          href: 'https://app2.studyu.health',
-		  position: 'right',
-        },
-	    {
-          label: 'StudyU Designer',
-          href: 'https://designer2.studyu.health',
-		  position: 'right',
-        },
-		{
-		  type: 'localeDropdown',
-		  position: 'right',
-		},
         ],
       },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'StudyU @HPI',
-                href: 'https://hpi.de/lippert/projects/studyu.html',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/studyuhealth',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/studyu-health/studyu',
-              },
-            ],
-          },
-          {
-            title: 'Legal',
-            items: [
-              {
-                label: 'Privacy',
-                to: 'https://#',
-              },
-              {
-                label: 'Imprint',
-                href: 'https://www13.hpi.uni-potsdam.de/fileadmin/user_upload/fachgebiete/lippert/studyu/StudyU_imprint_en.pdf',
-              },
-            ],
-          },
+      {
+        title: 'Community',
+        items: [
+        {
+          label: 'StudyU @HPI',
+          href: 'https://hpi.de/lippert/projects/studyu.html',
+        },
+        {
+          label: 'Twitter',
+          href: 'https://twitter.com/studyuhealth',
+        },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} StudyU. Built with Docusaurus.`,
       },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+      {
+        title: 'More',
+        items: [
+        {
+          label: 'Blog',
+          to: '/blog',
+        },
+        {
+          label: 'GitHub',
+          href: 'https://github.com/studyu-health/studyu',
+        },
+        ],
       },
-    }),
+      {
+        title: 'Legal',
+        items: [
+        {
+          label: 'Privacy',
+          to: 'https://#',
+        },
+        {
+          label: 'Imprint',
+          href: 'https://www13.hpi.uni-potsdam.de/fileadmin/user_upload/fachgebiete/lippert/studyu/StudyU_imprint_en.pdf',
+        },
+        ],
+      },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} StudyU. Built with Docusaurus.`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+    },
+  }),
 };
 
 module.exports = config;

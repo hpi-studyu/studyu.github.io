@@ -12,7 +12,7 @@
   font-weight: 400;
   /*font-stretch: 100%;*/
   src: url('/static/fonts/open-sans-v34-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+ */
-       url('/static/fonts/open-sans-v34-latin-regular.woff') format('woff'); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  url('/static/fonts/open-sans-v34-latin-regular.woff') format('woff'); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* You can override the default Infima variables here. */
@@ -74,11 +74,11 @@ html[data-theme='dark'] .dropdown__menu {
 }
 
 html[data-theme='light'] .dropdown__link--active {
-   background-color: #fff;
+ background-color: #fff;
 }
 
 html[data-theme='dark'] .dropdown__link--active {
-   background-color: #0f2f48;
+ background-color: #0f2f48;
 }
 
 html[data-theme='light'] header {
@@ -105,11 +105,34 @@ html[data-theme='dark'] footer {
 }
 
 .hero {
+  display: flex;
+  flex-direction: row;
   text-align: left !important;
 }
 
 .hero__title, .hero__subtitle {
   margin-left: 20%;
+}
+
+.container {
+  order: 1;
+}
+
+/* mobile view */
+@media screen and (max-width: 1250px) {
+  .hero {
+    flex-direction: column;
+   }
+  .container {
+    order: 2;
+
+  }
+  .hero__title, .hero__subtitle {
+    margin-left: 10%;
+  }
+    .button {
+    margin-top: 1rem;
+  }
 }
 
 .footer__links {
@@ -121,6 +144,10 @@ html[data-theme='dark'] footer {
 }
 
 .dropdown__link:hover {
-    color: var(--ifm-navbar-link-color);
-    background-color: var(--ifm-dropdown-hover-background-color) !important;
+  color: var(--ifm-navbar-link-color);
+  background-color: var(--ifm-dropdown-hover-background-color) !important;
+}
+
+.card {
+  background-color: var(--ifm-breadcrumb-item-background-active);
 }

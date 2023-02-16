@@ -11,17 +11,27 @@
   /*min-height: 50vh;*/
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
 .buttons {
-margin-left: 20%;
+  margin-left: 20%;
 }
 
 .heroLogo {
+  order: 2;
   height: 10em;
   padding-right: 10em;
+}
+
+/* mobile view */
+@media screen and (max-width: 1250px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+
+  .buttons {
+    margin-left: 10%;
+  }
+
+  .heroLogo {
+    display: none;
+  }
 }

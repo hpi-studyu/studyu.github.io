@@ -14,7 +14,7 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">N-Of-1 Trials Made Easy!</h1>
         <p className="hero__subtitle">
-			<Translate>StudyU is only available fully&#8209;functional platform</Translate><br/>for personalized N&#8209;of&#8209;1 treatment advice.
+			<Translate>StudyU is only available fully&#8209;functional platform</Translate><br/><Translate>for personalized N&#8209;of&#8209;1 treatment advice.</Translate>
 		</p>
         <div className={styles.buttons}>
           <Link
