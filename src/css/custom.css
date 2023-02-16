@@ -106,15 +106,11 @@ html[data-theme='dark'] footer {
 }
 
 .hero {
-  text-align: left;
+  text-align: left !important;
 }
 
 .hero__title, .hero__subtitle {
   margin-left: 20%;
-}
-
-.heroBanner_src-pages-index-module {
-  text-align: left !important;
 }
 
 .footer__links {
