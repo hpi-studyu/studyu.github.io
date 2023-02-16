@@ -10,7 +10,7 @@ const config = {
   // Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien.
   tagline: 'N-Of-1 Trials Made Easy! StudyU is a platform for conducting user-centric N-of-1 trials.',
   url: 'https://hpi-studyu.github.io/',
-  baseUrl: '/docs/',
+  baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
