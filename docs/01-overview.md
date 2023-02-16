@@ -5,7 +5,7 @@ sidebar_position: 1
 
 import StudyULogo from '/static/img/icon_wide.png';
 
-# Overview of <img src={StudyULogo} style={{width: 20 + '%', verticalAlign: 'middle'}} />
+# Overview of <img src={StudyULogo} style={{height: 5 + 'rem', verticalAlign: 'middle'}} />
 
 > A platform for designing, monitoring and analyzing N-of-1 trials, shaping the future of personalized medicine
 
