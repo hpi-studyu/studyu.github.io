@@ -17,7 +17,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  /* todo generate new matching primary colors */
+  /* TODO generate new matching primary colors */
   font-family: 'Open Sans';
   --ifm-font-family-base: 'Open Sans', sans-serif;
 
@@ -46,7 +46,7 @@
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 /* Color generator at https://docusaurus.io/docs/styling-layout */
 [data-theme='dark'] {
-  /* todo generate new matching primary colors */
+  /* TODO generate new matching primary colors */
   --ifm-color-primary: #1dbcdd; /* #2ea6e5 #1bc1df #12d2df */
   --ifm-color-primary-dark: orange;
   --ifm-color-primary-darker: red;
@@ -67,20 +67,19 @@
 
   /* manuell hinzugefügt weil --ifm-hero-text-color: nicht ging */
   --ifm-font-color-base-inverse: #fff;
-  
-  .dropdown__menu {
+}
+
+html[data-theme='dark'] .dropdown__menu {
   background-color: #0f2f48; /* 1b3a51 */
-  }
+}
 
-  .dropdown__link--active {
+html[data-theme='dark'] .dropdown__link--active {
    background-color: #0f2f48;
-  }
+}
 
-  .dropdown__link:hover {
+html[data-theme='dark'] .dropdown__link:hover {
     color: #fff;
     background-color: var(--ifm-dropdown-hover-background-color);
-  }
-
 }
 
 html[data-theme='light'] header {
@@ -104,6 +103,10 @@ html[data-theme='dark'] footer {
 
 .navbar__logo {
   height: 3em;
+}
+
+.hero {
+  text-align: left;
 }
 
 .hero__title, .hero__subtitle {
