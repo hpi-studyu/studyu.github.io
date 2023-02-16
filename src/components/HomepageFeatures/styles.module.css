@@ -1,0 +1,15 @@
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureSvg {
+  height: 8em; /* 100px */
+  width: 8em;
+}
+
+html[data-theme='dark'] .featureSvg {
+  filter: invert(100%);
+}

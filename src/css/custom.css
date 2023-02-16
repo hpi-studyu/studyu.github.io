@@ -1,0 +1,118 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* open-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  /*font-stretch: 100%;*/
+  src: url('/static/fonts/open-sans-v34-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+ */
+       url('/static/fonts/open-sans-v34-latin-regular.woff') format('woff'); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* You can override the default Infima variables here. */
+:root {
+  /* todo generate new matching primary colors */
+  font-family: 'Open Sans';
+  --ifm-font-family-base: 'Open Sans', sans-serif;
+
+  --ifm-color-primary: #105c85;
+  --ifm-color-primary-dark: #0e5378;
+  --ifm-color-primary-darker: #0e4e71;
+  --ifm-color-primary-darkest: #0b405d;
+  --ifm-color-primary-light: #126592;
+  --ifm-color-primary-lighter: #126a99;
+  --ifm-color-primary-lightest: #1578ad;
+
+  --ifm-heading-color: var(--ifm-navbar-link-color);
+
+  --ifm-font-color-base-inverse: #000;
+
+  --ifm-navbar-link-color: #000;
+  --ifm-link-color: var(--ifm-color-primary);
+  --ifm-navbar-link-hover-color: #2ea6e5;
+
+  /*--ifm-color-primary-light: #78effb;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-link-hover-decoration: none;*/
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Color generator at https://docusaurus.io/docs/styling-layout */
+[data-theme='dark'] {
+  /* todo generate new matching primary colors */
+  --ifm-color-primary: #2ea6e5;
+  --ifm-color-primary-dark: #81c8ee;
+  --ifm-color-primary-darker: #5db9e9;
+  --ifm-color-primary-darkest: #6fc1ec;
+  --ifm-color-primary-light: #c9e8f8;
+  --ifm-color-primary-lighter: #dbeffa;
+  --ifm-color-primary-lightest: #ffffff;
+
+  /*--ifm-color-primary: #02243e;*/
+  --ifm-background-color: #02243e !important;
+
+  --ifm-link-color: var(--ifm-color-primary);
+
+  --ifm-navbar-link-color: #fff;
+  --ifm-navbar-background-color: #02243e;
+
+  /* manuell hinzugefügt weil --ifm-hero-text-color: nicht ging */
+  --ifm-font-color-base-inverse: #fff;
+}
+
+html[data-theme='light'] header {
+  --ifm-hero-background-color: #fff;
+}
+html[data-theme='dark'] header {
+  --ifm-hero-background-color: #02243e;
+}
+
+html[data-theme='light'] footer {
+  --ifm-footer-background-color: #fff;
+  --ifm-footer-color: #000;
+  --ifm-footer-link-color: #000;
+  --ifm-footer-title-color: #000;
+  --ifm-footer-link-hover-color: #2ea6e5;
+}
+
+html[data-theme='dark'] footer {
+  --ifm-footer-background-color: #02243e;
+}
+
+.navbar__logo {
+  height: 3em;
+}
+
+.hero__title, .hero__subtitle {
+  margin-left: 20%;
+}
+
+.heroBanner_src-pages-index-module {
+  text-align: left !important;
+}
+
+.footer__links {
+  margin-bottom: 1.5rem;
+}
+
+.navbar__link--active, .dropdown__link--active {
+  color: var(--ifm-navbar-link-color);
+}
+
+.dropdown__link:hover {
+  color: #2ea6e5;
+}
+
+.dropdown__link--active {
+  background-color: var(--ifm-background-color);
+}
+.dropdown__link--active:hover {
+  color: #2ea6e5;
+}
