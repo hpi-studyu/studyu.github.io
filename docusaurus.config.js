@@ -9,16 +9,17 @@ const config = {
   title: 'StudyU',
   // Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien.
   tagline: 'N-Of-1 Trials Made Easy! StudyU is a platform for conducting user-centric N-of-1 trials.',
-  url: 'https://studyu.health',
+  url: 'https://hpi-studyu.github.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'hpi-studyu', // Usually your GitHub org/user name.
-  projectName: 'studyu', // Usually your repo name.
+  // GitHub Pages Deployment
+  projectName: 'hpi-studyu.github.io',
+  organizationName: 'hpi-studyu',
+  trailingSlash: false,
+  deploymentBranch: 'main',
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
