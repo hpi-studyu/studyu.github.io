@@ -67,6 +67,20 @@
 
   /* manuell hinzugefügt weil --ifm-hero-text-color: nicht ging */
   --ifm-font-color-base-inverse: #fff;
+  
+  .dropdown__menu {
+  background-color: #0f2f48; /* 1b3a51 */
+  }
+
+  .dropdown__link--active {
+   background-color: #0f2f48;
+  }
+
+  .dropdown__link:hover {
+    color: #fff;
+    background-color: var(--ifm-dropdown-hover-background-color);
+  }
+
 }
 
 html[data-theme='light'] header {
@@ -106,17 +120,4 @@ html[data-theme='dark'] footer {
 
 .navbar__link--active, .dropdown__link--active {
   color: var(--ifm-navbar-link-color);
-}
-
-.dropdown__menu {
-background-color: #0f2f48; /* 1b3a51 */
-}
-
-.dropdown__link--active {
- background-color: #0f2f48;
-}
-
-.dropdown__link:hover {
-  color: #fff;
-  background-color: var(--ifm-dropdown-hover-background-color);
 }
