@@ -9,7 +9,7 @@ const config = {
   title: 'StudyU',
   // Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien.
   tagline: 'N-Of-1 Trials Made Easy! StudyU is a platform for conducting user-centric N-of-1 trials.',
-  url: 'https://hpi-studyu.github.io/',
+  url: 'https://studyu.health',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -86,11 +86,11 @@ const config = {
         items: [
           {
             label: 'StudyU App',
-            href: 'https://app2.studyu.health',
+            href: 'https://app.studyu.health',
           },
           {
             label: 'StudyU Designer',
-            href: 'https://designer2.studyu.health',
+            href: 'https://designer.studyu.health',
           },
         ],
         },
@@ -126,12 +126,12 @@ const config = {
       {to: '/blog', label: 'Blog', position: 'left'},
       /*{
         label: 'StudyU App',
-        href: 'https://app2.studyu.health',
+        href: 'https://app.studyu.health',
         position: 'right',
       },
       {
         label: 'StudyU Designer',
-        href: 'https://designer2.studyu.health',
+        href: 'https://designer.studyu.health',
         position: 'right',
       },*/
       {
