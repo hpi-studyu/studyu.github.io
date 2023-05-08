@@ -78,6 +78,22 @@ const config = {
         label: 'Home',
         activeBaseRegex: '\A(?!x)x',
       },
+     {
+        to: '/',
+        position: 'left',
+        label: 'Try it out',
+        // activeBaseRegex: 'docs/overview',
+        items: [
+          {
+            label: 'StudyU App',
+            href: 'https://app2.studyu.health',
+          },
+          {
+            label: 'StudyU Designer',
+            href: 'https://designer2.studyu.health',
+          },
+        ],
+        },
       {
         to: 'docs/overview',
         position: 'left',
@@ -99,7 +115,6 @@ const config = {
          label: 'StudyU Platform',
          activeBaseRegex: 'docs/basics/studyu-platform',
        },
-            // ... more items
        ],
       },
       {
@@ -109,7 +124,7 @@ const config = {
         activeBaseRegex: 'docs/basics/studyu-platform',
       },
       {to: '/blog', label: 'Blog', position: 'left'},
-      {
+      /*{
         label: 'StudyU App',
         href: 'https://app2.studyu.health',
         position: 'right',
@@ -118,7 +133,7 @@ const config = {
         label: 'StudyU Designer',
         href: 'https://designer2.studyu.health',
         position: 'right',
-      },
+      },*/
       {
         type: 'localeDropdown',
         position: 'right',
@@ -132,7 +147,7 @@ const config = {
         title: 'Docs',
         items: [
         {
-          label: 'Tutorial',
+          label: 'How to use StudyU',
           to: '/docs/overview',
         },
         ],
@@ -141,13 +156,13 @@ const config = {
         title: 'Community',
         items: [
         {
-          label: 'StudyU @HPI',
+          label: 'StudyU @ HPI',
           href: 'https://hpi.de/lippert/projects/studyu.html',
         },
-        {
+        /*{
           label: 'Twitter',
           href: 'https://twitter.com/studyuhealth',
-        },
+        },*/
         ],
       },
       {
@@ -159,7 +174,7 @@ const config = {
         },
         {
           label: 'GitHub',
-          href: 'https://github.com/studyu-health/studyu',
+          href: 'https://github.com/hpi-studyu/studyu',
         },
         ],
       },
@@ -168,11 +183,11 @@ const config = {
         items: [
         {
           label: 'Privacy',
-          to: 'https://#',
+          to: '/docs/privacy',
         },
         {
           label: 'Imprint',
-          href: 'https://www13.hpi.uni-potsdam.de/fileadmin/user_upload/fachgebiete/lippert/studyu/StudyU_imprint_en.pdf',
+          href: '/docs/imprint',
         },
         ],
       },

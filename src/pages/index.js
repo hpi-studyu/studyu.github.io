@@ -36,6 +36,7 @@ function HomepageHeader() {
 
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
+  /* TODO Our partners */
   return (
     <Layout
       title={`${siteConfig.title}`}
@@ -43,7 +44,8 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-		// TODO Our partners
+
+
       </main>
     </Layout>
   );

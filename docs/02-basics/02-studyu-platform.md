@@ -19,6 +19,8 @@ You can find web versions of the StudyU designer at designer.studyu.health and o
 
 - Konigorski S, Wernicke S, Slosarek T, Zenner AM, Strelow N, Ruether FD, Henschel F, Manaswini M, Pottbäcker F, Edelman JA, Owoyele B, Danieletto M, Golden E, Zweig M, Nadkarni G, Böttinger E (2022). StudyU: a platform for designing and conducting innovative digital N-of-1 trials. J Med Internet Research 24(6): e35884. https://doi.org/10.2196/35884.
 
-## Related: StudyMe App
-TODO
-https://hpi.de/lippert/projects/studyu.html
+## Related
+
+### StudyMe App
+
+See [StudyMe at HPI](https://hpi.de/lippert/projects/studyu.html)
