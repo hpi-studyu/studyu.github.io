@@ -20,12 +20,12 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="https://designer.studyu.health" style={{marginRight: '3em'}}>
-            Design a new study
+            <Translate>Design a new study</Translate>
           </Link>
 		  <Link
             className="button button--secondary button--lg"
             to="/docs/app/overview">
-            Join a running study
+            <Translate>Join a running study</Translate>
           </Link>
         </div>
       </div>
