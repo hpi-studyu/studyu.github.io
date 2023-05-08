@@ -1,5 +1,9 @@
 # Privacy Policies
 
+## Website
+
+This website is hosted with Docusaurus on github.io. Refer to [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) for more information about how your data is processed.
+
 ## StudyU App
 
 This is the privacy policy of the StudyU app. It applies from December 16, 2020. You will be prompted to acknowledge this information the first time you use the StudyU app.
