@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkstudyu_docs=self.webpackChunkstudyu_docs||[]).push([[5045],{8415:s=>{s.exports=JSON.parse('[{"label":"news","permalink":"/de/blog/tags/news","count":2}]')}}]);

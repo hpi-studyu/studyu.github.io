@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkstudyu_docs=self.webpackChunkstudyu_docs||[]).push([[2535],{5641:t=>{t.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"StudyU has won the Best Design Award 2022 at HPI","permalink":"/blog/best-design-award"},{"title":"Welcome to the StudyU Blog","permalink":"/blog/first-blog-post"}]}')}}]);
