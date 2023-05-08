@@ -82,7 +82,7 @@ wenn Sie eine Studie als Entwurf speichern oder wenn Sie eine Studie veröffentl
 diesem Zeitpunkt existieren die Daten nur auf Ihrem Client, d.h. dem Webbrowser, den Sie
 verwenden.
 ### Wo werden Daten gespeichert?
-Das Backend wird mit [Supabase]((https://supabase.io)) gehostet. Wenn ein Benutzer an einer veröffentlichten
+Das Backend wird mit [Supabase](https://supabase.io) gehostet. Wenn ein Benutzer an einer veröffentlichten
 Studie teilnimmt, wird eine Kopie der Studiendefinition - einschließlich aller Informationen, die
 Sie über den StudyU Designer eingegeben haben - erstellt und an das Gerät des Benutzers
 gesendet.
