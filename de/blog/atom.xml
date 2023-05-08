@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://hpi-studyu.github.io/de/blog</id>
+    <id>https://studyu.health/de/blog</id>
     <title>StudyU Blog</title>
     <updated>2022-10-17T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://hpi-studyu.github.io/de/blog"/>
+    <link rel="alternate" href="https://studyu.health/de/blog"/>
     <subtitle>StudyU Blog</subtitle>
-    <icon>https://hpi-studyu.github.io/de/img/favicon.ico</icon>
+    <icon>https://studyu.health/de/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[StudyU has won the Best Design Award 2022 at HPI]]></title>
-        <id>https://hpi-studyu.github.io/de/blog/best-design-award</id>
-        <link href="https://hpi-studyu.github.io/de/blog/best-design-award"/>
+        <id>https://studyu.health/de/blog/best-design-award</id>
+        <link href="https://studyu.health/de/blog/best-design-award"/>
         <updated>2022-10-17T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[StudyU has won the Best Design Award 2022 at HPI. Read more.]]></summary>
         <content type="html"><![CDATA[<p>StudyU has won the Best Design Award 2022 at HPI. <a href="https://hpi.de/entrepreneurship/best-idea.html" target="_blank" rel="noopener noreferrer">Read more</a>.</p>]]></content>
@@ -22,8 +22,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Welcome to the StudyU Blog]]></title>
-        <id>https://hpi-studyu.github.io/de/blog/first-blog-post</id>
-        <link href="https://hpi-studyu.github.io/de/blog/first-blog-post"/>
+        <id>https://studyu.health/de/blog/first-blog-post</id>
+        <link href="https://studyu.health/de/blog/first-blog-post"/>
         <updated>2022-10-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Welcome to the StudyU blog!]]></summary>
         <content type="html"><![CDATA[<p>Welcome to the StudyU blog!</p>]]></content>
