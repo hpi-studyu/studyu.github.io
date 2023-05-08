@@ -1,3 +1,9 @@
+---
+title: Privacy Policies
+description: The StudyU Privacy Policies
+hide_table_of_contents: true
+---
+
 # Privacy Policies
 
 ## Website

@@ -1,3 +1,9 @@
+---
+title: Nutzungsbedingungen
+description: Die StudyU Nutzungsbedingungen
+hide_table_of_contents: true
+---
+
 # Nutzungsbedingungen
 
 ## StudyU App

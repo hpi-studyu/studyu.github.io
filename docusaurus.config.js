@@ -182,12 +182,16 @@ const config = {
         title: 'Legal',
         items: [
         {
+          label: 'Terms Of Use',
+          to: '/tos',
+        },
+        {
           label: 'Privacy',
-          to: '/docs/privacy',
+          to: '/privacy',
         },
         {
           label: 'Imprint',
-          href: '/docs/imprint',
+          href: '/imprint',
         },
         ],
       },

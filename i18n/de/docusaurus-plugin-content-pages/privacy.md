@@ -1,8 +1,14 @@
+---
+title: Datenschutzerklärung
+description: Die StudyU Datenschutzerklärung
+hide_table_of_contents: true
+---
+
 # Datenschutzerklärung
 
 ## Webseite
 
-This website is hosted with Docusaurus on github.io. Refer to [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) for more information about how your data is processed.
+Diese Webseite wird mit Docusaurus auf github.io bereitgestellt. Weitere Informationen zur Datenverarbeitung kann in der [Datenschutzerklärung von Github](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) nachgelesen werden.
 
 ## StudyU App
 

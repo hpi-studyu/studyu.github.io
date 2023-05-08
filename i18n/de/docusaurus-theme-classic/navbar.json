@@ -1,10 +1,46 @@
 {
-  "item.label.Tutorial": {
-    "message": "Tutorial",
-    "description": "Navbar item with label Tutorial"
-  },
   "item.label.Blog": {
     "message": "Blog",
     "description": "Navbar item with label Blog"
+  },
+  "logo.alt": {
+    "message": "StudyU Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Home": {
+    "message": "Startseite",
+    "description": "Navbar item with label Home"
+  },
+  "item.label.Try it out": {
+    "message": "Loslegen",
+    "description": "Navbar item with label Try it out"
+  },
+  "item.label.About": {
+    "message": "Über",
+    "description": "Navbar item with label About"
+  },
+  "item.label.Learning Center": {
+    "message": "Dokumentation",
+    "description": "Navbar item with label Learning Center"
+  },
+  "item.label.Publications": {
+    "message": "Publikationen",
+    "description": "Navbar item with label Publications"
+  },
+  "item.label.StudyU App": {
+    "message": "StudyU App",
+    "description": "Navbar item with label StudyU App"
+  },
+  "item.label.StudyU Designer": {
+    "message": "StudyU Designer",
+    "description": "Navbar item with label StudyU Designer"
+  },
+  "item.label.The N-of-1 Concept": {
+    "message": "Das N-of-1 Konzept",
+    "description": "Navbar item with label The N-of-1 Concept"
+  },
+  "item.label.StudyU Platform": {
+    "message": "Die StudyU Plattform",
+    "description": "Navbar item with label StudyU Platform"
   }
 }

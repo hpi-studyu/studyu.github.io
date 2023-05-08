@@ -1,3 +1,9 @@
+---
+title: Impressum
+description: Das StudyU Impressum
+hide_table_of_contents: true
+---
+
 # Impressum
 
 ### Für den Inhalt verantwortliche Personen  

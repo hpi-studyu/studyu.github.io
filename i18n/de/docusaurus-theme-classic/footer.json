@@ -1,6 +1,6 @@
 {
   "link.title.Docs": {
-    "message": "Docs",
+    "message": "Dokumentation",
     "description": "The title of the footer links column with title=Docs in the footer"
   },
   "link.title.Community": {
@@ -8,20 +8,8 @@
     "description": "The title of the footer links column with title=Community in the footer"
   },
   "link.title.More": {
-    "message": "More",
+    "message": "Mehr",
     "description": "The title of the footer links column with title=More in the footer"
-  },
-  "link.item.label.Tutorial": {
-    "message": "Tutorial",
-    "description": "The label of footer link with label=Tutorial linking to /docs/intro"
-  },
-  "link.item.label.StudyU @HPI": {
-    "message": "StudyU @HPI",
-    "description": "The label of footer link with label=StudyU @HPI linking to https://hpi.de/lippert/projects/studyu.html"
-  },
-  "link.item.label.Twitter": {
-    "message": "Twitter",
-    "description": "The label of footer link with label=Twitter linking to https://twitter.com/studyuhealth"
   },
   "link.item.label.Blog": {
     "message": "Blog",
@@ -29,10 +17,34 @@
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/studyu-health/studyu"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/hpi-studyu/studyu"
   },
   "copyright": {
-    "message": "Copyright © 2023 Studyu. Built with Docusaurus.",
+    "message": "Copyright © 2023 Studyu. Bereitgestellt mit Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.title.Legal": {
+    "message": "Weiteres",
+    "description": "The title of the footer links column with title=Legal in the footer"
+  },
+  "link.item.label.How to use StudyU": {
+    "message": "Grundlagen",
+    "description": "The label of footer link with label=How to use StudyU linking to /docs/overview"
+  },
+  "link.item.label.StudyU @ HPI": {
+    "message": "StudyU @ HPI",
+    "description": "The label of footer link with label=StudyU @ HPI linking to https://hpi.de/lippert/projects/studyu.html"
+  },
+  "link.item.label.Privacy": {
+    "message": "Datenschutzerklärung",
+    "description": "The label of footer link with label=Privacy linking to /privacy"
+  },
+  "link.item.label.Imprint": {
+    "message": "Impressum",
+    "description": "The label of footer link with label=Imprint linking to /imprint"
+  },
+  "link.item.label.Terms Of Use": {
+    "message": "Nutzungsbedingungen",
+    "description": "The label of footer link with label=Terms Of Use linking to /tos"
   }
 }

@@ -5,7 +5,7 @@
   },
   "theme.ErrorPageContent.tryAgain": {
     "message": "Nochmal versuchen",
-    "description": "The label of the button to try again when the page crashed"
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
   },
   "theme.NotFound.title": {
     "message": "Seite nicht gefunden",
@@ -262,7 +262,36 @@
     "message": "Tags",
     "description": "The title of the tag list page"
   },
-  "N-Of-1 Trials Made Easy! A platform for conducting user-centric N-of-1 trials.": {
-    "message": "Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien."
+  "StudyU is the only available fully‑functional platform": {
+    "message": "Eine voll funktionsfähige Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien."
+  },
+  "for personalized N‑of‑1 treatment advice.": {
+    "message": ""
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Main",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Docs sidebar",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "N-of-1 trials enable participants to discover the individual effects of interventions on their health. StudyU provides the supporting digital foundation.": {
+    "message": "N-of-1-Studien ermöglichen es den Teilnehmern, die individuellen Auswirkungen von Interventionen auf ihre Gesundheit zu entdecken. StudyU bietet die unterstützende digitale Grundlage."
+  },
+  "N-of-1 trials focus on the individual – and so does StudyU. Conduct your own studies or partake in others. It's your choice.": {
+    "message": "Bei N-of-1-Studien steht der Mensch im Mittelpunkt - so auch bei StudyU. Führen Sie Ihre eigenen Studien durch oder nehmen Sie an anderen teil. Sie haben die Wahl."
+  },
+  "StudyU is developed completely open source with self-hosting capabilities, guaranteeing a maximum of transparency and data privacy.": {
+    "message": "StudyU wird vollständig quelloffen entwickelt und kann selbst gehostet werden, wodurch ein Höchstmaß an Transparenz und Datenschutz gewährleistet wird."
+  },
+  "Discover the Power of N-of-1": {
+    "message": "Entdecke N-of-1 Studien"
+  },
+  "Personalized by Design": {
+    "message": "Personalisierbar"
+  },
+  "Open Source for Everyone": {
+    "message": "Quelloffen"
   }
 }

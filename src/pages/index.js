@@ -39,7 +39,7 @@ export default function Home() {
   /* TODO Our partners */
   return (
     <Layout
-      title={`${siteConfig.title}`}
+      /*title={`${siteConfig.title}`}*/
       description={`${siteConfig.tagline}`}>
       <HomepageHeader />
       <main>

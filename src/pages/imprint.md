@@ -1,3 +1,9 @@
+---
+title: Imprint
+description: The StudyU Imprint
+hide_table_of_contents: true
+---
+
 # Imprint
 
 ### Persons responsible for content  

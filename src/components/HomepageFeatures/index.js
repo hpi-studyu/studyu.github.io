@@ -2,36 +2,38 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
+import Translate, {translate} from '@docusaurus/Translate';
+
 const FeatureList = [
   {
-    title: 'Discover the Power of N-of-1',
+    title: (<Translate>Discover the Power of N-of-1</Translate>),
     Svg: require('@site/static/img/icons/body.svg').default,
     description: (
-      <>
+      <Translate>
         N-of-1 trials enable participants to discover the	  
 		individual effects of interventions on their health.
 		StudyU provides the supporting digital foundation.
-      </>
+      </Translate>
     ),
   },
   {
-    title: 'Personalized by Design',
+    title: (<Translate>Personalized by Design</Translate>),
     Svg: require('@site/static/img/icons/fingerprint.svg').default,
     description: (
-      <>
+      <Translate>
         N-of-1 trials focus on the individual &ndash; and so does StudyU.
 		Conduct your own studies or partake in others. It&#39;s your choice.
-      </>
+      </Translate>
     ),
   },
   {
-    title: 'Open Source for Everyone',
+    title: (<Translate>Open Source for Everyone</Translate>),
     Svg: require('@site/static/img/icons/code-blocks-outline-rounded.svg').default,
     description: (
-      <>
+      <Translate>
         StudyU is developed completely open source with self-hosting capabilities, 
 		guaranteeing a maximum of transparency and data privacy.
-      </>
+      </Translate>
     ),
   },
 ];

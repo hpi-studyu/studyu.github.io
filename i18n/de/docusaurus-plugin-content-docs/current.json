@@ -3,16 +3,36 @@
     "message": "Next",
     "description": "The label for version current"
   },
-  "sidebar.tutorialSidebar.category.Tutorial - Basics": {
-    "message": "Tutorial - Basics",
-    "description": "The label for category Tutorial - Basics in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.Basics.link.generated-index.description": {
+    "message": "Lernen Sie die Grundlagen von StudyU kennen.",
+    "description": "The generated-index page description for category Basics in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Tutorial - Basics.link.generated-index.description": {
-    "message": "5 minutes to learn the most important Docusaurus concepts.",
-    "description": "The generated-index page description for category Tutorial - Basics in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.StudyU App": {
+    "message": "StudyU App",
+    "description": "The label for category StudyU App in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Tutorial - Extras": {
-    "message": "Tutorial - Extras",
-    "description": "The label for category Tutorial - Extras in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.StudyU App.link.generated-index.description": {
+    "message": "Partake in N-of-1 trials with the StudyU App.",
+    "description": "The generated-index page description for category StudyU App in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.StudyU Designer": {
+    "message": "StudyU Designer",
+    "description": "The label for category StudyU Designer in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.StudyU Designer.link.generated-index.description": {
+    "message": "Design your own trials with the StudyU Designer.",
+    "description": "The generated-index page description for category StudyU Designer in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Development": {
+    "message": "Development",
+    "description": "The label for category Development in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Development.link.generated-index.description": {
+    "message": "Develop the StudyU Platform yourself.",
+    "description": "The generated-index page description for category Development in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Basics": {
+    "message": "Basics",
+    "description": "The label for category Basics in sidebar tutorialSidebar"
   }
 }

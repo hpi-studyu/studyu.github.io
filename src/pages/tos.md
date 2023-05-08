@@ -1,3 +1,9 @@
+---
+title: Terms Of Use
+description: The StudyU Terms of Use
+hide_table_of_contents: true
+---
+
 # Terms Of Use
 
 ## StudyU App
