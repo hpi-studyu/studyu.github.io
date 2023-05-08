@@ -13,10 +13,9 @@ Phone: +49 (0) 331 5509-4844
 Fax: +49 (0) 331 5509-129  
 Email: stefan.konigorski@hpi.de, erwin.boettinger@hpi.de  
 Website: www.hpi.de  
-Authorized Representative Managing Directors: Prof. Dr. Christoph Meinel (CEO), Dr.
-Marcus Kölling (CFO)  
+Authorized Representative Managing Directors: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich, Dr. Marcus Kölling  
 Registry Office: Potsdam District Court  
-Register Number: HRB   
+Register Number: HRB 12184  
 
 ### Legal information
 The contents retrievable here make no claim to correctness, usability and/or completeness.

@@ -19,25 +19,6 @@ To see which data is being shared, please refer to the privacy policy.
 Downloading and using the StudyU app is free of charge, however, this might change in the future.
 
 ## StudyU Designer
-
-The StudyU designer and accompanying legal information are available in English and German. In case you have any questions please reach out to us via the contact information in the imprint.
-### 1. Purpose
-The StudyU designer is part of the StudyU platform. It is a web application to design N-of-1 trials. These studies, once published, are available to participants via the StudyU app.
-
-### 2. General
-Any use of the StudyU designer requires the acceptance of the terms of use.
-The terms of use of StudyU prohibit misuse of the platform such as for manipulation, unethical, immoral and criminal acts, the design of studies that includes harmful interventions, and other unlawful or unscientific behaviour. All responsibility and liability for the designed studies liability lies with the researcher/clinician that designs the study. The creators of the StudyU platform are not liable for any misuse of the platform.
-Researchers/clinicians have to be 18 years or older in order to use StudyU. It is required that every researcher/clinician has conducted training on good scientific practice ,  before using StudyU. This includes that a positive ethics approval should be available with an institutional review board (IRB) number, which is one required information that has to be provided in the StudyU designer. In case an IRB number is not available, we further stress that all responsibility lies with the researcher/clinician.
-We reserve the right to change functionalities of our services, unless otherwise agreed, unreasonable for the user or prescribed by law.
-
-### 3. Privacy policy
-See the privacy policy.
-
-### 4. Pricing
-Using the StudyU study designer is free of charge, however, this might change in the future.
-
-
-## StudyU Designer
 The StudyU designer and accompanying legal information are available in English and German. In case you have any questions please reach out to us via the contact information in the imprint.
 
 ### 1 Purpose

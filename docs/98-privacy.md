@@ -32,7 +32,7 @@ The data is solely stored in order to conduct and evaluate N-of-1 trials using t
 ### When is data stored?
 The data is sent to the StudyU designer backend and stored only when you save a study as a draft or when you publish a study. Until that point the data only exists on your client, i.e., the web browser you are using.
 ### Where is data stored?
-The backend is hosted with Supabase . When a user participates in a published study, a copy of the study definition – including all information you entered via the StudyU designer – is created and sent to the user’s device.
+The backend is hosted with [Supabase]((https://supabase.io)). When a user participates in a published study, a copy of the study definition – including all information you entered via the StudyU designer – is created and sent to the user’s device.
 ### Who has access to the data in which way?
 Only the StudyU development team (see imprint) has direct read and write rights to the backend. Users who participate in published studies can view the entered information. The access to the information you published with the StudyU designer can be restricted. You can decide whether to give access to everyone or only to invited participants. In addition, you can publish the study design and optionally the study data in the study registry. Published studies can be viewed and – if study data have been shared – all data pertaining to the study can be downloaded.
 ### Which rights do I have regarding my data?
