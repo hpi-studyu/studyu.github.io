@@ -24,7 +24,7 @@ function HomepageHeader() {
           </Link>
 		  <Link
             className="button button--secondary button--lg"
-            to="https://app.studyu.health">
+            to="/docs/app/overview">
             Join a running study
           </Link>
         </div>

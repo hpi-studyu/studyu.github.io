@@ -1,11 +1,14 @@
 # The StudyU Platform
 
-The StudyU platform contains the StudyU designer and the StudyU app, which allow to design and implement, and then to conduct the study, respectively.
+The StudyU platform contains the StudyU Designer and the StudyU App, which allow to design and implement, and then to conduct the study, respectively.
 
-You can find the StudyU app here in the Android Play store and here in the Apple App store.
+You can find the StudyU App in the [Android Play Store](htps://play.google.com/store/apps/details?id=health.studyu.app) and in the [Apple App Store](https://apps.apple.com/us/app/studyu-health/id1571991198?itsct=apps_box_link&itscg=30200).
 
-You can find web versions of the StudyU designer at designer.studyu.health and of the StudyU app at app.studyu.health.
+<a href='htps://play.google.com/store/apps/details?id=health.studyu.app'><img alt='Get it on Google Play' src='/img/google-play-badge.png' width="150" /></a>
+<span style={{margin: '10px'}}/>
+<a href='https://apps.apple.com/us/app/studyu-health/id1571991198?itsct=apps_box_link&itscg=30200'><img alt='Apple Download' src='/img/apple-black.svg' /></a>
 
+You can find web versions of the StudyU Designer at [designer.studyu.health](https://designer.studyu.health) and of the StudyU App at [app.studyu.health](https://app.studyu.health).
 
 ## Clinical use cases
 

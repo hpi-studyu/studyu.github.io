@@ -38,3 +38,8 @@ We reserve the right to change functionalities of our services, unless otherwise
 See the privacy policy.
 ### 4 Pricing
 Using the StudyU study designer is free of charge, however, this might change in the future.
+
+## Website
+
+Apple, the Apple logo, Apple TV, iPad, iPhone, iPod touch, iTunes, and Mac are trademarks of Apple Inc.  
+Google Play and the Google Play logo are trademarks of Google LLC.

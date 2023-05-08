@@ -1,0 +1,16 @@
+# How to use the StudyU Designer
+The StudyU designer is divided into two main components, the dashboard and the editor.
+## 1.1 Dashboard
+The dashboard includes two lists of studies: draft studies (studies that are still being worked on and can still be deleted) and published studies that users can participate in (results are downloadable). By clicking on a draft study or the add button, the editor is opened.
+## 1.2 Editor
+The editor allows specification of different study aspects according to the study model. The editor is split further into sections (arranged in a logical order, but you can switch between them).
+1.	Meta Data: This section allows you to edit the study title, description and select a descriptive icon to represent your study.
+2.	Interventions: Here you can define the different interventions that are offered to the user, including the tasks each intervention comprises and how these tasks are to be scheduled.
+3.	Eligibility Questions: In the questionnaire, the eligibility questions are added which the user needs to answer before participating in the study. You can specify Boolean questions as well as single and multiple-choice questions. The answers of the user to these questions are not stored and are not available in the downloadable study data.
+4.	Eligibility Criteria: Using the questions defined in the section before, you are now able to define the eligibility criteria by specifying which answers lead to an exclusion, together with a reasoning for the users on why they are excluded. This section can only be edited once the eligibility questionnaire above contains at least one question.
+5.	Observations: In this section you can define the observations the user has to report on and how they are to be scheduled. In the current version the user can be asked to answer different questions. Additionally, you can also set up slider questions.
+6.	Schedule: Here you can edit the study’s schedule information, number of cycles, phase duration, whether or not a baseline phase should be included, and the sequence of the interventions. Please consider that different interventions have different impacts, e.g., a longer washout period or a longer time until an effect can be observed.
+7.	Report: You can define the setup of the report the user receives. You are able to add and configure the different report sections.
+8.	Results: You can specify which observation results you want to include in your data export.
+9.	Consent: You can set up the study specific consent form in a modular way.
+10.	Publish: Here you can save the study as a draft or publish it. If saved as draft, you can continue editing the study at a later point in time. When you want to publish the study, it is first validated, to check whether all necessary aspects are specified. Once published it is available to the users of the StudyU app.
