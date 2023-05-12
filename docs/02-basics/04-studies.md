@@ -2,7 +2,7 @@
 
 Use of StudyU in clinical studies in collaboration with:
 
-| Insitution        <img width="100rem" />                                   | Details                                                                                                                                                                                                                                         |
+| Institution        <img width="100rem" />                                   | Details                                                                                                                                                                                                                                         |
 |----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <img src="/img/partner/mount_sinai.svg" alt="HPI Mount Sinai" loading="lazy" style={{ backgroundColor: 'white' }} />           | tba                                                                                                                                                                                                                                             |
 | <img src="/img/partner/weill_cornell.svg" alt="Mount Sinai" loading="lazy" style={{ backgroundColor: 'white' }} />         | <a href="https://weillcornell.org/parag-goyal-md-msc">Parag Goyal, M.D., MSc</a>                                                                                                                                                                |
