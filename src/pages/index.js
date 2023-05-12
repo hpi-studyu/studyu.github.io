@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Translate, {translate} from '@docusaurus/Translate';
 import styles from './index.module.css';
+import Head from '@docusaurus/Head';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -36,7 +37,7 @@ function HomepageHeader() {
 
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
-  /* TODO Our partners */
+
   return (
     <Layout
       /*title={`${siteConfig.title}`}*/
@@ -44,8 +45,18 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-
-
+        <section>
+        <div className={styles.partnertitle}>Use of StudyU in clinical studies in collaboration with:</div>
+            <a href="/docs/basics/studies">
+            <div className={styles.wrapper}>
+              <img src="/img/partner/hpims.svg" alt="" loading="lazy" />
+              <img src="/img/partner/mount_sinai.svg" alt="" loading="lazy" />
+              <img src="/img/partner/weill_cornell.svg" alt="" loading="lazy" />
+              <img src="/img/partner/university_queensland.svg" alt="" loading="lazy" />
+              <img src="/img/partner/uk_eppendorf.svg" alt="" loading="lazy" />
+            </div>
+            </a>
+        </section>
       </main>
     </Layout>
   );
