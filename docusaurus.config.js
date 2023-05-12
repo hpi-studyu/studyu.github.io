@@ -196,7 +196,7 @@ const config = {
         ],
       },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} StudyU. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} StudyU`,
     },
     prism: {
       theme: lightCodeTheme,
