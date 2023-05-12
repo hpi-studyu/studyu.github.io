@@ -1,4 +1,4 @@
-# Clinical StudyU with StudyU
+# Clinical Studies with StudyU
 
 Use of StudyU in clinical studies in collaboration with:
 
