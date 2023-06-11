@@ -30,7 +30,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-	  <img src={require('@site/static/img/icon_wide.png').default} className={clsx('', styles.heroLogo)}/>
+	  <img src={'/img/icon_wide.png'} className={clsx('', styles.heroLogo)}/>
     </header>
   );
 }

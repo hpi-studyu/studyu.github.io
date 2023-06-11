@@ -3,9 +3,7 @@ title: Overview
 sidebar_position: 1
 ---
 
-import StudyULogo from '/static/img/icon_wide.png';
-
-# Overview of <img src={StudyULogo} style={{height: 5 + 'rem', verticalAlign: 'middle'}} />
+# Overview of <img src={'/img/icon_wide.png'} style={{height: 5 + 'rem', verticalAlign: 'middle'}} />
 
 > A platform for designing, monitoring and analyzing N-of-1 trials, shaping the future of personalized medicine
 

@@ -202,6 +202,14 @@ const config = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
+     announcementBar: {
+          id: 'support_us',
+          content:
+            'The German Federal Minister of Health has taken a look at StudyU! <a rel="noopener noreferrer" href="/blog">Read more</a>',
+          backgroundColor: '#ebedf0',
+          textColor: '#091E42',
+          isCloseable: true,
+        },
   }),
    plugins: [
       [
