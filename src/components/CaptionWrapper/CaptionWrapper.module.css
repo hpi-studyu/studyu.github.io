@@ -3,3 +3,8 @@
   font-style: italic;
   color: #828282;
 }
+
+figure {
+  margin-left: 0;
+  margin-right: 0;
+}
