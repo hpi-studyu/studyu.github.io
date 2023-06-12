@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://studyu.health/blog</id>
-    <title>StudyU Blog</title>
+    <title>StudyU - Personalized Health Interventions Blog</title>
     <updated>2023-06-08T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://studyu.health/blog"/>
-    <subtitle>StudyU Blog</subtitle>
+    <subtitle>StudyU - Personalized Health Interventions Blog</subtitle>
     <icon>https://studyu.health/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Introducing StudyU to the German Federal Minister of Health]]></title>
