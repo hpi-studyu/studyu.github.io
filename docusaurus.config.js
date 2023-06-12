@@ -95,16 +95,15 @@ const config = {
         ],
         },
       {
-        to: 'docs/overview',
-        position: 'left',
-        label: 'About',
-        activeBaseRegex: 'docs/overview',
-      },
-      {
         type: 'dropdown',
         label: 'Learning Center',
         position: 'left',
         items: [
+        {
+          to: 'docs/overview',
+          label: 'About',
+          activeBaseRegex: 'docs/overview',
+        },
         {
          to: 'docs/basics/n-of-1-trials',
          label: 'The N-of-1 Concept',
@@ -122,6 +121,12 @@ const config = {
         position: 'left',
         label: 'Publications',
         activeBaseRegex: 'docs/basics/studyu-platform',
+      },
+      {
+        to: 'docs/basics/studies',
+        position: 'left',
+        label: 'Studies',
+        activeBaseRegex: 'docs/basics/studies',
       },
       {to: '/blog', label: 'Blog', position: 'left'},
       /*{
