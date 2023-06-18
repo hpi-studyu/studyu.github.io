@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>StudyU - Personalized Health Interventions Blog</title>
-        <link>https://studyu.health/de/blog</link>
+        <link>https://www.studyu.health/de/blog</link>
         <description>StudyU - Personalized Health Interventions Blog</description>
         <lastBuildDate>Thu, 08 Jun 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,8 +10,8 @@
         <language>de</language>
         <item>
             <title><![CDATA[Introducing StudyU to the German Federal Minister of Health]]></title>
-            <link>https://studyu.health/de/blog/federal-health-minister-meets-studyu</link>
-            <guid>https://studyu.health/de/blog/federal-health-minister-meets-studyu</guid>
+            <link>https://www.studyu.health/de/blog/federal-health-minister-meets-studyu</link>
+            <guid>https://www.studyu.health/de/blog/federal-health-minister-meets-studyu</guid>
             <pubDate>Thu, 08 Jun 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[On June 8, 2023, we had the honor of introducing StudyU to Prof. Dr. Karl Lauterbach,]]></description>
             <content:encoded><![CDATA[<p>On June 8, 2023, we had the honor of introducing StudyU to Prof. Dr. Karl Lauterbach,
@@ -28,8 +28,8 @@ to learn more about StudyU and other ongoing digital health research projects.</
         </item>
         <item>
             <title><![CDATA[StudyU has won the Best Idea Award 2022 at HPI]]></title>
-            <link>https://studyu.health/de/blog/best-idea-award</link>
-            <guid>https://studyu.health/de/blog/best-idea-award</guid>
+            <link>https://www.studyu.health/de/blog/best-idea-award</link>
+            <guid>https://www.studyu.health/de/blog/best-idea-award</guid>
             <pubDate>Mon, 17 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[We are honored to announce that StudyU has won the Best Idea Award 2022 of the School Of Entrepreneurship at]]></description>
             <content:encoded><![CDATA[<p>We are honored to announce that StudyU has won the <b>Best Idea Award 2022</b> of the School Of Entrepreneurship at
