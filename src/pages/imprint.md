@@ -6,10 +6,10 @@ hide_table_of_contents: true
 
 # Imprint
 
-### Persons responsible for content  
+### Persons responsible for content
+
 Dr. Stefan Konigorski, Sarah Wernicke M.Sc., Tamara Slosarek M.Sc., Prof. Dr. Erwin
 Böttinger
-
 
 **Digital Health Center**  
 **Hasso Plattner Institute for Digital Engineering gGmbH**  
@@ -19,14 +19,17 @@ Phone: +49 (0) 331 5509-4844
 Fax: +49 (0) 331 5509-129  
 Email: stefan.konigorski@hpi.de, erwin.boettinger@hpi.de  
 Website: www.hpi.de  
-Authorized Representative Managing Directors: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich, Dr. Marcus Kölling  
+Authorized Representative Managing Directors: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich,
+Dr. Marcus Kölling  
 Registry Office: Potsdam District Court  
-Register Number: HRB 12184  
+Register Number: HRB 12184
 
 ### Legal information
+
 The contents retrievable here make no claim to correctness, usability and/or completeness.
 The legal information is non-binding and therefore not legally binding. Rather, they have an
 informative character without any guarantee being given for their correctness.
 
 ### Privacy Notice
+
 Please consult the privacy notice for further information.
