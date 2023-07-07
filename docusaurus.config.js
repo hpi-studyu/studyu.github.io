@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'StudyU - Personalized Health Interventions',
   // Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien.
-  tagline: 'N-Of-1 Trials Made Easy! StudyU is a platform for conducting user-centric N-of-1 trials. Start your own study today with StudyU!',
+  tagline: 'StudyU is a user-friendly, open-source platform for publishing user-centric N-of-1 trials and enables participants to take part in them. Start your own study today with StudyU!',
   url: 'https://www.studyu.health',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -65,7 +65,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
   ({
-    metadata: [{name: 'keywords', content: 'digital health, studyu, medical, n-of-1 trials, health, digital, study, personalized health'}],
+    metadata: [{name: 'keywords', content: 'digital health, studyu, medical, n-of-1 trials, health, digital, study, personalized health, medical trials, randomized controlled trial'}],
     navbar: {
       title: '',
       logo: {
