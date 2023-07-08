@@ -44,18 +44,6 @@ export default function Home() {
       <HomepageHeader />
       <main>
         <HomepageFeatures />
-        <section>
-        <div className={styles.partnertitle}>StudyU in clinical studies in collaboration with:</div>
-            <a href="/docs/basics/studies">
-            <div className={styles.wrapper}>
-              <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy" />
-              <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
-              <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy" />
-              <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
-              <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
-            </div>
-            </a>
-        </section>
       </main>
     </Layout>
   );

@@ -13,7 +13,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: '/img/favicon.ico',
+  favicon: '/img/favicon/favicon.ico',
 
   // GitHub Pages Deployment
   projectName: 'docs',
@@ -110,23 +110,27 @@ const config = {
          label: 'The N-of-1 Concept',
          activeBaseRegex: 'docs/basics/n-of-1-trials',
        },
-       {
-         to: 'docs/basics/studyu-platform',
-         label: 'StudyU Platform',
+        {
+         to: 'docs/app/overview',
+         label: 'StudyU App',
+         activeBaseRegex: 'docs/app/overview',
+       },
+        {
+         to: 'docs/designer/overview',
+         label: 'StudyU Designer',
+         activeBaseRegex: 'docs/designer/overview',
+       },
+      {
+         to: 'docs/basics/studyu-platform#publications',
+         label: 'Publications',
          activeBaseRegex: 'docs/basics/studyu-platform',
        },
        ],
       },
       {
-        to: 'docs/basics/studyu-platform',
-        position: 'left',
-        label: 'Publications',
-        activeBaseRegex: 'docs/basics/studyu-platform',
-      },
-      {
         to: 'docs/basics/studies',
         position: 'left',
-        label: 'Studies',
+        label: 'Collaborations',
         activeBaseRegex: 'docs/basics/studies',
       },
       {to: '/blog', label: 'Blog', position: 'left'},
@@ -224,7 +228,14 @@ const config = {
           disableInDev: false, // By default, the plugin is inactive in development
         },
       ],
-    ]
+    ]/*,
+   scripts: [
+       {
+         src:
+           '/js/foo.js',
+         async: false,
+       },
+   ]*/
 };
 
 module.exports = config;
