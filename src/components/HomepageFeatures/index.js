@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
-
 import Glider from 'react-glider';
 import 'glider-js/glider.min.css';
 
@@ -49,7 +48,7 @@ function Feature({Svg, title, description}) {
         <Svg className={styles.featureSvg} role="img" />
       </div>
       <div className="text--center padding-horiz--md">
-        <h2>{title}</h2>
+        <h2 className="defaultTitle">{title}</h2>
         <p>{description}</p>
       </div>
     </div>
@@ -69,8 +68,8 @@ export default function HomepageFeatures() {
       </div>
     </section>
             <section>
-                  <div className={styles.partnertitle}>StudyU in clinical studies in collaboration with:</div>
-                      <a href="/docs/basics/studies">
+                  <h2><div className={styles.sectiontitle}><Translate>StudyU in collaboration with clinical studies</Translate></div></h2>
+                    <a href="/docs/basics/studies">
                       <div className={styles.wrapper}>
                         <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy" />
                         <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
@@ -78,7 +77,7 @@ export default function HomepageFeatures() {
                         <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
                         <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
                       </div>
-                      </a>
+                    </a>
                   </section>
     <ProductView />
     </div>
@@ -88,55 +87,56 @@ export default function HomepageFeatures() {
 export function ProductView({children}) {
     return (
         <section className={styles.productView}>
-        <div className={"container"}>
+        <h2><div className={styles.sectiontitle}><Translate>The StudyU Platform</Translate></div></h2>
+        <div className={["container", styles.container].join(" ")}>
 
           <ProductViewItem>
           <ProductViewText>
-          <h3><a href="https://designer.studyu.health" target="_blank">The StudyU Designer</a></h3>
+          <h3>StudyU Designer</h3>
               <p>
-              The StudyU Designer is a web-based application supporting the design and implementation of
+              <Translate>The StudyU Designer is a web-based application supporting the design and implementation of
               digital N-of-1 trials for clinicians, researchers, or digital health enthusiasts. With its
               user-centric design framework, the StudyU Designer improves usability with many supportive
               features during the study creation process. Notably, it includes a preview function that
               provides a real-time visualization of the study design. Besides running private N-of-1
               trials, seamless collaboration with other researchers is also supported by sharing studies,
-              fostering collaboration and transparency in the spirit of public health and open science.
+              fostering collaboration and transparency in the spirit of public health and open science.</Translate>
               <br />
               <br />
-              <a href="/docs/designer/howto-designer">Check out our tutorial</a> to learn how to conduct
-              your first digital N-of-1 trial with the StudyU Designer or start designing your
-              first study now at <a href="https://designer.studyu.health" target="_blank">designer.studyu.health</a>.
+              <a href="/docs/designer/howto-designer"><Translate>Refer to our tutorial</Translate></a> <Translate>to learn how to conduct
+              your first digital N-of-1 trial or start designing your own study
+              at</Translate> <a href="https://designer.studyu.health" target="_blank">designer.studyu.health</a>.
               </p>
 
           </ProductViewText>
           <ProductViewGlider>
             <img src="/img/product/designer/1.png" alt="Screenshot of the StudyU Designer" />
-                      <img src="/img/product/designer/2.png" alt="Screenshot of the StudyU Designer" />
-                      <img src="/img/product/designer/3.png" alt="Screenshot of the StudyU Designer" />
+            <img src="/img/product/designer/2.png" alt="Screenshot of the StudyU Designer" />
+            <img src="/img/product/designer/3.png" alt="Screenshot of the StudyU Designer" />
           </ProductViewGlider>
           </ProductViewItem>
           <ProductViewItem>
               <ProductViewText>
-                         <h3><a href="https://app.studyu.health" target="_blank">The StudyU App</a></h3>
+             <h3>StudyU App</h3>
                   <p>
-          The StudyU App is a user-friendly application that enables individuals to actively participate in
+          <Translate>The StudyU App is a user-friendly application that enables individuals to actively participate in
           digital N-of-1 trials and obtain personalized treatment advice. Its accessible design approach
           accommodates users with limited technical skills, allowing them to directly measure the impact
           of interventions on their health outcomes. By engaging patients in the trial process, the StudyU
           App promotes patient empowerment and facilitates shared decision-making between researchers,
           clinicians, and individuals. The StudyU App leverages the capabilities of statistical computing
           and advanced machine learning models to identify the optimal intervention tailored specifically
-          to your unique needs and circumstances.
+          to your unique needs and circumstances.</Translate>
            <br />
            <br />
-           <a href="/docs/app/general-practitioner">Check out our tutorials</a> to
+           <a href="/docs/app/general-practitioner"><Translate>Have a look at our tutorials</Translate></a> <Translate>to
            learn how to use the StudyU App as a general practitioner or participant.
-           StudyU is available as a mobile application or as a web version at: <a href="https://app.studyu.health" target="_blank">app.studyu.health</a>
+           StudyU is available as a mobile application and as a web version at</Translate> <a href="https://app.studyu.health" target="_blank">app.studyu.health</a>
             </p>
-            <a target="_blank" href='https://play.google.com/store/apps/details?id=health.studyu.app'><img alt='Get it on Google Play' src='/img/google-play-badge.png' width="150" /></a>
-            <span style={{margin: '10px'}}/>
-            <a target="_blank" href='https://apps.apple.com/us/app/studyu-health/id1571991198?itsct=apps_box_link&itscg=30200'><img alt='Apple Download' src='/img/apple-black.svg' /></a>
-              </ProductViewText>
+       <a href='https://apps.apple.com/us/app/studyu-health/id1571991198?itsct=apps_box_link&itscg=30200'><img alt='Apple Download' src='/img/apple-black.svg' /></a>
+       <span style={{margin: '10px'}}/>
+       <a href='https://play.google.com/store/apps/details?id=health.studyu.app'><img alt='Get it on Google Play' src='/img/google-play-badge.png' width="133.2" /></a>
+   </ProductViewText>
               <ProductViewGlider>
                <img src="/img/product/app/placeholder.png" alt="Screenshot of the StudyU App" />
               </ProductViewGlider>

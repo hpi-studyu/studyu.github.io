@@ -4,7 +4,7 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 3rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -19,4 +19,18 @@
   order: 2;
   height: 10em;
   padding-right: 10em;
+}
+
+@media screen and (max-width: 1250px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+
+  .buttons {
+    margin-left: 10%;
+  }
+
+  .heroLogo {
+    display: none;
+  }
 }

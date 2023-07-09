@@ -12,7 +12,7 @@
     "description": "Navbar item with label Home"
   },
   "item.label.Try it out": {
-    "message": "Loslegen",
+    "message": "Jetzt starten",
     "description": "Navbar item with label Try it out"
   },
   "item.label.About": {
@@ -42,5 +42,9 @@
   "item.label.StudyU Platform": {
     "message": "Die StudyU Plattform",
     "description": "Navbar item with label StudyU Platform"
+  },
+  "item.label.Collaborations": {
+    "message": "Collaborations",
+    "description": "Navbar item with label Collaborations"
   }
 }

@@ -65,6 +65,8 @@
   --ifm-navbar-link-color: #fff;
   --ifm-navbar-background-color: #02243e;
 
+  --ifm-heading-color: var(--ifm-color-primary);
+
   /* manuell hinzugefügt weil --ifm-hero-text-color: nicht ging */
   --ifm-font-color-base-inverse: #fff;
 }
@@ -117,7 +119,6 @@ html[data-theme='dark'] footer {
    }
   .container {
     order: 2;
-
   }
   .hero__title, .hero__subtitle {
     margin-left: 10%;
@@ -145,4 +146,8 @@ iframe {
   display: block;
   width: 100%;
   height: 500px;
+}
+
+.defaultTitle {
+  color: var( --ifm-navbar-link-color);
 }

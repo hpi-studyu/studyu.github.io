@@ -13,9 +13,10 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">N-Of-1 Trials Made Easy!</h1>
+        <h1 className={clsx("hero__title")}>N-Of-1 Trials Made Easy!</h1>
         <p className="hero__subtitle">
-			<Translate>StudyU is the only available fully&#8209;functional platform</Translate><br/><Translate>for personalized N&#8209;of&#8209;1 treatment advice.</Translate>
+			<Translate>StudyU is the only available fully&#8209;functional platform</Translate><br/>
+			<Translate>for personalized N&#8209;of&#8209;1 treatment advice.</Translate>
 		</p>
         <div className={styles.buttons}>
           <Link

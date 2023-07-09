@@ -299,5 +299,57 @@
   },
   "Join a running study": {
     "message": "Trete einer Studie bei"
+  },
+  "StudyU in collaboration with clinical studies": {
+    "message": "StudyU in Kollaboration mit klinischen Studien"
+  },
+  "The StudyU Designer is a web-based application supporting the design and implementation of digital N-of-1 trials for clinicians, researchers, or digital health enthusiasts. With its user-centric design framework, the StudyU Designer improves usability with many supportive features during the study creation process. Notably, it includes a preview function that provides a real-time visualization of the study design. Besides running private N-of-1 trials, seamless collaboration with other researchers is also supported by sharing studies, fostering collaboration and transparency in the spirit of public health and open science.": {
+    "message": "Der StudyU Designer ist eine webbasierte Anwendung, die die Gestaltung und Durchführung digitaler N-of-1-Studien für Kliniker, Forscher oder digitale Gesundheitsbegeisterte unterstützt. Mit seinem benutzerzentrierten Design-Framework verbessert der StudyU Designer die Benutzerfreundlichkeit mit vielen unterstützenden Funktionen während des Studienerstellungsprozesses. Insbesondere enthält er eine Vorschaufunktion, die eine Echtzeitvisualisierung des Studiendesigns ermöglicht. Neben der Durchführung privater N-of-1-Studien wird auch die nahtlose Zusammenarbeit mit anderen Forschern durch das Teilen von Studien unterstützt, was die Zusammenarbeit und Transparenz im Sinne der öffentlichen Gesundheit und der offenen Wissenschaft fördert."
+  },
+  "Refer to our tutorial": {
+    "message": "Lesen Sie unser Tutorial"
+  },
+  "to learn how to conduct your first digital N-of-1 trial or start designing your own study at": {
+    "message": "um zu erfahren, wie Sie Ihre erste digitale N-of-1-Studie durchführen oder beginnen Sie mit der Gestaltung Ihrer eigenen Studie unter"
+  },
+  "The StudyU App is a user-friendly application that enables individuals to actively participate in digital N-of-1 trials and obtain personalized treatment advice. Its accessible design approach accommodates users with limited technical skills, allowing them to directly measure the impact of interventions on their health outcomes. By engaging patients in the trial process, the StudyU App promotes patient empowerment and facilitates shared decision-making between researchers, clinicians, and individuals. The StudyU App leverages the capabilities of statistical computing and advanced machine learning models to identify the optimal intervention tailored specifically to your unique needs and circumstances.": {
+    "message": "Die StudyU App ist eine benutzerfreundliche Anwendung, die es Einzelpersonen ermöglicht, aktiv an digitalen N-of-1-Studien teilzunehmen und personalisierte Behandlungsempfehlungen zu erhalten. Ihr zugänglicher Designansatz ermöglicht es Benutzern mit begrenzten technischen Fähigkeiten, die Auswirkungen von Interventionen auf ihre Gesundheitsergebnisse direkt zu messen. Durch die Einbindung von Patienten in den Studienprozess fördert die StudyU App die Patientenstärkung und erleichtert die gemeinsame Entscheidungsfindung zwischen Forschern, Klinikern und Einzelpersonen. Die StudyU App nutzt die Möglichkeiten der statistischen Berechnung und fortschrittlicher Machine-Learning-Modelle, um die optimale Intervention zu identifizieren, die speziell auf Ihre individuellen Bedürfnisse und Umstände zugeschnitten ist."
+  },
+  "Have a look at our tutorials": {
+    "message": "Lesen Sie unsere Tutorials"
+  },
+  "to learn how to use the StudyU App as a general practitioner or participant. StudyU is available as a mobile application and as a web version at": {
+    "message": "um zu erfahren, wie Sie die StudyU App als Allgemeinmediziner oder Teilnehmer verwenden. StudyU ist als mobile Anwendung und als Webversion verfügbar unter"
+  },
+  "theme.IdealImageMessage.loading": {
+    "message": "Wird geladen...",
+    "description": "When the full-scale image is loading"
+  },
+  "theme.IdealImageMessage.load": {
+    "message": "Zum Laden klicken {sizeMessage}",
+    "description": "To prompt users to load the full image. sizeMessage is a parenthesized size figure."
+  },
+  "theme.IdealImageMessage.offline": {
+    "message": "Browser ist offline. Bild nicht geladen",
+    "description": "When the user is viewing an offline document"
+  },
+  "theme.IdealImageMessage.404error": {
+    "message": "404. Bild nicht gefunden.",
+    "description": "When the image is not found"
+  },
+  "theme.IdealImageMessage.error": {
+    "message": "Fehler. Zum neu laden klicken",
+    "description": "When the image fails to load for unknown error"
+  },
+  "theme.unlistedContent.title": {
+    "message": "Nicht öffentlich",
+    "description": "The unlisted content banner title"
+  },
+  "theme.unlistedContent.message": {
+    "message": "Diese Seite ist nicht öffentlich zugänglich.",
+    "description": "The unlisted content banner message"
+  },
+  "The StudyU Platform": {
+    "message": "Die StudyU Plattform"
   }
 }

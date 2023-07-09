@@ -65,6 +65,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
   ({
+  colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
     metadata: [{name: 'keywords', content: 'digital health, studyu, medical, n-of-1 trials, health, digital, study, personalized health, medical trials, randomized controlled trial'}],
     navbar: {
       title: '',
