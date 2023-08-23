@@ -1,0 +1,53 @@
+# StudyU Self-Hosting
+
+The following guide describes the necessary steps in order to deploy a self-hosted instance
+of StudyU. In case you just want to use StudyU, read on at [The StudyU Platform](docs/basics/studyu-platform).
+
+## Component Overview
+
+The StudyU application consists of the StudyU App and the StudyU Designer. The StudyU App
+allows participants to take part in N-of-1 trials created with the StudyU Designer.
+The StudyU App is available for Apple and Android smartphones, and also as a web application.
+The StudyU Designer is only available as a web-application and enables clinicians to design
+and conduct N-of-1 trials.
+
+All application data is handled by Supabase which serves as a middleware framework between
+a Postgres database and the StudyU components. Supabase is a self-hosted alternative to
+Firebase and provides API, authentication, and storage functionality. It is coupled with a
+PostgreSQL database that stores all of StudyU’s data. The data is stored persistent can and
+on-premise inside a docker volume.
+
+The connection between the user's device and Supabase is established directly between the
+user client and the Supabase reverse proxy. The reverse proxy maps the different Supabase
+components to a single port which simplifies self-hosting.
+
+## Security
+
+Access to all components requires authentication. This is done via the Supabase JWT implementation.
+Users of the StudyU Designer have to register an account (email and password) on first use and
+login before they can use the system. For the StudyU App, anonymous accounts are created
+automatically on first use and stored persistently on the user’s device. User accounts are managed
+together with the StudyU data on the local Supabase instance and do not reside elsewhere.
+Furthermore, access to all created data, including studies and participant data, is protected by
+Supabase policies. This ensures that no unauthorized access to the data is permitted.
+
+## System Requirements
+
+The StudyU and Supabase setup runs with Docker and Docker compose. Therefore, every system that
+supports the Docker Engine, will be sufficient (Linux, Windows, macOS, or other UNIX-like systems).
+Running the system on AWS with ECS should in general be possible, however, this has yet to be verified.
+For a simple setup with a restricted number of users, we recommend the following system requirements:
+
+Essential:
+-	VM with 4 core CPU and 16 GB RAM
+-	Docker installation
+
+Optional:
+-	Internet access, e.g. via reverse proxy with forwarded ports, including SSH for maintenance and HTTP or HTTPS
+-	SSL Certificates
+-	Regular Backup capabilities for Supabase (cronjob, etc.)
+
+## Get Started
+
+We have developed a StudyU CLI to help you setting up StudyU easily. The process is described in the `docker`
+directory on the [StudyU GitHub](https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md)
