@@ -9,21 +9,21 @@ of StudyU. In case you just want to use StudyU, read on at [The StudyU Platform]
 
 ## Component Overview
 
-The StudyU application consists of the StudyU App and the StudyU Designer. The StudyU App
+The StudyU application consists of the **StudyU App** and the **StudyU Designer**. The StudyU App
 allows participants to take part in N-of-1 trials created with the StudyU Designer.
 The StudyU App is available for Apple and Android smartphones, and also as a web application.
 The StudyU Designer is only available as a web-application and enables clinicians to design
 and conduct N-of-1 trials.
 
-All application data is handled by Supabase which serves as a middleware framework between
+All application data is handled by **Supabase** which serves as a middleware framework between
 a Postgres database and the StudyU components. Supabase is a self-hosted alternative to
 Firebase and provides API, authentication, and storage functionality. It is coupled with a
-PostgreSQL database that stores all of StudyU’s data. The data is stored persistent can and
+**PostgreSQL database** that stores all of StudyU’s data. The data is stored persistent can and
 on-premise inside a docker volume.
 
 The connection between the user's device and Supabase is established directly between the
-user client and the Supabase reverse proxy. The reverse proxy maps the different Supabase
-components to a single port which simplifies self-hosting.
+user client and the Supabase **reverse proxy**. The reverse proxy maps the different [Supabase
+components](https://supabase.com/docs/guides/self-hosting) to a single port which simplifies self-hosting.
 
 <CaptionWrapper caption="Overview of the components used to self-host a dockerized StudyU instance">
 <Image img={thumbnail} />
@@ -31,7 +31,7 @@ components to a single port which simplifies self-hosting.
 
 ## Security
 
-Access to all components requires authentication. This is done via the Supabase JWT implementation.
+Access to all components requires authentication. This is done via the [Supabase JWT implementation](https://supabase.com/docs/learn/auth-deep-dive/auth-deep-dive-jwts).
 Users of the StudyU Designer have to register an account (email and password) on first use and
 login before they can use the system. For the StudyU App, anonymous accounts are created
 automatically on first use and stored persistently on the user’s device. User accounts are managed
