@@ -1,7 +1,11 @@
+import Image from '@theme/IdealImage';
+import thumbnail from '/img/study_docker_infrastructure_v3.png';
+import CaptionWrapper from "@site/src/components/CaptionWrapper/CaptionWrapper";
+
 # StudyU Self-Hosting
 
 The following guide describes the necessary steps in order to deploy a self-hosted instance
-of StudyU. In case you just want to use StudyU, read on at [The StudyU Platform](docs/basics/studyu-platform).
+of StudyU. In case you just want to use StudyU, read on at [The StudyU Platform](/docs/basics/studyu-platform).
 
 ## Component Overview
 
@@ -20,6 +24,10 @@ on-premise inside a docker volume.
 The connection between the user's device and Supabase is established directly between the
 user client and the Supabase reverse proxy. The reverse proxy maps the different Supabase
 components to a single port which simplifies self-hosting.
+
+<CaptionWrapper caption="Overview of the components used to self-host a dockerized StudyU instance">
+<Image img={thumbnail} />
+</CaptionWrapper>
 
 ## Security
 
