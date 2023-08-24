@@ -29,14 +29,14 @@ process.
 <Image img={thumbnail} />
 </CaptionWrapper>
 
-## Docker Container
+### Docker Container
 
 Below is a list of all containers involved in a full setup of StudyU. We recommend using our
 [StudyU CLI](#get-started-with-the-studyu-cli) to start and
 manage your individual setup. You can read more about the different ways to run StudyU
 [here](https://github.com/hpi-studyu/studyu/tree/dev/docker#overview).
 
-### Supabase
+#### Supabase
 
 StudyU depends on Supabase as its backend, performing various important tasks to ensure the proper functioning of StudyU.
 Supabase itself is made up of different services (you can learn more about them
@@ -55,7 +55,7 @@ following containers:
 - supabase-rest
 - supabase-storage
 
-### StudyU
+#### StudyU
 
 StudyU has three containers: one for the StudyU App, one for the StudyU Designer, and a third one called studyu-proxy.
 This third container, studyu-proxy, works as a reverse proxy for web requests directed towards StudyU or Supabase.
