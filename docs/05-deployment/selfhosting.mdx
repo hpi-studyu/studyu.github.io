@@ -32,7 +32,7 @@ process.
 ## Docker Container
 
 Below is a list of all containers involved in a full setup of StudyU. We recommend using our
-[StudyU CLI](https://github.com/hpi-studyu/studyu/tree/dev/docker#quick-start-with-the-studyu-cli) to start and
+[StudyU CLI](#get-started-with-the-studyu-cli) to start and
 manage your individual setup. You can read more about the different ways to run StudyU
 [here](https://github.com/hpi-studyu/studyu/tree/dev/docker#overview).
 
@@ -40,11 +40,11 @@ manage your individual setup. You can read more about the different ways to run 
 
 StudyU depends on Supabase as its backend, performing various important tasks to ensure the proper functioning of StudyU.
 Supabase itself is made up of different services (you can learn more about them
- [here](https://supabase.com/docs/guides/self-hosting#architecture), and all of these services are
-necessary for StudyU to work correctly. Each service is managed separately in its own container. The current Supabase
-setup consists of the following containers:
+[here](https://supabase.com/docs/guides/self-hosting#architecture)). All of these services are necessary for StudyU to
+work correctly. Each service is managed separately in its own container. The current Supabase setup consists of the
+following containers:
 
-- supabase-db (the actual database, can also be run on a separate machine)
+- supabase-db (the actual database. Can also be run on a separate machine)
 - supabase-realtime
 - supabase-imgproxy
 - supabase-studio
@@ -55,7 +55,7 @@ setup consists of the following containers:
 - supabase-rest
 - supabase-storage
 
-## StudyU
+### StudyU
 
 StudyU has three containers: one for the StudyU App, one for the StudyU Designer, and a third one called studyu-proxy.
 This third container, studyu-proxy, works as a reverse proxy for web requests directed towards StudyU or Supabase.
@@ -100,15 +100,15 @@ Optional:
 - SSL Certificates (highly recommended!)
 - Regular Backup capabilities for Supabase (cronjob, etc.)
 
-## Get Started with our StudyU CLI
+## Get Started with the StudyU CLI
 
 We have developed a StudyU CLI tool to streamline the process of setting up StudyU. Since there are multiple ways how to
-setup and configure a self-hosted version of StudyU, more guidance is available in the `docker/README.txt` of the
+assemble a self-hosted version of StudyU, further guidance is available in the `docker/README.txt` file in the
 [StudyU GitHub repository](https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md).
 
 ## Quick Start
 
-1. Clone the official StudyU repository.
+1. Clone the official [StudyU repository](https://github.com/hpi-studyu/studyu).
 
 `git clone https://github.com/hpi-studyu/studyu`
 
@@ -116,7 +116,7 @@ setup and configure a self-hosted version of StudyU, more guidance is available 
 
 ~~`git checkout master`~~
 
-3. Switch to the `docker` directory inside the studyu directory.
+3. Switch to the `studyu/docker` directory.
 
 `cd studyu/docker`
 
