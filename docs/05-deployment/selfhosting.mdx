@@ -31,6 +31,11 @@ process.
 
 ## Docker Container
 
+Below is a list of all containers involved in a full setup of StudyU. We recommend using our
+[StudyU CLI](https://github.com/hpi-studyu/studyu/tree/dev/docker#quick-start-with-the-studyu-cli) to start and
+manage your individual setup. You can read more about the different ways to run StudyU
+[here](https://github.com/hpi-studyu/studyu/tree/dev/docker#overview).
+
 ### Supabase
 
 StudyU depends on Supabase as its backend, performing various important tasks to ensure the proper functioning of StudyU.
@@ -39,7 +44,7 @@ Supabase itself is made up of different services (you can learn more about them
 necessary for StudyU to work correctly. Each service is managed separately in its own container. The current Supabase
 setup consists of the following containers:
 
-- supabase-db (the actual database)
+- supabase-db (the actual database, can also be run on a separate machine)
 - supabase-realtime
 - supabase-imgproxy
 - supabase-studio
@@ -95,7 +100,30 @@ Optional:
 - SSL Certificates (highly recommended!)
 - Regular Backup capabilities for Supabase (cronjob, etc.)
 
-## Get Started
+## Get Started with our StudyU CLI
 
-We have developed a StudyU CLI tool to streamline the process of setting up StudyU. Instructions are provided in the
-`docker` directory within the [StudyU GitHub repository](https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md).
+We have developed a StudyU CLI tool to streamline the process of setting up StudyU. Since there are multiple ways how to
+setup and configure a self-hosted version of StudyU, more guidance is available in the `docker/README.txt` of the
+[StudyU GitHub repository](https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md).
+
+## Quick Start
+
+1. Clone the official StudyU repository.
+
+`git clone https://github.com/hpi-studyu/studyu`
+
+2. ~~If you want to run a productive environment, checkout the `master` branch.~~
+
+~~`git checkout master`~~
+
+3. Switch to the `docker` directory inside the studyu directory.
+
+`cd studyu/docker`
+
+4. Configure the StudyU CLI.
+
+`./studyu-cli config`
+
+5. Start your individual setup.
+
+`./studyu-cli start`
