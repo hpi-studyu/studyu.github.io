@@ -130,6 +130,11 @@ const config = {
          label: 'Publications',
          activeBaseRegex: 'docs/basics/studyu-platform',
        },
+      {
+         to: 'docs/deployment/selfhosting',
+         label: 'Deployment',
+         activeBaseRegex: 'docs/deployment/selfhosting',
+       },
        ],
       },
       {

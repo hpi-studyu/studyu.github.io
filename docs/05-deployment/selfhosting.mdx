@@ -29,6 +29,39 @@ process.
 <Image img={thumbnail} />
 </CaptionWrapper>
 
+## Docker Container
+
+### Supabase
+
+StudyU depends on Supabase as its backend, performing various important tasks to ensure the proper functioning of StudyU.
+Supabase itself is made up of different services (you can learn more about them
+ [here](https://supabase.com/docs/guides/self-hosting#architecture), and all of these services are
+necessary for StudyU to work correctly. Each service is managed separately in its own container. The current Supabase
+setup consists of the following containers:
+
+- supabase-db (the actual database)
+- supabase-realtime
+- supabase-imgproxy
+- supabase-studio
+- supabase-kong
+- supabase-auth
+- supabase-meta
+- supabase-edge-functions
+- supabase-rest
+- supabase-storage
+
+## StudyU
+
+StudyU has three containers: one for the StudyU App, one for the StudyU Designer, and a third one called studyu-proxy.
+This third container, studyu-proxy, works as a reverse proxy for web requests directed towards StudyU or Supabase.
+The studyu-proxy container is only necessary if you're planning to self-host Supabase without running the studyu-app
+or studyu-designer on the same server. Do not run studyu-app or studyu-designer concurrently with studyu-proxy.
+Here's the comprehensive list of all containers:
+
+- studyu-app
+- studyu-designer
+- studyu-proxy (acts as a reverse proxy to Supabase. Only needed if neither studyu-app nor studyu-designer are started)
+
 ## Security
 
 Access to all components requires authentication, accomplished through the
