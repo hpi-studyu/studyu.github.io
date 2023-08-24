@@ -5,7 +5,7 @@
 <meta name="generator" content="Docusaurus v0.0.0-5621">
 <title data-rh="true">StudyU Self-Hosting | StudyU - Personalized Health Interventions</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://www.studyu.health/docs/deployment/selfhosting"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="keywords" content="digital health, studyu, medical, n-of-1 trials, health, digital, study, personalized health, medical trials, randomized controlled trial"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="StudyU Self-Hosting | StudyU - Personalized Health Interventions"><meta data-rh="true" name="description" content="The following guide describes the necessary steps in order to deploy a self-hosted instance"><meta data-rh="true" property="og:description" content="The following guide describes the necessary steps in order to deploy a self-hosted instance"><link data-rh="true" rel="icon" href="/img/favicon/favicon.ico"><link data-rh="true" rel="canonical" href="https://www.studyu.health/docs/deployment/selfhosting"><link data-rh="true" rel="alternate" href="https://www.studyu.health/docs/deployment/selfhosting" hreflang="en-US"><link data-rh="true" rel="alternate" href="https://www.studyu.health/de/docs/deployment/selfhosting" hreflang="de-DE"><link data-rh="true" rel="alternate" href="https://www.studyu.health/docs/deployment/selfhosting" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/blog/rss.xml" title="StudyU - Personalized Health Interventions RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="StudyU - Personalized Health Interventions Atom Feed"><link rel="stylesheet" href="/assets/css/styles.c3493602.css">
-<script src="/assets/js/runtime~main.06a8a541.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.b9024d5d.js" defer="defer"></script>
 <script src="/assets/js/main.07255144.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -13,46 +13,48 @@
 <p>The following guide describes the necessary steps in order to deploy a self-hosted instance
 of StudyU. In case you just want to use StudyU, read on at <a href="/docs/basics/studyu-platform">The StudyU Platform</a>.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="component-overview">Component Overview<a href="#component-overview" class="hash-link" aria-label="Direct link to Component Overview" title="Direct link to Component Overview">​</a></h2>
-<p>The StudyU application consists of the <strong>StudyU App</strong> and the <strong>StudyU Designer</strong>. The StudyU App
-allows participants to take part in N-of-1 trials created with the StudyU Designer.
-The StudyU App is available for Apple and Android smartphones, and also as a web application.
-The StudyU Designer is only available as a web-application and enables clinicians to design
-and conduct N-of-1 trials.</p>
-<p>All application data is handled by <strong>Supabase</strong> which serves as a middleware framework between
-a Postgres database and the StudyU components. Supabase is a self-hosted alternative to
-Firebase and provides API, authentication, and storage functionality. It is coupled with a
-<strong>PostgreSQL database</strong> that stores all of StudyU’s data. The data is stored persistent can and
-on-premise inside a docker volume.</p>
-<p>The connection between the user&#x27;s device and Supabase is established directly between the
-user client and the Supabase <strong>reverse proxy</strong>. The reverse proxy maps the different <a href="https://supabase.com/docs/guides/self-hosting" target="_blank" rel="noopener noreferrer">Supabase
-components</a> to a single port which simplifies self-hosting.</p>
+<p>The StudyU application comprises the <strong>StudyU App</strong> and the <strong>StudyU Designer</strong>. The StudyU App enables participants to
+take part in N-of-1 trials created using the StudyU Designer. It is accessible in the main app stores, as well as
+through a web application.
+The StudyU Designer is exclusively available as a web application, facilitating clinicians in designing and conducting
+N-of-1 trials.</p>
+<p>All application data is managed by <strong>Supabase</strong>, serving as a middleware framework connecting a Postgres database with
+the StudyU components. Supabase functions as a self-hosted alternative to Firebase, offering API, authentication, and
+storage functionalities. It is linked with a <strong>PostgreSQL database</strong> that stores all of StudyU’s data. The data is
+stored persistently on-premise inside a docker volume.</p>
+<p>The connection between the user&#x27;s device and Supabase is directly established between the user client and the Supabase
+<strong>reverse proxy</strong>. This reverse proxy maps the various
+<a href="https://supabase.com/docs/guides/self-hosting" target="_blank" rel="noopener noreferrer">Supabase components</a> to a single port, simplifying the self-hosting
+process.</p>
 <figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAkUlEQVR4nE2P2QrFIAxE/f+/9LUVWq1LXdpcTiDlBgbFySy61pqAOafc9y29dznPU1JKwrzvq3Dbton3XpdyznqWUhTP8+gy4yBxgIgxqjtvtVYZY6iQNGeKtZYCkijcEO77LsdxiMPpuq5vCdgdJ6AdiQ0h6CcQ/HdE8HWExNq64sAQjZP93FkcwNUirast/gCZ3jhYZRqHqgAAAABJRU5ErkJggg==&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="2406" height="1923"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/assets/ideal-img/study_docker_infrastructure_v3.44e4959.2406.png" srcset="/assets/ideal-img/study_docker_infrastructure_v3.44e4959.2406.png 2406w" width="2406" height="1923"></noscript></div><figcaption class="figcaption_pIkn">Overview of the components used to self-host a dockerized StudyU instance</figcaption></figure>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="security">Security<a href="#security" class="hash-link" aria-label="Direct link to Security" title="Direct link to Security">​</a></h2>
-<p>Access to all components requires authentication. This is done via the <a href="https://supabase.com/docs/learn/auth-deep-dive/auth-deep-dive-jwts" target="_blank" rel="noopener noreferrer">Supabase JWT implementation</a>.
-Users of the StudyU Designer have to register an account (email and password) on first use and
-login before they can use the system. For the StudyU App, anonymous accounts are created
-automatically on first use and stored persistently on the user’s device. User accounts are managed
-together with the StudyU data on the local Supabase instance and do not reside elsewhere.
-Furthermore, access to all created data, including studies and participant data, is protected by
-Supabase policies. This ensures that no unauthorized access to the data is permitted.</p>
+<p>Access to all components requires authentication, accomplished through the
+<a href="https://supabase.com/docs/learn/auth-deep-dive/auth-deep-dive-jwts" target="_blank" rel="noopener noreferrer">Supabase JWT implementation</a>. Users of the StudyU
+Designer are required to register an account (using an email and password) upon their initial usage, and subsequently,
+log in before being able to utilize the system.</p>
+<p>In the case of the StudyU App, anonymous accounts are automatically generated upon first usage and are persistently
+stored on the user’s device. User accounts are collectively managed alongside the StudyU data on the local Supabase
+instance and are not stored elsewhere.</p>
+<p>Moreover, access to all generated data, including studies and participant information, is safeguarded by Supabase
+postgres policies. The policies ensures that no unauthorized access to the data can happen.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="system-requirements">System Requirements<a href="#system-requirements" class="hash-link" aria-label="Direct link to System Requirements" title="Direct link to System Requirements">​</a></h2>
-<p>The StudyU and Supabase setup runs with Docker and Docker compose. Therefore, every system that
-supports the Docker Engine, will be sufficient (Linux, Windows, macOS, or other UNIX-like systems).
-Running the system on AWS with ECS should in general be possible, however, this has yet to be verified.
-For a simple setup with a restricted number of users, we recommend the following system requirements:</p>
+<p>The StudyU and Supabase setup runs with <code>Docker</code> and <code>Docker Compose</code>. Consequently, any system supporting the Docker
+Engine will be sufficient (Linux, Windows, macOS, or other UNIX-like systems). Running the system on AWS with ECS should
+be possible in general, however, this has yet to be verified.</p>
+<p>For a setup with a limited number of users, we recommend the following system requirements:</p>
 <p>Essential:</p>
 <ul>
-<li>VM with 4 core CPU and 16 GB RAM</li>
+<li>VM with a 4-core CPU and 16 GB RAM</li>
 <li>Docker installation</li>
 </ul>
 <p>Optional:</p>
 <ul>
 <li>Internet access, e.g. via reverse proxy with forwarded ports, including SSH for maintenance and HTTP or HTTPS</li>
-<li>SSL Certificates</li>
+<li>SSL Certificates (highly recommended!)</li>
 <li>Regular Backup capabilities for Supabase (cronjob, etc.)</li>
 </ul>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="get-started">Get Started<a href="#get-started" class="hash-link" aria-label="Direct link to Get Started" title="Direct link to Get Started">​</a></h2>
-<p>We have developed a StudyU CLI to help you setting up StudyU easily. The process is described in the <code>docker</code>
-directory on the <a href="https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md" target="_blank" rel="noopener noreferrer">StudyU GitHub</a></p></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/category/deployment"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Deployment</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/category/development"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Development</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#component-overview" class="table-of-contents__link toc-highlight">Component Overview</a></li><li><a href="#security" class="table-of-contents__link toc-highlight">Security</a></li><li><a href="#system-requirements" class="table-of-contents__link toc-highlight">System Requirements</a></li><li><a href="#get-started" class="table-of-contents__link toc-highlight">Get Started</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/overview">How to use StudyU</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://hpi.de/lippert/projects/studyu.html" target="_blank" rel="noopener noreferrer" class="footer__link-item">StudyU @ HPI<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/blog">Blog</a></li><li class="footer__item"><a href="https://github.com/hpi-studyu/studyu" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">Legal</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/tos">Terms Of Use</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy">Privacy</a></li><li class="footer__item"><a class="footer__link-item" href="/imprint">Imprint</a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 StudyU</div></div></div></footer></div>
+<p>We have developed a StudyU CLI tool to streamline the process of setting up StudyU. Instructions are provided in the
+<code>docker</code> directory within the <a href="https://github.com/hpi-studyu/studyu/blob/dev/docker/README.md" target="_blank" rel="noopener noreferrer">StudyU GitHub repository</a>.</p></div></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/docs/category/deployment"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Deployment</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/docs/category/development"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Development</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#component-overview" class="table-of-contents__link toc-highlight">Component Overview</a></li><li><a href="#security" class="table-of-contents__link toc-highlight">Security</a></li><li><a href="#system-requirements" class="table-of-contents__link toc-highlight">System Requirements</a></li><li><a href="#get-started" class="table-of-contents__link toc-highlight">Get Started</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/docs/overview">How to use StudyU</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://hpi.de/lippert/projects/studyu.html" target="_blank" rel="noopener noreferrer" class="footer__link-item">StudyU @ HPI<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/blog">Blog</a></li><li class="footer__item"><a href="https://github.com/hpi-studyu/studyu" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">Legal</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/tos">Terms Of Use</a></li><li class="footer__item"><a class="footer__link-item" href="/privacy">Privacy</a></li><li class="footer__item"><a class="footer__link-item" href="/imprint">Imprint</a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2023 StudyU</div></div></div></footer></div>
 </body>
 </html>
