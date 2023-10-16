@@ -43,11 +43,7 @@ More information about the study is available in the open access paper: [Study p
 
 For the successful execution of a digital N-of-1 study, supportive and patient-friendly tools are essential. Due to the
 unique nature of N-of-1 trials and their special requirements, the N-of-trial tailored platform **StudyU** served as a
-particularly helpful instrument during the implementation of the FAB-Study:
-
-"The new StudyU platform greatly supported the FAB-Study, by serving as an easy-to-use and cost-effective therapeutic
-tool for us. Working with StudyU proved to be a pleasant experience for both the researchers and our patients. We will
-definitely consider using StudyU for future N-of-1 studies", said study author Amke Müller.
+particularly helpful instrument during the implementation of the FAB-Study.
 
 ## Promising Potential
 
