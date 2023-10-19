@@ -8,8 +8,7 @@ hide_table_of_contents: true
 
 ### Persons responsible for content
 
-Dr. Stefan Konigorski, Sarah Wernicke M.Sc., Tamara Slosarek M.Sc., Prof. Dr. Erwin
-Böttinger
+Dr. Stefan Konigorski
 
 **Digital Health Cluster**  
 **Hasso Plattner Institute for Digital Engineering gGmbH**  
