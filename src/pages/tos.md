@@ -9,7 +9,7 @@ hide_table_of_contents: true
 ## StudyU App
 
 The StudyU app and accompanying legal information are available in English and German. In case you
-have any questions please reach out to us via the contact information in the imprint.
+have any questions please reach out to us via the contact information in the legal notice.
 
 ### 1. Purpose
 
@@ -46,7 +46,7 @@ Downloading and using the StudyU app is free of charge, however, this might chan
 ## StudyU Designer
 
 The StudyU designer and accompanying legal information are available in English and German. In case
-you have any questions please reach out to us via the contact information in the imprint.
+you have any questions please reach out to us via the contact information in the legal notice.
 
 ### 1 Purpose
 

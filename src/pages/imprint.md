@@ -1,17 +1,17 @@
 ---
-title: Imprint
-description: The StudyU Imprint
+title: Legal Notice
+description: The StudyU Legal Notice
 hide_table_of_contents: true
 ---
 
-# Imprint
+# Legal Notice
 
 ### Persons responsible for content
 
 Dr. Stefan Konigorski, Sarah Wernicke M.Sc., Tamara Slosarek M.Sc., Prof. Dr. Erwin
 Böttinger
 
-**Digital Health Center**  
+**Digital Health Cluster**  
 **Hasso Plattner Institute for Digital Engineering gGmbH**  
 Prof.-Dr.-Helmert-Str. 2-3  
 14482 Potsdam  

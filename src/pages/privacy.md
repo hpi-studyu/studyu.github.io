@@ -57,7 +57,7 @@ the [iCloud data security overview](https://support.apple.com/en-us/HT202303) fo
 
 ### Who has access to the data in which way?
 
-Only the StudyU development team (see imprint) has direct read and write rights to the backend. The
+Only the StudyU development team (see legal notice) has direct read and write rights to the backend. The
 study participation data, i.e., intervention and observation data, can be downloaded by researchers
 via the StudyU designer website. The researcher can define access and downloading rights of the
 study, which is then described in the consent part of the app where you can read it. The access can
@@ -72,7 +72,7 @@ retrospectively. Via the StudyU app settings you can delete all your data, i.e.,
 and session data, or opt-out of the current study, which only deletes the study data of the current
 study. However, if researchers already downloaded the participation data in CSV format, this data
 cannot be deleted by us. In case you have any questions or concerns please contact us. You can find
-our contact information in the imprint.
+our contact information in the legal notice.
 
 ## StudyU Designer
 
@@ -106,7 +106,7 @@ designer – is created and sent to the user’s device.
 
 ### Who has access to the data in which way?
 
-Only the StudyU development team (see imprint) has direct read and write rights to the backend.
+Only the StudyU development team (see legal notice) has direct read and write rights to the backend.
 Users who participate in published studies can view the entered information. The access to the
 information you published with the StudyU designer can be restricted. You can decide whether to give
 access to everyone or only to invited participants. In addition, you can publish the study design
@@ -119,5 +119,5 @@ You can view all data on the StudyU designer website. You can edit and delete dr
 StudyU designer. When studies are published, you cannot edit or delete them anymore. When a
 published study is conducted by users, all study information present at the time of publishing is
 accessible to them. If studies are published, only the development team can edit or delete them.
-Please refer to the contact information given in the imprint. The development team can only edit and
+Please refer to the contact information given in the legal notice. The development team can only edit and
 delete data from the backend, not what was downloaded and stored by participants.

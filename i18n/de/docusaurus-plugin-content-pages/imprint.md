@@ -11,7 +11,7 @@ Dr. Stefan Konigorski, Sarah Wernicke M.Sc., Tamara Slosarek M.Sc., Prof. Dr. Er
 Böttinger
 
 
-**Digital Health Center**  
+**Digital Health Cluster**  
 **Hasso Plattner Institut für Digital Engineering gGmbH**  
 Prof.-Dr.-Helmert-Str. 2-3  
 14482 Potsdam  

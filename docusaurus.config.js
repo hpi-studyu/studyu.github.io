@@ -210,7 +210,7 @@ const config = {
           to: '/privacy',
         },
         {
-          label: 'Imprint',
+          label: 'Legal Notice',
           href: '/imprint',
         },
         ],
