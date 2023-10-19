@@ -16,7 +16,7 @@ Prof.-Dr.-Helmert-Str. 2-3
 14482 Potsdam  
 Phone: +49 (0) 331 5509-4844  
 Fax: +49 (0) 331 5509-129  
-Email: stefan.konigorski@hpi.de, erwin.boettinger@hpi.de  
+Email: stefan.konigorski@hpi.de
 Website: www.hpi.de  
 Authorized Representative Managing Directors: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich,
 Dr. Marcus Kölling  
