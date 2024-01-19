@@ -67,19 +67,24 @@ export default function HomepageFeatures() {
         </div>
       </div>
     </section>
-            <section>
-                  <h2><div className={styles.sectiontitle}><Translate>StudyU in collaboration with clinical studies</Translate></div></h2>
-                    <a href="/docs/basics/studies">
-                      <div className={styles.wrapper}>
-                        <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy" />
-                        <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
-                        <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy" />
-                        <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
-                        <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
-                      </div>
-                    </a>
-                  </section>
     <ProductView />
+    <section>
+          <h2><div className={styles.sectiontitle}><Translate>StudyU in collaboration with clinical studies</Translate></div></h2>
+            <a href="/docs/basics/studies">
+              <div className={styles.wrapper}>
+                <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy" />
+                <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
+                <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy" />
+                <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
+                <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
+              </div>
+              <div className={styles.wrapper}>
+                <img src="/img/partner/charite.svg" alt="Charité" loading="lazy" />
+                <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy" />
+                <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy" />
+              </div>
+            </a>
+          </section>
     </div>
   );
 }
