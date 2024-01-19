@@ -21,15 +21,16 @@
   font-family: 'Open Sans';
   --ifm-font-family-base: 'Open Sans', sans-serif;
 
-  --ifm-color-primary: #105c85;
-  --ifm-color-primary-dark: #0e5378;
-  --ifm-color-primary-darker: #0e4e71;
-  --ifm-color-primary-darkest: #0b405d;
-  --ifm-color-primary-light: #126592;
-  --ifm-color-primary-lighter: #126a99;
-  --ifm-color-primary-lightest: #1578ad;
+  /* https://maketintsandshades.com/#359de9 */
+  --ifm-color-primary: #359de9;
+  --ifm-color-primary-dark: #308dd2;
+  --ifm-color-primary-darker: #2a7eba;
+  --ifm-color-primary-darkest: #256ea3;
+  --ifm-color-primary-light: #49a7eb;
+  --ifm-color-primary-lighter: #5db1ed;
+  --ifm-color-primary-lightest: #72baf0;
 
-  --ifm-heading-color: var(--ifm-navbar-link-color);
+  --ifm-heading-color: var(--ifm-color-primary-darkest);
 
   --ifm-font-color-base-inverse: #000;
 
