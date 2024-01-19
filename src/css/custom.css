@@ -30,12 +30,12 @@
   --ifm-color-primary-lighter: #5db1ed;
   --ifm-color-primary-lightest: #72baf0;
 
-  --ifm-heading-color: var(--ifm-color-primary-darkest);
+  --ifm-heading-color: var(--ifm-color-primary-darker);
 
   --ifm-font-color-base-inverse: #000;
 
   --ifm-navbar-link-color: #000;
-  --ifm-link-color: var(--ifm-color-primary);
+  --ifm-link-color: var(--ifm-color-primary-darker);
   --ifm-navbar-link-hover-color: #1dbcdd;
 
   /*--ifm-color-primary-light: #78effb;
