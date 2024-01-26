@@ -76,9 +76,9 @@ export default function HomepageFeatures() {
                 <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
                 <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy" />
                 <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
-                <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
               </div>
               <div className={styles.wrapper}>
+                <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
                 <img src="/img/partner/charite.svg" alt="Charité" loading="lazy" />
                 <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy" />
                 <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy" />
