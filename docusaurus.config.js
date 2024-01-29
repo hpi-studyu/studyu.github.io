@@ -13,7 +13,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: '/img/favicon/favicon.ico',
+  favicon: '/img/icon.png',
 
   // GitHub Pages Deployment
   projectName: 'docs',
@@ -75,7 +75,7 @@ const config = {
       title: '',
       logo: {
         alt: 'StudyU Logo',
-        src: 'img/icon_wide.png',
+        src: 'img/logo.png',
       },
       items: [
       {

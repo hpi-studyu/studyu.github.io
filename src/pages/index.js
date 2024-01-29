@@ -31,7 +31,7 @@ function HomepageHeader() {
           </Link>
         </div>
       </div>
-	  <img src={'/img/icon_wide.png'} className={clsx('', styles.heroLogo)} alt="StudyU Logo" />
+	  <img src={'/img/logo.png'} className={clsx('', styles.heroLogo)} alt="StudyU Logo" />
     </header>
   );
 }
