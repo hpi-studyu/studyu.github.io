@@ -30,7 +30,13 @@ at [app.studyu.health](https://app.studyu.health).
 - Konigorski S, Wernicke S, Slosarek T, Zenner AM, Strelow N, Ruether FD, Henschel F, Manaswini M,
   Pottbäcker F, Edelman JA, Owoyele B, Danieletto M, Golden E, Zweig M, Nadkarni G, Böttinger E (
   2022). StudyU: a platform for designing and conducting innovative digital N-of-1 trials. J Med
-  Internet Research 24(6): e35884. https://doi.org/10.2196/35884.
+  Internet Research 24(6): e35884. [https://doi.org/10.2196/35884](https://doi.org/10.2196/35884).
+- Müller, A., Konigorski, S., Meißner, C. et al. Study protocol: combined N-of-1 trials to assess 
+  open-label placebo treatment for antidepressant discontinuation symptoms [FAB-study]. BMC 
+  Psychiatry 23, 749 (2023). [https://doi.org/10.1186/s12888-023-05184-y](https://doi.org/10.1186/s12888-023-05184-y).
+- Fu, J., Liu, S., Du, S., Ruan, S., Guo, X., Pan, W., Sharma, A., & Konigorski, S. (2023).
+  Multimodal N-of-1 trials: A Novel Personalized Healthcare Design. ArXiv, abs/2302.07547.
+  [https://arxiv.org/abs/2302.07547](https://arxiv.org/abs/2302.07547)
 
 ## Related
 
