@@ -67,7 +67,7 @@ html[data-theme='dark'] .wrapper img {
 /* Partner End */
 
 .productView {
-margin-top: 3em;
+margin-top: 6em;
 }
 
 .parent {
@@ -97,4 +97,28 @@ margin-top: 3em;
     padding-right: 0em;
     margin-top: 2em;
   }
+}
+
+/* Blog posts */
+
+.blogPosts {
+  margin-top: 6em;
+}
+
+.blogCard {
+  /*min-height: 50rem;*/
+  background-color: var(--ifm-background-color) !important;
+  color: var(--ifm-font-color-base-inverse) !important;
+}
+
+[data-theme='dark'] .blogCard {
+  border: 1px solid white;
+}
+
+.cardHeader {
+  color: var(--ifm-link-color);
+}
+
+.cardSubheader {
+  color: var(--ifm-font-color-base-inverse) !important;
 }

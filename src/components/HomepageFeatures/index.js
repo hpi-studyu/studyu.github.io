@@ -1,11 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
-
 import Glider from 'react-glider';
 import 'glider-js/glider.min.css';
-
 import Translate, {translate} from '@docusaurus/Translate';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import CardHeader from '@mui/material/CardHeader';
+import Masonry from '@mui/lab/Masonry';
+import Link from '@docusaurus/Link';
 
 const FeatureList = [
   {
@@ -55,53 +59,98 @@ function Feature({Svg, title, description}) {
   );
 }
 
-export default function HomepageFeatures() {
+export default function HomepageFeatures({ recentPosts }) {
   return (
-  <div>
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
-      </div>
-    </section>
-    <ProductView />
-    <section>
-          <h2><div className={styles.sectiontitle}><Translate>StudyU in collaboration with clinical studies</Translate></div></h2>
-            <a href="/docs/basics/studies">
-              <div className={styles.wrapper}>
-                <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy" />
-                <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy" />
-                <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy" />
-                <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy" />
+      <div>
+          <section className={styles.features}>
+              <div className="container">
+                  <div className="row">
+                      {FeatureList.map((props, idx) => (
+                          <Feature key={idx} {...props} />
+                      ))}
+                  </div>
               </div>
-              <div className={styles.wrapper}>
-                <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf" loading="lazy" />
-                <img src="/img/partner/charite.svg" alt="Charité" loading="lazy" />
-                <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy" />
-                <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy" />
-              </div>
-            </a>
           </section>
-    </div>
+          <ProductView/>
+          <section>
+              <h2>
+                  <div className={styles.sectiontitle}><Translate>StudyU in collaboration with clinical
+                      studies</Translate></div>
+              </h2>
+              <a href="/docs/basics/studies">
+                  <div className={styles.wrapper}>
+                      <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy"/>
+                      <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy"/>
+                      <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy"/>
+                      <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy"/>
+                  </div>
+                  <div className={styles.wrapper}>
+                      <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf"
+                           loading="lazy"/>
+                      <img src="/img/partner/charite.svg" alt="Charité" loading="lazy"/>
+                      <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy"/>
+                      <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy"/>
+                  </div>
+              </a>
+          </section>
+          <section className={styles.blogPosts}>
+              <h2 style={{textAlign: 'center'}}>Recent Blog Posts</h2>
+              <Masonry
+                  sx={{ width: "auto", paddingLeft: "5em", paddingRight: "5em" }}
+                  columns={3}
+                  spacing={3}
+                  sequential
+              >
+                  {recentPosts.map((recentPost, index) => (
+                      <div xs={12} sm={6} md={4} key={index}>
+                          <RecentBlogPostCard key={index} recentPost={recentPost}/>
+                      </div>
+                  ))}
+              </Masonry>
+          </section>
+      </div>
   );
+}
+
+function RecentBlogPostCard({ recentPost }) {
+    const { BlogPost } = recentPost;
+    console.log(recentPost);
+    return (
+        /* <img src={recentPost.metadata.frontMatter.image} alt={recentPost.metadata.title} /> */
+        <section>
+            <Card className={styles.blogCard}>
+                <CardHeader
+                    title={recentPost.metadata.title}
+                    subheader={recentPost.metadata.formattedDate}
+                    subheaderTypographyProps={{ className: styles.cardSubheader}}
+                    className={styles.cardHeader}
+                />
+                <CardContent>
+                    <BlogPost />
+                    <Link to={recentPost.metadata.permalink}>Read more</Link>
+                </CardContent>
+            </Card>
+        </section>
+    );
 }
 
 export function ProductView({children}) {
     return (
         <section className={styles.productView}>
-        <h2><div className={styles.sectiontitle}><Translate>The StudyU Platform</Translate></div></h2>
-        <div className={["container", styles.container].join(" ")}>
+            <h2>
+                <div className={styles.sectiontitle}><Translate>The StudyU Platform</Translate></div>
+            </h2>
+            <div className={["container", styles.container].join(" ")}>
 
-          <ProductViewItem>
-          <ProductViewText>
-          <h3>StudyU Designer</h3>
-              <p>
-              <Translate>The StudyU Designer is a web-based application supporting the design and implementation of
-              digital N-of-1 trials for clinicians, researchers, or digital health enthusiasts. With its
-              user-centric design framework, the StudyU Designer improves usability with many supportive
+                <ProductViewItem>
+                    <ProductViewText>
+                        <h3>StudyU Designer</h3>
+                        <p>
+                            <Translate>The StudyU Designer is a web-based application supporting the design and
+                                implementation of
+                                digital N-of-1 trials for clinicians, researchers, or digital health enthusiasts. With
+                                its
+                                user-centric design framework, the StudyU Designer improves usability with many supportive
               features during the study creation process. Notably, it includes a preview function that
               provides a real-time visualization of the study design. Besides running private N-of-1
               trials, seamless collaboration with other researchers is also supported by sharing studies,

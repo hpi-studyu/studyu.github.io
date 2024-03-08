@@ -3,9 +3,9 @@ slug: anti-stress-study-among-physicians
 title: Innovative Anti-Stress Study among Physicians at Charité
 ---
 
-We are pleased to announce that the "Anti-Stress Intervention Among Physicians
-(ASIP)" Study utilizes StudyU to investigate the following intriguing and
-pertinent research question:
+The "Anti-Stress Intervention Among Physicians (ASIP)" Study utilizes
+StudyU to investigate the following intriguing and pertinent research 
+question:
 
 >How can the everyday level of perceived stress be reduced in a fast and
 >easy-to-implement manner?
@@ -13,6 +13,8 @@ pertinent research question:
 The project will be conducted in cooperation with the [Institute for Public
 Health at Charité](https://iph.charite.de/en/) – Universitätsmedizin Berlin
 (Principal Investigator: Dr. med. Valentin Vetter).
+
+<!-- truncate -->
 
 ## Background
 

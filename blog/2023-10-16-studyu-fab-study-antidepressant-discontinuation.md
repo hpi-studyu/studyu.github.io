@@ -9,7 +9,7 @@ was published in cooperation with [Universitätsklinikum Hamburg-Eppendorf](http
 both of them based in Germany.
 
 Let us have a deeper look into the content of this innovative study and what this achievement means for StudyU.
-
+<!-- truncate -->
 ## Unlocking the Power of N-of-1 Trials with StudyU
 
 **StudyU** is a novel platform leading the way in the digital transformation of N-of-1 trials, the gold standard for

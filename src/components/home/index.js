@@ -36,15 +36,17 @@ function HomepageHeader() {
   );
 }
 
-export default function Home() {
+export default function Home({ recentPosts }) {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
       /*title={`${siteConfig.title}`}*/
+        /*className={classes.gridContainer}*/
+
       description={`${siteConfig.tagline}`}>
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+          <HomepageFeatures recentPosts={recentPosts} />
       </main>
     </Layout>
   );
