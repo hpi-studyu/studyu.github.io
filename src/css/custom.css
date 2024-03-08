@@ -152,3 +152,9 @@ iframe {
 .defaultTitle {
   color: var( --ifm-navbar-link-color);
 }
+
+.collab-preview-img {
+  padding: 1rem;
+  background-color: white;
+  width: 20rem;
+}
