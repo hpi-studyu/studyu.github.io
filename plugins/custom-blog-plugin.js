@@ -46,6 +46,22 @@ async function blogPluginExtended(...pluginArgs) {
 
             actions.addRoute({
                 // Add route for the home page
+                path: '/de/',
+                exact: true,
+
+                // The component to use for the "Home" page route
+                component: '@site/src/components/home/index.js',
+
+                // These are the props that will be passed to our "Home" page component
+                modules: {
+                    recentPosts: await Promise.all(
+                        recentPosts.map(createRecentPostModule)
+                    ),
+                },
+            });
+
+            actions.addRoute({
+                // Add route for the home page
                 path: '/',
                 exact: true,
 
