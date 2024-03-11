@@ -78,12 +78,13 @@ margin-top: 6em;
   }
   .item {
     width: auto;
+    padding: 2em;
   }
   .last {
     width: auto;
   }
   .productText {
-    padding-right: 0em;
+    padding-right: 0;
     margin-top: 2em;
   }
 }
