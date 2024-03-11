@@ -303,6 +303,9 @@
   "StudyU in collaboration with clinical studies": {
     "message": "StudyU in Kollaboration mit klinischen Studien"
   },
+  "Recent Blog Posts": {
+    "message": "News"
+  },
   "The StudyU Designer is a web-based application supporting the design and implementation of digital N-of-1 trials for clinicians, researchers, or digital health enthusiasts. With its user-centric design framework, the StudyU Designer improves usability with many supportive features during the study creation process. Notably, it includes a preview function that provides a real-time visualization of the study design. Besides running private N-of-1 trials, seamless collaboration with other researchers is also supported by sharing studies, fostering collaboration and transparency in the spirit of public health and open science.": {
     "message": "Der StudyU Designer ist eine webbasierte Anwendung, die die Gestaltung und Durchführung digitaler N-of-1-Studien für Kliniker, Forscher oder digitale Gesundheitsbegeisterte unterstützt. Mit seinem benutzerzentrierten Design-Framework verbessert der StudyU Designer die Benutzerfreundlichkeit mit vielen unterstützenden Funktionen während des Studienerstellungsprozesses. Insbesondere enthält er eine Vorschaufunktion, die eine Echtzeitvisualisierung des Studiendesigns ermöglicht. Neben der Durchführung privater N-of-1-Studien wird auch die nahtlose Zusammenarbeit mit anderen Forschern durch das Teilen von Studien unterstützt, was die Zusammenarbeit und Transparenz im Sinne der öffentlichen Gesundheit und der offenen Wissenschaft fördert."
   },

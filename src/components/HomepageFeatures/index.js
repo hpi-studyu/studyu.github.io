@@ -129,7 +129,7 @@ export default function HomepageFeatures({ recentPosts }) {
               </a>
           </section>
           <section className={styles.blogPosts}>
-          <h2 className={styles.sectiontitle}>Recent Blog Posts</h2>
+              <h2 className={styles.sectiontitle}><Translate>Recent Blog Posts</Translate></h2>
               <ResponsiveMasonry
                   style={{marginLeft: "3em", marginRight: "3em"}}
                   columnsCountBreakPoints={{500: 1, 800: 2, 1250: 3}}
