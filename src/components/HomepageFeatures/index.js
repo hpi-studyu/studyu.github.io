@@ -7,8 +7,9 @@ import Translate, {translate} from '@docusaurus/Translate';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
+import Item from '@mui/material/Grid';
 import CardHeader from '@mui/material/CardHeader';
-import Masonry from '@mui/lab/Masonry';
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Link from '@docusaurus/Link';
 
 const FeatureList = [
@@ -94,26 +95,28 @@ export default function HomepageFeatures({ recentPosts }) {
               </a>
           </section>
           <section className={styles.blogPosts}>
-              <h2 style={{textAlign: 'center'}}>Recent Blog Posts</h2>
-              <Masonry
-                  sx={{ width: "auto", paddingLeft: "5em", paddingRight: "5em" }}
-                  columns={3}
-                  spacing={3}
-                  sequential
+          <h2 className={styles.sectiontitle}>Recent Blog Posts</h2>
+              <ResponsiveMasonry
+                  style={{marginLeft: "3em", marginRight: "3em"}}
+                  columnsCountBreakPoints={{500: 1, 800: 2, 1250: 3}}
               >
-                  {recentPosts.map((recentPost, index) => (
-                      <div xs={12} sm={6} md={4} key={index}>
-                          <RecentBlogPostCard key={index} recentPost={recentPost}/>
-                      </div>
-                  ))}
-              </Masonry>
+              <Masonry
+                      gutter="1em"
+                  >
+                      {recentPosts.map((recentPost, index) => (
+                        <RecentBlogPostCard key={index} recentPost={recentPost}/>
+                      ))}
+                  </Masonry>
+              </ResponsiveMasonry>
           </section>
       </div>
-  );
+);
 }
 
-function RecentBlogPostCard({ recentPost }) {
-    const { BlogPost } = recentPost;
+function RecentBlogPostCard({
+    recentPost
+}) {
+    const {BlogPost} = recentPost;
     console.log(recentPost);
     return (
         /* <img src={recentPost.metadata.frontMatter.image} alt={recentPost.metadata.title} /> */
