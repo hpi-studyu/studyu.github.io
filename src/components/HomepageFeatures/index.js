@@ -7,7 +7,6 @@ import Translate, {translate} from '@docusaurus/Translate';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
-import Item from '@mui/material/Grid';
 import CardHeader from '@mui/material/CardHeader';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Link from '@docusaurus/Link';
@@ -79,19 +78,54 @@ export default function HomepageFeatures({ recentPosts }) {
                       studies</Translate></div>
               </h2>
               <a href="/docs/basics/studies">
-                  <div className={styles.wrapper}>
-                      <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy"/>
-                      <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy"/>
-                      <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy"/>
-                      <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy"/>
-                  </div>
-                  <div className={styles.wrapper}>
-                      <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf"
-                           loading="lazy"/>
-                      <img src="/img/partner/charite.svg" alt="Charité" loading="lazy"/>
-                      <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy"/>
-                      <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy"/>
-                  </div>
+                  <Grid
+                      container
+                      direction="row"
+                      rowSpacing={8}
+                      className={styles.partnerGrid}
+                  >
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf"
+                                    loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/charite.svg" alt="Charité" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy"/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
+                              align="center"
+                        >
+                            <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy"/>
+                        </Grid>
+                    </Grid>
               </a>
           </section>
           <section className={styles.blogPosts}>
@@ -198,7 +232,6 @@ export function ProductView({children}) {
                <img src="/img/product/app/placeholder.png" alt="Screenshot of the StudyU App" />
               </ProductViewGlider>
           </ProductViewItem>
-
         </div>
         </section>
     );
