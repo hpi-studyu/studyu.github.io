@@ -43,7 +43,7 @@ html[data-theme='dark'] .featureSvg {
 }
 
 .partnerItem img {
-  max-height: 10em;
+  height: 10em;
   width: auto;
   padding: 1em;
 }
