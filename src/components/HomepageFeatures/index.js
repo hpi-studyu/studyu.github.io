@@ -141,7 +141,7 @@ function RecentBlogPostCard({
         <section>
             <Card className={styles.blogCard}>
                 <CardHeader
-                    title={recentPost.metadata.title}
+                    title=<Link to={recentPost.metadata.permalink}>{recentPost.metadata.title}</Link>
                     subheader={recentPost.metadata.formattedDate}
                     subheaderTypographyProps={{ className: styles.cardSubheader}}
                     className={styles.cardHeader}
