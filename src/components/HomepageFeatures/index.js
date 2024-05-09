@@ -60,6 +60,18 @@ function Feature({Svg, title, description}) {
 }
 
 export default function HomepageFeatures({ recentPosts }) {
+    const partners = [
+        { src: "/img/partner/hpims.svg", alt: "HPI Mount Sinai" },
+        { src: "/img/partner/mount_sinai.svg", alt: "Mount Sinai" },
+        { src: "/img/partner/weill_cornell.svg", alt: "Weill Cornell" },
+        { src: "/img/partner/university_queensland.svg", alt: "University of Queensland" },
+        { src: "/img/partner/uk_eppendorf.svg", alt: "Universitätsklinikum Hamburg-Eppendorf" },
+        { src: "/img/partner/charite.svg", alt: "Charité" },
+        { src: "/img/partner/uniklinik_wuerzburg.svg", alt: "Uniklinikum Würzburg" },
+        { src: "/img/partner/rbk.svg", alt: "Robert-Bosch-Krankenhaus Stuttgart" },
+        { src: "/img/partner/ghana_health_uni.png", alt: "University of Health and Allied Sciences, Ghana" }
+    ];
+
   return (
       <div>
           <section className={styles.features}>
@@ -78,54 +90,26 @@ export default function HomepageFeatures({ recentPosts }) {
                       studies</Translate></div>
               </h2>
               <a href="/docs/basics/studies">
-                  <Grid
-                      container
-                      direction="row"
-                      rowSpacing={8}
-                      className={styles.partnerGrid}
-                  >
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
+                <Grid
+                    container
+                    direction="row"
+                    rowSpacing={4}
+                    className={styles.partnerGrid}
+                >
+                    {partners.map((partner, index) => (
+                        <Grid
+                            key={index}
+                            item
+                            xs={4}
+                            sm={3}
+                            md={2}
+                            className={styles.partnerItem}
+                            align="center"
                         >
-                            <img src="/img/partner/hpims.svg" alt="HPI Mount Sinai" loading="lazy"/>
+                            <img src={partner.src} alt={partner.alt} loading="lazy" />
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/mount_sinai.svg" alt="Mount Sinai" loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/weill_cornell.svg" alt="Weill Cornell" loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/university_queensland.svg" alt="University of Queensland" loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/uk_eppendorf.svg" alt="Universitätsklinikum Hamburg-Eppendorf"
-                                    loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/charite.svg" alt="Charité" loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/uniklinik_wuerzburg.svg" alt="Uniklinikum Würzburg" loading="lazy"/>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={3} className={styles.partnerItem}
-                              align="center"
-                        >
-                            <img src="/img/partner/rbk.svg" alt="Robert-Bosch-Krankenhaus Stuttgart" loading="lazy"/>
-                        </Grid>
-                    </Grid>
+                    ))}
+                </Grid>
               </a>
           </section>
           <section className={styles.blogPosts}>

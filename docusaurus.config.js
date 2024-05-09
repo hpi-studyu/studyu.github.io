@@ -146,6 +146,7 @@ const config = {
         activeBaseRegex: 'docs/basics/studies',
       },
       {to: '/blog', label: 'Blog', position: 'left'},
+      {to: '/contact', label: 'Contact', position: 'left'},
       /*{
         label: 'StudyU App',
         href: 'https://app.studyu.health',
@@ -227,7 +228,7 @@ const config = {
      announcementBar: {
           id: 'support_us',
           content:
-            'New Anti-Stress Intervention Among Physicians (ASIP) study with Charité ! <a rel="noopener noreferrer" href="/blog">Read more</a>',
+            'StudyU at the 2nd Spring Symposium on Medical Informatics in Heidelberg! <a rel="noopener noreferrer" href="/blog">Read more</a>',
           backgroundColor: '#ebedf0',
           textColor: '#091E42',
           isCloseable: true,
