@@ -39,12 +39,12 @@
     "message": "Datenschutzerklärung",
     "description": "The label of footer link with label=Privacy linking to /privacy"
   },
-  "link.item.label.Imprint": {
-    "message": "Impressum",
-    "description": "The label of footer link with label=Imprint linking to /imprint"
-  },
   "link.item.label.Terms Of Use": {
     "message": "Nutzungsbedingungen",
     "description": "The label of footer link with label=Terms Of Use linking to /tos"
+  },
+  "link.item.label.Legal Notice": {
+    "message": "Legal Notice",
+    "description": "The label of footer link with label=Legal Notice linking to /imprint"
   }
 }

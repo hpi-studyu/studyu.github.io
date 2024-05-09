@@ -266,7 +266,7 @@
     "message": "Eine voll funktionsfähige Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien."
   },
   "for personalized N‑of‑1 treatment advice.": {
-    "message": ""
+    "message": "für personalisierte N-of-1-Behandlungsempfehlungen."
   },
   "theme.NavBar.navAriaLabel": {
     "message": "Main",
@@ -354,5 +354,21 @@
   },
   "The StudyU Platform": {
     "message": "Die StudyU Plattform"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "{count} Einträge",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.admonition.warning": {
+    "message": "warning",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Expand sidebar category '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Collapse sidebar category '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
   }
 }

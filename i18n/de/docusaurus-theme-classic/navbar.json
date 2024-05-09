@@ -44,7 +44,15 @@
     "description": "Navbar item with label StudyU Platform"
   },
   "item.label.Collaborations": {
-    "message": "Collaborations",
+    "message": "Kooperationen",
     "description": "Navbar item with label Collaborations"
+  },
+  "item.label.Contact": {
+    "message": "Kontakt",
+    "description": "Navbar item with label Contact"
+  },
+  "item.label.Deployment": {
+    "message": "Bereitstellung",
+    "description": "Navbar item with label Deployment"
   }
 }

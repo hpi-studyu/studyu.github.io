@@ -7,19 +7,18 @@ hide_table_of_contents: true
 # Impressum
 
 ### Für den Inhalt verantwortliche Personen  
-Dr. Stefan Konigorski, Sarah Wernicke M.Sc., Tamara Slosarek M.Sc., Prof. Dr. Erwin
-Böttinger
-
+Dr. Stefan Konigorski
 
 **Digital Health Cluster**  
-**Hasso Plattner Institut für Digital Engineering gGmbH**  
+**Hasso-Plattner-Institut für Digital Engineering gGmbH**
 Prof.-Dr.-Helmert-Str. 2-3  
-14482 Potsdam  
+14482 Potsdam
 Telefon: +49 (0) 331 5509-4844  
 Telefax: +49 (0) 331 5509-129  
-E-Mail: stefan.konigorski@hpi.de, erwin.boettinger@hpi.de  
+Email: stefan.konigorski@hpi.de
 Website: www.hpi.de  
-Vertretungsberechtigte Geschäftsführer: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich, Dr. Marcus Kölling  
+Vertretungsberechtigte Geschäftsführer: Prof. Dr. Tobias Friedrich, Prof. Dr. Ralf Herbrich,
+Dr. Marcus Kölling 
 Registergericht: Amtsgericht Potsdam  
 Registernummer: HRB 12184  
 

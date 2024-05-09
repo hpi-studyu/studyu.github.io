@@ -12,7 +12,7 @@
     "description": "The label for category StudyU App in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.StudyU App.link.generated-index.description": {
-    "message": "Partake in N-of-1 trials with the StudyU App.",
+    "message": "Nehmen Sie an Studien mit der StudyU App teil.",
     "description": "The generated-index page description for category StudyU App in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.StudyU Designer": {
@@ -20,19 +20,27 @@
     "description": "The label for category StudyU Designer in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.StudyU Designer.link.generated-index.description": {
-    "message": "Design your own trials with the StudyU Designer.",
+    "message": "Erstellen Sie Studien mit dem StudyU Designer.",
     "description": "The generated-index page description for category StudyU Designer in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Development": {
-    "message": "Development",
+    "message": "Entwicklung",
     "description": "The label for category Development in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Development.link.generated-index.description": {
-    "message": "Develop the StudyU Platform yourself.",
+    "message": "Entwickeln Sie die StudyU-Plattform weiter.",
     "description": "The generated-index page description for category Development in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Basics": {
-    "message": "Basics",
+    "message": "Grundlagen",
     "description": "The label for category Basics in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Deployment": {
+    "message": "Bereitstellung",
+    "description": "The label for category Deployment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Deployment.link.generated-index.description": {
+    "message": "Die StudyU-Plattform bereitstellen.",
+    "description": "The generated-index page description for category Deployment in sidebar tutorialSidebar"
   }
 }

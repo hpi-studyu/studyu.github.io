@@ -11,9 +11,9 @@ hide_table_of_contents: true
 Dr. Stefan Konigorski
 
 **Digital Health Cluster**  
-**Hasso Plattner Institute for Digital Engineering gGmbH**  
+**Hasso Plattner Institute for Digital Engineering gGmbH**
 Prof.-Dr.-Helmert-Str. 2-3  
-14482 Potsdam  
+14482 Potsdam
 Phone: +49 (0) 331 5509-4844  
 Fax: +49 (0) 331 5509-129  
 Email: stefan.konigorski@hpi.de
