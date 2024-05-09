@@ -2,11 +2,46 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://www.studyu.health/de/blog</id>
     <title>StudyU - Personalized Health Interventions Blog</title>
-    <updated>2024-01-19T00:00:00.000Z</updated>
+    <updated>2024-05-08T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://www.studyu.health/de/blog"/>
     <subtitle>StudyU - Personalized Health Interventions Blog</subtitle>
     <icon>https://www.studyu.health/de/img/icon.png</icon>
+    <entry>
+        <title type="html"><![CDATA[StudyU at the 2nd Spring Symposium on Medical Informatics in Heidelberg]]></title>
+        <id>https://www.studyu.health/de/blog/heidelberg-symposium</id>
+        <link href="https://www.studyu.health/de/blog/heidelberg-symposium"/>
+        <updated>2024-05-08T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<CaptionWrapper caption="Johannes Vedder presenting the StudyU platform at the 2nd Spring Symposium]]></summary>
+        <content type="html"><![CDATA[<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQF/8QAIRAAAgICAQQDAAAAAAAAAAAAAQIDEQAFBAYHEhQhMUH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAIBERIiMf/aAAwDAQACEQMRAD8A19d1lrUnn9zVe5qz5XzmYiqiJKAVRYsAtfnlZyWfuNoY55Ej6J5rorEKwmVbF/dX8Yxg31qhKRl0/9k=&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="1280" height="960"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/heidelberg_symposium.443606e.1280.jpg" srcset="/de/assets/ideal-img/heidelberg_symposium.443606e.1280.jpg 1280w" width="1280" height="960"></noscript></div><figcaption class="figcaption_pIkn">Johannes Vedder presenting the StudyU platform at the 2nd Spring Symposium
+on Medical Informatics in Heidelberg</figcaption></figure>
+<p>On May 8th, 2024, Johannes Vedder, senior developer of StudyU, presented the StudyU platform at the
+<a href="https://www.klinikum.uni-heidelberg.de/kliniken-institute/institute/institut-fuer-medizinische-informatik/2-heidelberger-fruehjahrssymposium-medizinische-informatik" target="_blank" rel="noopener noreferrer">2nd Spring Symposium on Medical Informatics in Heidelberg</a>, Germany.</p>
+<p>The symposium was organized by the Heidelberg University Hospital and the Heidelberg Institute for
+Medical Informatics, Biometry and Epidemiology and took place in the Marsilius Arkaden of the
+University of Heidelberg.</p>
+<p>The symposium was attended by a diverse audience of medical informatics experts, clinicians, and
+researchers. The StudyU platform was presented as a novel tool for designing, monitoring, and
+analyzing N-of-1 trials. The presentation highlighted the potential of the StudyU platform to
+revolutionize personalized medicine by enabling researchers to conduct large-scale N-of-1 trials
+digitally. Furthermore, <a href="http://localhost:3000/docs/basics/studies" target="_blank" rel="noopener noreferrer">current collaborations and ongoing projects</a>
+utilizing the StudyU platform in various clinical settings were discussed, showcasing the platform's
+versatility and applicability in different research domains and international contexts.</p>
+<p>The presentation was well-received by the audience, who expressed interest in the platform's
+capabilities and potential applications. Several attendees approached Johannes Vedder after the
+presentation to inquire about the platform and discuss potential collaborations.</p>
+<p>Overall, the 2nd Heidelberg Spring Symposium on Medical Informatics was a successful event that
+provided an excellent platform for showcasing the StudyU platform and engaging with the medical
+informatics community. The positive feedback received at the symposium further validates the
+importance and relevance of the StudyU platform in the field of personalized medicine. We look forward
+to continuing to promote the platform and collaborate with researchers and clinicians to advance the
+field of N-of-1 trials and personalized medicine.</p>
+<p>If you are interested in learning more about the StudyU platform or collaborating with us, please feel
+free to reach out to us. Have a look at our <a href="https://www.studyu.health/de/contact">contact page</a> for more information.</p>
+<p>Stay tuned for more updates on StudyU and upcoming events!</p>
+<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAFAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAQQBAgcAAAAAAAAAAAAAAQACAwURBiEEBxIlMUFU/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAZEQACAwEAAAAAAAAAAAAAAAAAAgEDETH/2gAMAwEAAhEDEQA/AMc4DXeoaxjYI7CSVrNwJT1jb1g5yFTt5wXQaO31Hj5Goiqtr50MH//Z&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="4000" height="1824"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/heidelberg_castle.e4bb5f1.4000.jpg" srcset="/de/assets/ideal-img/heidelberg_castle.e4bb5f1.4000.jpg 4000w" width="4000" height="1824"></noscript></div><figcaption class="figcaption_pIkn">Heidelberg Castle</figcaption></figure>
+<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAFAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQH/8QAIRAAAgAGAQUAAAAAAAAAAAAAAQIAAwQFESEGEhMxNNL/xAAVAQEBAAAAAAAAAAAAAAAAAAADBP/EABkRAAIDAQAAAAAAAAAAAAAAAAACARIxIf/aAAwDAQACEQMRAD8AyGm53emozLZ6ZSFI7iU0oPrHhunR3EjTbkzEm73AknPsTPqEIpSbaC3MP//Z&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="4000" height="1824"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/heidelberg_city.fa2bb29.4000.jpg" srcset="/de/assets/ideal-img/heidelberg_city.fa2bb29.4000.jpg 4000w" width="4000" height="1824"></noscript></div><figcaption class="figcaption_pIkn">The city of Heidelberg</figcaption></figure>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Innovative Anti-Stress Study among Physicians at Charité]]></title>
         <id>https://www.studyu.health/de/blog/anti-stress-study-among-physicians</id>
@@ -163,17 +198,23 @@ to learn more about StudyU and other ongoing digital health research projects.</
         <id>https://www.studyu.health/de/blog/best-idea-award</id>
         <link href="https://www.studyu.health/de/blog/best-idea-award"/>
         <updated>2022-10-17T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[StudyU has won the Best Idea Award 2022 of the School Of Entrepreneurship at Hasso Plattner]]></summary>
-        <content type="html"><![CDATA[<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAIAAAC+zks0AAAACXBIWXMAADXUAAA11AFeZeUIAAAA4klEQVR4nGPg5OBi5+Tl4xMS4BMVFZMVkVJW1zVW0NRSVdeWV9VlUNfQCzEyi7B2tjZ1DbbzCzW11ZDV8zUw7UhLV1DXZ1CWl3GSlc3TN+iLDGyMDoqytgkxN0+30jfV0lbS0WcQ4+MT5+Fp89ffVBBR5eHoa2FqoCBjpChjr6XSHh/LYK6m6KGh6qEl72+kHW1mkO9s7KAqoyMpsryu+vX2EwxZtuETgr081ZVEOLls5SXq7FXijNWrwwKPzZ50d+VshnhDyxoX/Qg9GUtpIS8V8S4n2e5g84bI0DXxBlvjNAEppzUWqtf/XQAAAABJRU5ErkJggg==&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="1030" height="687"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/best_idea_award.88bc93e.1030.png" srcset="/de/assets/ideal-img/best_idea_award.88bc93e.1030.png 1030w" alt="" width="1030" height="687"></noscript></div><figcaption class="figcaption_pIkn">The winning team StudyU with Pauline Gieseler und Johannes Vedder (middle)</figcaption></figure>
+        <summary type="html"><![CDATA[<CaptionWrapper caption="The winning team StudyU with Pauline Gieseler (middle left) and]]></summary>
+        <content type="html"><![CDATA[<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAHCAIAAAC+zks0AAAACXBIWXMAADXUAAA11AFeZeUIAAAA4klEQVR4nGPg5OBi5+Tl4xMS4BMVFZMVkVJW1zVW0NRSVdeWV9VlUNfQCzEyi7B2tjZ1DbbzCzW11ZDV8zUw7UhLV1DXZ1CWl3GSlc3TN+iLDGyMDoqytgkxN0+30jfV0lbS0WcQ4+MT5+Fp89ffVBBR5eHoa2FqoCBjpChjr6XSHh/LYK6m6KGh6qEl72+kHW1mkO9s7KAqoyMpsryu+vX2EwxZtuETgr081ZVEOLls5SXq7FXijNWrwwKPzZ50d+VshnhDyxoX/Qg9GUtpIS8V8S4n2e5g84bI0DXxBlvjNAEppzUWqtf/XQAAAABJRU5ErkJggg==&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="1030" height="687"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/best_idea_award.88bc93e.1030.png" srcset="/de/assets/ideal-img/best_idea_award.88bc93e.1030.png 1030w" alt="" width="1030" height="687"></noscript></div><figcaption class="figcaption_pIkn">The winning team StudyU with Pauline Gieseler (middle left) and
+Johannes Vedder (middle right)</figcaption></figure>
 <p>StudyU has won the <b>Best Idea Award 2022</b> of the School Of Entrepreneurship at Hasso Plattner
-Institute (HPI).</p>
+Institute (HPI). The team consists of Pauline Gieseler and Johannes Vedder, who are both
+students at the Hasso Plattner Institute in Potsdam, Germany.</p>
 <p>Winning this award grants us the opportunity to <b>visit HPI New York City</b> and meet its director,
 Dr. Joann Halpern. Additionally, it enables us to establish connections with HPI･MS, a collaborative
-project between HPI and <a href="https://www.mountsinai.org/" target="_blank" rel="noopener noreferrer">Mount Sinai Health System</a>, renowned as one of the world's top-ranked hospitals.</p>
+project between HPI and <a href="https://www.mountsinai.org/" target="_blank" rel="noopener noreferrer">Mount Sinai Health System</a>, renowned as one
+of the world's top-ranked hospitals.</p>
 <p>With these new possibilities, our goal is to further enhance the development of StudyU, so that a
-greater number of individuals will be able to experience the advantages of personalized healthcare interventions.</p>
+greater number of individuals will be able to experience the advantages of personalized healthcare
+interventions.</p>
 <p>Many thanks to everyone who voted for us!</p>
 <p>Read more on the HPI website: <a href="https://hpi.de/entrepreneurship/best-idea.html" target="_blank" rel="noopener noreferrer">https://hpi.de/entrepreneurship/best-idea.html</a>.</p>
-<p>Image credits: HPI School Of Entrepreneurship</p>]]></content>
+<p>Image credits: HPI School Of Entrepreneurship</p>
+<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAFCAYAAAB8ZH1oAAAACXBIWXMAABYlAAAWJQFJUiTwAAAA2ElEQVR4nAHNADL/ALqKTvq5h1f/sHxS/82wjf/h1cH/07qn/9i+rP+6opX+1uHp/9HX2+kAd2BK+ltINv99YUr/vIll/86xnf+/mIH/u66h/1BPVf6mrbX//fz76QB5cGn6VkY7/4RWO/+lWUD/gWRY/zNIS/9ASE//Dxsw/mZxgP/////pAKKUg/pXRjn/snhC/35xaf9ZTEX/ABco/w8WI/8qLTf+SFNl/9jo8OkAd2xe+mVLOf9sUDn/TExN/1FGQ/8DGyr/Q0A//4xqTv6Pgnz/nbjP6bGteJI30lmvAAAAAElFTkSuQmCC&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="584" height="320"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/best_idea_award_3.b133ef0.584.png" srcset="/de/assets/ideal-img/best_idea_award_3.b133ef0.584.png 584w" width="584" height="320"></noscript></div><figcaption class="figcaption_pIkn">The winning team (Johannes Vedder, Pauline Gieseler and Dr. Stefan Konigorski (right) together with Dr. Joann Halpern, the Director of the Hasso Plattner Institute, New York (second from the right)</figcaption></figure>
+<div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABQQI/8QAIxAAAgECBgIDAAAAAAAAAAAAAQIDBCEABQYRIkETURKBkf/EABUBAQEAAAAAAAAAAAAAAAAAAAID/8QAHBEAAgICAwAAAAAAAAAAAAAAAQIAAwQFESKR/9oADAMBAAIRAxEAPwBzMNa5K1fLKIKOpWTmJEqAfIT6ve/rvFQ1ZR7D45ACOuZxnGaOaTw0q1BRGIRdlsov19nCT6XmR2VM0lCg7Dh1+4k+xNHCWOR7CMKt+yqJ/9k=&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="960" height="1280"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/de/assets/ideal-img/best_idea_award_2.4a311c0.960.jpg" srcset="/de/assets/ideal-img/best_idea_award_2.4a311c0.960.jpg 960w" width="960" height="1280"></noscript></div>]]></content>
     </entry>
 </feed>
