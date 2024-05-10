@@ -93,14 +93,14 @@ export default function HomepageFeatures({ recentPosts }) {
                 <Grid
                     container
                     direction="row"
-                    rowSpacing={4}
+                    rowSpacing={0}
                     className={styles.partnerGrid}
                 >
                     {partners.map((partner, index) => (
                         <Grid
                             key={index}
                             item
-                            xs={4}
+                            xs={6}
                             sm={3}
                             md={2}
                             className={styles.partnerItem}
