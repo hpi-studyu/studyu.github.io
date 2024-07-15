@@ -228,7 +228,7 @@ const config = {
      announcementBar: {
           id: 'support_us',
           content:
-            'StudyU at the 2nd Spring Symposium on Medical Informatics in Heidelberg! <a rel="noopener noreferrer" href="/blog">Read more</a>',
+            'New StudyU and StudyMe trial launched in Ghana! <a rel="noopener noreferrer" href="/blog">Read more</a>',
           backgroundColor: '#ebedf0',
           textColor: '#091E42',
           isCloseable: true,
