@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkstudyu_docs=self.webpackChunkstudyu_docs||[]).push([[8947],{6600:u=>{u.exports=JSON.parse('{"authors":[{"name":"StudyU Team","title":"HPI StudyU","url":"https://github.com/hpi-studyu","imageURL":"/img/icon.png","key":"studyu-team","page":null,"count":0}]}')}}]);
