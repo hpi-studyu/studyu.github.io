@@ -18,6 +18,11 @@ in a single participant, i.e. where the participant follows the different interv
 in a pre-specified or randomized order, and the outcome (e.g. improvement of lower back pain or
 rheumatoid arthritis pain) is compared between interventions.
 
-Here, we are building a platform called StudyU, developing and evaluating necessary tools and
+If you would like to learn more about N-of-1 trials, we recommend you to watch the short video
+["What is an N-of-1 trial?"](https://palsforhealth.com/Pals/Article/What%20is%20an%20N-of-1%20trial)
+which was created by our [collaboration](/docs/basics/studies) partners at
+[Weill Cornell Medicine](https://goyallab.weill.cornell.edu/research/clinical-trials).
+
+With StudyU, we are building a platform called StudyU, developing and evaluating necessary tools and
 methods for the platform, and applying the platform to derive and evaluate individualized treatment
-effects.
+effects. Read more about it [here](/docs/02-basics/02-studyu-platform.md).
