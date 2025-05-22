@@ -4,10 +4,38 @@
         <title>StudyU - Personalized Health Interventions Blog</title>
         <link>https://www.studyu.health/blog</link>
         <description>StudyU - Personalized Health Interventions Blog</description>
-        <lastBuildDate>Mon, 15 Jul 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 22 May 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Empowering Precision Medicine StudyU and the Future of Individualized Care]]></title>
+            <link>https://www.studyu.health/blog/studyu-at-mount-sinai</link>
+            <guid>https://www.studyu.health/blog/studyu-at-mount-sinai</guid>
+            <pubDate>Thu, 22 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Discover how Dr. Stefan Konigorski presented StudyU at Mount Sinai, showcasing its potential to transform clinical care through personalized, digital N-of-1 trials.]]></description>
+            <content:encoded><![CDATA[<figure><div style="background-size:cover;background-repeat:no-repeat;position:relative;background-image:url(&quot;data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAGAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAUG/8QAIRAAAgEEAQUBAAAAAAAAAAAAAQMCAAQRMQUSExQWIUH/xAAUAQEAAAAAAAAAAAAAAAAAAAAF/8QAGxEAAgIDAQAAAAAAAAAAAAAAAQIDMQAEEVH/2gAMAwEAAhEDEQA/AJfHql6W/jfDtS6KpxF+Wz72yc4xsD5uszaxS22UwWyj1wEsy2cj9pShG2JJUJc0QBXhxxNeOFuIL6Tef//Z&quot;)"><svg style="width:100%;height:auto;max-width:100%;margin-bottom:-4px" width="3213" height="1807"></svg><noscript><img style="width:100%;height:auto;max-width:100%;margin-bottom:-4px;position:absolute;top:0;left:0" src="/assets/ideal-img/0525-studyu-mount-sinai-talk.d20d6f5.3213.jpg" srcset="/assets/ideal-img/0525-studyu-mount-sinai-talk.d20d6f5.3213.jpg 3213w" width="3213" height="1807"></noscript></div><figcaption class="figcaption_pIkn"></figcaption></figure>
+<p>On May 22, 2025, Dr. Stefan Konigorski, Senior Researcher in the chair of Digital Health &amp; Machine
+Learning and Adjunct Assistant Professor at the Icahn School of Medicine at Mount Sinai in New
+York, delivered a presentation titled "Digital N-of-1 trials to support patients and clinical
+decision making" at the digital health partnership workshop of the Hasso Plattner Institute and the
+Mount Sinai hospital in New York City.</p>
+<p>In his talk, Dr. Konigorski introduced StudyU, an open-source platform designed
+to facilitate the design and execution of digital N-of-1 trials. These trials focus on
+individualized treatment assessments, allowing researchers and clinicians to evaluate the effects
+of interventions on a single participant over time.
+StudyU comprises two main components: the StudyU Designer, a web-based tool enabling researchers
+to collaboratively design and publish trials, and the StudyU App, a mobile application that
+allows participants to engage with the trials and monitor their health outcomes.</p>
+<p>Dr. Konigorski emphasized the potential of digital N-of-1 trials to revolutionize personalized
+medicine by providing tailored insights into treatment efficacy for individual patients. He
+discussed how platforms like StudyU can democratize evidence generation, making it more accessible
+for both researchers and participants. The integration of such digital tools into clinical practice
+could lead to more informed decision-making and improved patient outcomes.</p>
+<p>The talk highlighted the growing interest in leveraging digital technologies to enhance clinical
+research methodologies. StudyU exemplifies the innovative approaches being developed to advance
+personalized healthcare through the use of digital platforms and individualized trial designs.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Advancing Digital Health Solutions in Ghana with StudyU and StudyMe]]></title>
             <link>https://www.studyu.health/blog/advancing-digital-health-solutions-in-ghana</link>
