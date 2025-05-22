@@ -228,7 +228,7 @@ const config = {
      announcementBar: {
           id: 'support_us',
           content:
-            'New StudyU and StudyMe trial launched in Ghana! <a rel="noopener noreferrer" href="/blog">Read more</a>',
+            'Discover StudyU at New York City\'s leading hospital! <a rel="noopener noreferrer" href="/blog">Read more</a>',
           backgroundColor: '#ebedf0',
           textColor: '#091E42',
           isCloseable: true,
