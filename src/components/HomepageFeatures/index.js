@@ -64,7 +64,6 @@ export default function HomepageFeatures({ recentPosts }) {
         { src: "/img/partner/hpims.svg", alt: "HPI Mount Sinai" },
         { src: "/img/partner/mount_sinai.svg", alt: "Mount Sinai" },
         { src: "/img/partner/weill_cornell.svg", alt: "Weill Cornell" },
-        { src: "/img/partner/university_queensland.svg", alt: "University of Queensland" },
         { src: "/img/partner/uk_eppendorf.svg", alt: "Universitätsklinikum Hamburg-Eppendorf" },
         { src: "/img/partner/charite.svg", alt: "Charité" },
         { src: "/img/partner/uniklinik_wuerzburg.svg", alt: "Uniklinikum Würzburg" },
