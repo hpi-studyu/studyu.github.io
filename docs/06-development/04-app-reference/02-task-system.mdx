@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+title: Task System
+description: How tasks are rendered, completed, and submitted in the participant app
+---
+
+# Task System
+
+When a participant taps a task in the `TaskOverview`, a `TaskScreen` is pushed modally. The screen renders the appropriate widget based on task type.
+
+## Task completion flow
+
+```mermaid
+flowchart LR
+    TASK_BOX["<code>TaskBox</code><br/>task_box.dart<br/>Tappable card in task list"]
+    TASK_SCREEN["<code>TaskScreen</code><br/>task_screen.dart<br/>Task execution container"]
+
+    CHECKMARK["<code>CheckmarkTaskWidget</code><br/>checkmark_task_widget.dart<br/>Simple done/not-done toggle"]
+    QUESTIONNAIRE["<code>QuestionnaireTaskWidget</code><br/>questionnaire_task_widget.dart<br/>Full questionnaire flow"]
+
+    QWIDGET["<code>QuestionnaireWidget</code><br/>questionnaire_widget.dart<br/>Question renderer"]
+
+    TASK_BOX -->|"tap"| TASK_SCREEN
+    TASK_SCREEN -->|"CheckmarkTask"| CHECKMARK
+    TASK_SCREEN -->|"QuestionnaireTask"| QUESTIONNAIRE
+    QUESTIONNAIRE --> QWIDGET
+
+    subgraph "Question Type Widgets"
+        Q1["BooleanQuestionWidget"]
+        Q2["ChoiceQuestionWidget"]
+        Q3["ScaleQuestionWidget"]
+        Q4["AnnotatedScaleQuestionWidget"]
+        Q5["VisualAnalogueQuestionWidget"]
+        Q6["FreeTextQuestionWidget"]
+        Q7["ImageCapturingQuestionWidget"]
+        Q8["AudioRecordingQuestionWidget"]
+        Q9["FitbitQuestionWidget"]
+        Q10["PainQuestionWidget"]
+    end
+
+    QWIDGET --> Q1
+    QWIDGET --> Q2
+    QWIDGET --> Q3
+    QWIDGET --> Q4
+    QWIDGET --> Q5
+    QWIDGET --> Q6
+    QWIDGET --> Q7
+    QWIDGET --> Q8
+    QWIDGET --> Q9
+    QWIDGET --> Q10
+```
+
+## Question widget file mapping
+
+| Question Type | Widget Class | File |
+|---|---|---|
+| `BooleanQuestion` | `BooleanQuestionWidget` | `app/lib/widgets/questionnaire/questions/boolean_question_widget.dart` |
+| `ChoiceQuestion` | `ChoiceQuestionWidget` | `app/lib/widgets/questionnaire/questions/choice_question_widget.dart` |
+| `ScaleQuestion` | `ScaleQuestionWidget` | `app/lib/widgets/questionnaire/questions/scale_question_widget.dart` |
+| `AnnotatedScaleQuestion` | `AnnotatedScaleQuestionWidget` | `app/lib/widgets/questionnaire/questions/annotated_scale_question_widget.dart` |
+| `VisualAnalogueQuestion` | `VisualAnalogueQuestionWidget` | `app/lib/widgets/questionnaire/questions/visual_analogue_question_widget.dart` |
+| `FreeTextQuestion` | `FreeTextQuestionWidget` | `app/lib/widgets/questionnaire/questions/free_text_question_widget.dart` |
+| `ImageCapturingQuestion` | `ImageCapturingQuestionWidget` | `app/lib/widgets/questionnaire/questions/image_capturing_question_widget.dart` |
+| `AudioRecordingQuestion` | `AudioRecordingQuestionWidget` | `app/lib/widgets/questionnaire/questions/audio_recording_question_widget.dart` |
+| `FitbitQuestion` | `FitbitQuestionWidget` | `app/lib/widgets/questionnaire/questions/fitbit_question_widget.dart` |
+| `PainQuestion` | `PainQuestionWidget` | `app/lib/widgets/questionnaire/questions/pain_question_widget.dart` |
+
+## Task result submission
+
+After a task is completed, the `TaskScreen` calls `StudySubject.addResult()`. This method:
+
+1. Creates a `SubjectProgress` record with the task result
+2. Attempts to write to Supabase (`SubjectProgress.save()`)
+3. On success: updates the remote `StudySubject` record and local cache
+4. On `SocketException` or network error: stores the result in `FlutterSecureStorage` for later sync
+
+See [Offline Capabilities](../03-architecture/05-offline-capabilities.mdx) for the full sync lifecycle.
+
+## Completion period tracking
+
+A task can have multiple `CompletionPeriod` time windows (e.g., a morning window 08:00–12:00 and an evening window 18:00–20:00). Each window must be completed separately. The `SubjectProgress.result.periodId` field ties a completion event to the specific window.
+
+`StudySubject.completedTaskForDay(taskId, date)` returns `true` if **all** completion periods for the task have a matching `SubjectProgress` record for the given date.
+
+The `TaskBox` in the dashboard shows:
+- Empty state — task not yet completed
+- Partially filled — some periods completed
+- Full — all periods completed

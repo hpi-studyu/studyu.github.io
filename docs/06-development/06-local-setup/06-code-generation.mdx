@@ -1,0 +1,50 @@
+---
+sidebar_position: 6
+title: Code Generation
+description: When and how to regenerate build_runner output after model changes
+---
+
+# Code Generation
+
+The `core` package uses `json_serializable` and `build_runner` to generate JSON serialization code. If you change any model class in `core/`, you must regenerate before the change is usable by `app` or `designer_v2`.
+
+## Why generated files are committed to git
+
+Normally, generated `*.g.dart` files are excluded from version control. StudyU commits them because `core` is a path dependency imported by the other packages — those packages need the generated files to be present at import time without running code generation themselves.
+
+## Regenerate after model changes
+
+```bash
+melos run generate
+```
+
+This runs `dart run build_runner build --delete-conflicting-outputs` in the `core` and `designer_v2` packages. Stage and commit the resulting `*.g.dart` changes alongside your model changes.
+
+:::warning
+If you edit a model in `core/` and run the apps without regenerating, you will get compile errors in `app` and `designer_v2` about missing or mismatched serialization methods.
+:::
+
+## When to regenerate
+
+You must run `melos run generate` whenever you:
+
+- Add a new field to a model class in `core/`
+- Change the type of an existing field
+- Add or modify a `@JsonKey` annotation
+- Create a new model class with `@JsonSerializable`
+- Modify an enum that is used in a model
+
+You do **not** need to regenerate for:
+- Changes to non-model Dart files
+- UI changes in `app/` or `designer_v2/`
+- Configuration changes in `.env` files
+
+## After pulling from remote
+
+If someone else changed a model and committed updated `*.g.dart` files, you may get conflicts after pulling. If the generated files conflict with uncommitted local changes:
+
+```bash
+git stash
+melos run generate
+git stash pop
+```

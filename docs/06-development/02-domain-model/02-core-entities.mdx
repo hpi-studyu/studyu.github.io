@@ -1,0 +1,337 @@
+---
+sidebar_position: 2
+title: Core Entities
+description: Glossary of every domain object in StudyU with field-by-field reference
+---
+
+# Core Entities
+
+This glossary defines every domain entity in StudyU, maps it to its code location, and lists all fields. Read [N-of-1 Trials](./01-n-of-1-trials.mdx) first if you haven't already.
+
+## Study
+
+**Research meaning:** The top-level protocol for a clinical study. It defines everything needed to conduct the trial: what treatments will be compared, what data will be collected, who is eligible to participate, what participants must consent to, and how long the trial runs.
+
+**In the codebase:** `Study` is the aggregate root. Everything else hangs off it. It maps to the `study` table in Supabase.
+
+**File:** `core/lib/src/models/tables/study.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID primary key |
+| `userId` | `String` | The researcher who owns the study |
+| `title` | `String?` | Display name |
+| `description` | `String?` | Free-text study description |
+| `status` | `StudyStatus` | `draft`, `running`, or `closed` |
+| `participation` | `Participation` | `open` (anyone can join) or `invite` (invite code required) |
+| `resultSharing` | `ResultSharing` | `public`, `private`, or `organization` |
+| `questionnaire` | `StudyUQuestionnaire` | Eligibility screening questions |
+| `eligibilityCriteria` | `List<EligibilityCriterion>` | Rules evaluated against questionnaire answers |
+| `consent` | `List<ConsentItem>` | Items the participant must agree to |
+| `interventions` | `List<Intervention>` | The treatment arms |
+| `observations` | `List<Observation>` | Data collection tasks that run throughout the study |
+| `schedule` | `StudySchedule` | Temporal structure of the trial |
+| `reportSpecification` | `ReportSpecification` | How results are visualized |
+| `collaboratorEmails` | `List<String>` | Co-researchers with edit access |
+| `registryPublished` | `bool` | Whether the study appears in the public registry |
+
+**Key constant:** `Study.baselineID = '__baseline'` is the sentinel ID used for the baseline phase. The baseline is not stored as a real `Intervention` row — it is synthesized on the client using this ID.
+
+**Computed properties:**
+
+- `hasEligibilityCheck` — `true` if both `eligibilityCriteria` and `questionnaire.questions` are non-empty
+- `studyLength` — total number of days, calculated from `schedule`
+- `isOwner(user)`, `isEditor(user)`, `canEdit(user)` — access-control helpers
+
+---
+
+## Intervention
+
+**Research meaning:** One arm of the study — a treatment, therapy, supplement, or behavior that the participant follows during a phase. A study with two interventions alternates between them. The "baseline" is a special arm with no active tasks, used to measure the participant's resting state.
+
+**In the codebase:** `Intervention` owns a list of `InterventionTask` instances. Currently the only concrete `InterventionTask` type is `CheckmarkTask`.
+
+**File:** `core/lib/src/models/interventions/intervention.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID |
+| `name` | `String?` | Display name (e.g., "Vitamin D 2000 IU") |
+| `description` | `String?` | Instructions shown to the participant |
+| `icon` | `String` | Icon identifier string |
+| `tasks` | `List<InterventionTask>` | Activities the participant performs during this phase |
+
+**The baseline intervention** is constructed dynamically in `StudySubject.selectedInterventions`:
+
+```dart
+Intervention(Study.baselineID, 'Baseline')
+  ..tasks = []
+  ..icon = 'rayStart';
+```
+
+It has an empty task list because the baseline phase collects data only through Observations (which run across all phases), not through phase-specific tasks.
+
+**`CheckmarkTask`** (`core/lib/src/models/interventions/tasks/checkmark_task.dart`) is the only built-in intervention task type. It records a simple boolean: did the participant complete this activity today? It stores a `Result<bool>` in `SubjectProgress`.
+
+---
+
+## Observation
+
+**Research meaning:** A measurement taken from the participant. Unlike intervention tasks (which only run during their assigned phase), observations run during **every phase including baseline**. This is intentional — you need baseline data and data from both treatment arms to make comparisons.
+
+**In the codebase:** `Observation` is an abstract class extending `Task`. The only concrete implementation is `QuestionnaireTask`.
+
+**File:** `core/lib/src/models/observations/observation.dart`
+
+`QuestionnaireTask` (`core/lib/src/models/observations/tasks/questionnaire_task.dart`) contains a `StudyUQuestionnaire` (a list of `Question` objects). When a participant completes a `QuestionnaireTask`, it produces a `Result<QuestionnaireState>` in `SubjectProgress`.
+
+The key behavioral difference between tasks and observations in `StudySubject.scheduleFor()`:
+
+```dart
+// Intervention tasks — only for the active intervention today
+for (final task in activeIntervention.tasks) { ... }
+
+// Observations — always included, regardless of which intervention is active
+for (final observation in study.observations) { ... }
+```
+
+---
+
+## Subject (StudySubject)
+
+**Research meaning:** A participant who has enrolled in a study. Their enrollment record tracks which interventions they are assigned to, when they started, and all of their task completion data.
+
+**In the codebase:** `StudySubject` maps to the `study_subject` table. It holds references to its parent `Study` and its list of `SubjectProgress` records. The subject's trial sequence is generated lazily via `interventionOrder`.
+
+**File:** `core/lib/src/models/tables/study_subject.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID |
+| `studyId` | `String` | Foreign key to `study` |
+| `userId` | `String` | Foreign key to the auth user |
+| `startedAt` | `DateTime?` | The date the participant began the trial (stored UTC) |
+| `selectedInterventionIds` | `List<String>` | The two intervention IDs assigned to this participant |
+| `inviteCode` | `String?` | Code used to join an invite-only study |
+| `isDeleted` | `bool` | Soft-delete flag |
+
+**Key methods:**
+
+| Method | Purpose |
+|---|---|
+| `getInterventionForDate(DateTime)` | Returns which `Intervention` is active on a given day |
+| `getDayOfStudyFor(DateTime)` | Returns how many days since `startedAt` |
+| `scheduleFor(DateTime)` | Returns all `TaskInstance` objects due on a given day (intervention tasks + observations) |
+| `completedTaskForDay(String taskId, DateTime)` | Returns `true` if the task was completed in any of its `CompletionPeriod` windows |
+| `interventionOrder` | The full ordered list of intervention IDs for the trial (generated by `StudySchedule`) |
+
+:::note
+`startedAt` is stored in UTC. When comparing dates, use the `differenceInDays` extension method rather than direct arithmetic to avoid timezone bugs.
+:::
+
+---
+
+## Questionnaire (StudyUQuestionnaire)
+
+**Research meaning:** A set of questions. In clinical research, questionnaires serve two purposes: screening (are you eligible?) and measurement (how are you feeling?). StudyU uses the same `StudyUQuestionnaire` class for both.
+
+**In the codebase:** `StudyUQuestionnaire` is a thin wrapper around `List<Question>`. It is used in two completely different contexts:
+
+1. **On `Study.questionnaire`** — shown to the participant during the eligibility check before enrollment. Answers are evaluated against `EligibilityCriterion` expressions.
+2. **Inside `QuestionnaireTask.questions`** — shown during the study as a daily observation task.
+
+**File:** `core/lib/src/models/questionnaire/questionnaire.dart`
+
+**Question types** (all extend `Question<V>`, parsed via `Question.fromJson`):
+
+| Type | Answer value | Use case |
+|---|---|---|
+| `BooleanQuestion` | `bool` | Yes/no questions |
+| `ChoiceQuestion` | `String` | Single or multiple choice |
+| `ScaleQuestion` | `num` | Numeric rating scale |
+| `AnnotatedScaleQuestion` | `num` | Scale with labels at each step |
+| `VisualAnalogueQuestion` | `double` | Continuous slider |
+| `FreeTextQuestion` | `String` | Open-ended text entry |
+| `ImageCapturingQuestion` | `String` | Photo upload (stored as blob path) |
+| `AudioRecordingQuestion` | `String` | Audio upload (stored as blob path) |
+| `FitbitQuestion` | varies | Pulls data from Fitbit API |
+| `PainQuestion` | varies | Body map pain locator |
+
+Questions support **conditional display** via `QuestionConditional`: a question can be hidden unless a previous question's answer meets a condition.
+
+---
+
+## Eligibility Criteria (EligibilityCriterion)
+
+**Research meaning:** Rules that determine whether a participant qualifies for a study. A study might require participants to be non-smokers, within a certain age range, or have a specific diagnosis. If a participant violates any criterion, they cannot enroll.
+
+**In the codebase:** Each `EligibilityCriterion` has a `condition: Expression` that is evaluated against the participant's `QuestionnaireState` (their answers to the eligibility questionnaire).
+
+**File:** `core/lib/src/models/eligibility/eligibility_criterion.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID |
+| `reason` | `String?` | Human-readable explanation (shown to participant if they fail) |
+| `condition` | `Expression` | The logical condition that must be `true` for the participant to qualify |
+
+**Methods:**
+- `isSatisfied(QuestionnaireState)` — returns `true` if the condition passes
+- `isViolated(QuestionnaireState)` — returns `true` if the condition explicitly fails (note: `null` means the answer has not been given yet, which is distinct from `false`)
+
+**Expression types** (all extend `Expression`, parsed via `Expression.fromJson`):
+
+| Type | File | Purpose |
+|---|---|---|
+| `BooleanExpression` | `types/boolean_expression.dart` | Tests a boolean answer |
+| `ChoiceExpression` | `types/choice_expression.dart` | Tests a choice answer against a specific value |
+| `NumericExpression` | `types/numeric_expression.dart` | Tests a numeric answer with a comparison operator |
+| `TextExpression` | `types/text_expression.dart` | Tests a text answer |
+| `NotExpression` | `types/not_expression.dart` | Logical NOT of another expression |
+| `CompositeExpression` | `types/composite_expression.dart` | AND/OR of a list of sub-expressions |
+
+`CompositeExpression` is the recursive building block. It has a `logicType` (`and` or `or`) and a `List<Expression>` that can itself contain further `CompositeExpression` instances, forming an arbitrary tree. An empty `CompositeExpression` evaluates to `true`.
+
+---
+
+## Consent (ConsentItem)
+
+**Research meaning:** Before a participant can enroll in a clinical study, they must give informed consent — they must confirm that they understand the study's purpose, risks, and their right to withdraw. Each `ConsentItem` is one statement they must explicitly agree to.
+
+**In the codebase:** `Study.consent` is a `List<ConsentItem>`. The app presents each item to the participant and requires them to check a box before proceeding to enrollment.
+
+**File:** `core/lib/src/models/consent/consent_item.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID |
+| `title` | `String?` | Short heading (e.g., "Data Storage") |
+| `description` | `String?` | Full explanation of what the participant is agreeing to |
+| `iconName` | `String` | Icon identifier, defaults to `'textBoxCheck'` |
+
+`Study.hasConsentCheck` returns `true` if `consent` is non-empty.
+
+---
+
+## Study Schedule (StudySchedule)
+
+**Research meaning:** The temporal blueprint of the trial. It defines how long each phase lasts, how many times the participant cycles through the interventions, whether there is a baseline period at the start, and in what order the interventions appear.
+
+**In the codebase:** `StudySchedule` is a value object embedded in `Study.schedule`. It is used both for display in the Designer and for generating the actual phase sequence for each `StudySubject`.
+
+**File:** `core/lib/src/models/study_schedule/study_schedule.dart`
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `numberOfCycles` | `int` | `2` | How many times the intervention pair repeats |
+| `phaseDuration` | `int` | `7` | Number of days in each phase |
+| `includeBaseline` | `bool` | `true` | Whether a baseline phase precedes the interventions |
+| `sequence` | `PhaseSequence` | `alternating` | Order of interventions within each cycle |
+| `sequenceCustom` | `String` | `'ABAB'` | Custom sequence string, used only when `sequence == customized` |
+
+**`PhaseSequence` enum values:**
+
+| Value | Pattern | Description |
+|---|---|---|
+| `alternating` | A B A B ... | Interventions alternate every phase |
+| `counterBalanced` | A B B A ... | Order reverses each cycle to control for order effects |
+| `randomized` | varies | Order randomized per cycle (first cycle is always A B) |
+| `customized` | user-defined | Researcher provides a string like `'ABBA'` or `'AABB'` |
+
+**Key computed values:**
+- `length` — total days in the study (baseline + all cycles)
+- `numberOfPhases` — total number of phases including optional baseline
+- `generateInterventionIdsInOrder(List<String>)` — given the two selected intervention IDs, returns the full ordered sequence of intervention IDs the subject will follow
+
+:::note
+`StudySchedule.numberOfInterventions = 2` is a constant. The platform currently assumes exactly two intervention arms per study.
+:::
+
+---
+
+## Task
+
+**Research meaning:** Any activity a participant must perform on a study day. Tasks have a schedule (when they are available) and may fire reminders.
+
+**In the codebase:** `Task` is the abstract base class for everything a participant does. It is not serialized directly — you always work with a concrete subtype.
+
+**File:** `core/lib/src/models/tasks/task.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | UUID |
+| `type` | `String` | Discriminator string used for JSON polymorphism |
+| `title` | `String?` | Display name shown to participant |
+| `header` | `String?` | Optional instructional text shown above the task |
+| `footer` | `String?` | Optional text shown below the task |
+| `schedule` | `Schedule` | When the task is available and when reminders fire |
+
+**`Schedule`** (`core/lib/src/models/tasks/schedule.dart`) contains:
+- `completionPeriods: List<CompletionPeriod>` — one or more time windows (e.g., 08:00–12:00 and 18:00–20:00) during which the task can be completed. A task with multiple `CompletionPeriod` entries requires completion in each window.
+- `reminders: List<StudyUTimeOfDay>` — times when the participant receives a push notification.
+
+**`CompletionPeriod`** has an `unlockTime` and `lockTime` (both `StudyUTimeOfDay`), plus an `id` UUID used to match a `SubjectProgress.result.periodId` back to the specific window.
+
+**Concrete subtypes:**
+
+```
+Task (abstract)
+├── InterventionTask (abstract) — phase-specific
+│   └── CheckmarkTask — records a bool (did participant do this?)
+└── Observation (abstract) — runs every phase
+    └── QuestionnaireTask — records a QuestionnaireState
+```
+
+---
+
+## SubjectProgress
+
+**Research meaning:** A single task completion event. Every time a participant completes a task, one record is written. The aggregate of all `SubjectProgress` records for a subject is the raw data used in analysis.
+
+**In the codebase:** `SubjectProgress` maps to the `subject_progress` table. Its primary key is `(completed_at, subject_id)`.
+
+**File:** `core/lib/src/models/tables/subject_progress.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `subjectId` | `String` | Foreign key to `study_subject` |
+| `interventionId` | `String` | Which intervention was active when this was completed |
+| `taskId` | `String` | Which task was completed |
+| `completedAt` | `DateTime?` | UTC timestamp of completion |
+| `resultType` | `String` | `'QuestionnaireState'` or `'bool'` — the discriminator |
+| `result` | `Result<T>` | The typed payload |
+
+**`Result<T>`** (`core/lib/src/models/results/result.dart`) is a generic wrapper with two concrete forms:
+- `Result<QuestionnaireState>` — produced by `QuestionnaireTask`. Contains the participant's answers keyed by question ID.
+- `Result<bool>` — produced by `CheckmarkTask`. Contains a single `true` value (the record existing implies the task was done).
+
+The `Result.periodId` field ties a completion back to the specific `CompletionPeriod` window it was completed in, enabling multi-period task tracking.
+
+:::note
+`completedAt` is stored in UTC. The code uses `isSameDate()` extension comparisons — be careful when doing date arithmetic directly.
+:::
+
+---
+
+## Report Specification (ReportSpecification)
+
+**Research meaning:** The configuration for how a study's results are presented to the researcher and participant. An N-of-1 trial's primary output is a comparison between phases — the report is how that comparison is communicated.
+
+**In the codebase:** `ReportSpecification` is embedded in `Study.reportSpecification`. It has one primary section and any number of secondary sections, each of a different statistical type.
+
+**File:** `core/lib/src/models/report/report_specification.dart`
+
+| Field | Type | Description |
+|---|---|---|
+| `primary` | `ReportSection?` | The headline analysis shown prominently |
+| `secondary` | `List<ReportSection>` | Additional analyses shown below |
+
+**`ReportSection` subtypes** (all extend `ReportSection`, each with `id`, `title`, `description`):
+
+| Type | File | What it shows |
+|---|---|---|
+| `AverageSection` | `sections/average_section.dart` | Mean value per intervention phase |
+| `DescriptiveStatsSection` | `sections/descriptive_stats_section.dart` | Min, max, mean, standard deviation |
+| `GaugeComparisonSection` | `sections/gauge_comparison_section.dart` | Side-by-side gauge comparing two phases |
+| `LinearRegressionSection` | `sections/linear_regression_section.dart` | Trend line over time |
+| `TextualSummarySection` | `sections/textual_summary_section.dart` | Researcher-authored text interpretation |

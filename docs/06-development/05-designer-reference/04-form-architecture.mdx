@@ -1,0 +1,86 @@
+---
+sidebar_position: 4
+title: Form Architecture
+description: Auto-save pattern, FormViewModel structure, and common view components
+---
+
+# Form Architecture
+
+All design screens follow a consistent pattern: `reactive_forms` `FormGroup` instances managed by Riverpod providers, with debounced auto-save to Supabase.
+
+## Form pattern
+
+```mermaid
+flowchart LR
+    subgraph "View Layer"
+        PAGE["Page Widget<br/>(ConsumerWidget)"]
+        FORM_VIEW["Form View<br/>(ReactiveForm)"]
+        CONTROLS["Form Controls<br/>(text fields, dropdowns,<br/>arrays, pickers)"]
+    end
+
+    subgraph "State Layer"
+        VM["FormViewModel<br/>(Riverpod Provider)"]
+        FORM_GROUP["FormGroup<br/>(reactive_forms)"]
+        VALIDATION["Validators<br/>(required, max length, etc.)"]
+    end
+
+    subgraph "Data Layer"
+        REPO["Repository<br/>(StudyRepository)"]
+        API["StudyUApiClient"]
+        SUPA["Supabase"]
+    end
+
+    PAGE --> FORM_VIEW
+    FORM_VIEW --> CONTROLS
+    CONTROLS -->|"user input"| FORM_GROUP
+    VM --> FORM_GROUP
+    VM --> VALIDATION
+    FORM_GROUP -->|"debounced<br/>auto-save<br/>(1000ms)"| REPO
+    REPO --> API
+    API --> SUPA
+
+    style VM fill:#FFB74D,color:#000
+    style FORM_GROUP fill:#FFB74D,color:#000
+```
+
+**Key architectural points:**
+- Forms auto-save on change with 1000ms debounce — no explicit "Save" button needed
+- A `SyncIndicator` widget shows the current save status (saving, saved, error)
+- `FormViewModel` classes manage `FormGroup` / `FormArray` instances from the `reactive_forms` package
+- Each design tab has its own form controller that maps between the `Study` domain model and reactive form state
+- Two-column layouts (for editing interventions and surveys) show the form on the left and a live preview on the right
+
+---
+
+## Common view components
+
+| Component | File | Purpose |
+|---|---|---|
+| `SingleColumnLayout` | `designer_v2/lib/common_views/layout_single_column.dart` | Configurable widths: narrow, wide, stretched, split |
+| `TwoColumnLayout` | `designer_v2/lib/common_views/layout_two_column.dart` | Side-by-side layout for form + preview (7:8 flex ratio) |
+| `FormScaffold` | `designer_v2/lib/common_views/form_scaffold.dart` | Form wrapper with app bar, action buttons, unsaved changes dialog |
+| `FormTableLayout` | `designer_v2/lib/common_views/form_table_layout.dart` | Label + input pair layout for consistent form alignment |
+| `AsyncValueWidget` | `designer_v2/lib/common_views/async_value_widget.dart` | Handles loading / error / data states for async providers |
+| `EmptyBody` | `designer_v2/lib/common_views/empty_body.dart` | Placeholder when lists are empty (icon + title + description) |
+| `Banner` / `BannerBox` | `designer_v2/lib/common_views/banner.dart` | Info/warning messages (e.g., "Study is in draft") |
+| `SyncIndicator` | `designer_v2/lib/common_views/sync_indicator.dart` | Visual save status feedback |
+| `Sidesheet` | `designer_v2/lib/common_views/sidesheet/sidesheet.dart` | Slide-in panel for detail views (e.g., participant details) |
+
+---
+
+## Two-column layout
+
+The interventions and measurements tabs use `TwoColumnLayout` when editing a single item. The flex ratio is 7:8 (form:preview).
+
+```
+┌─────────────────────────┬──────────────────────────────┐
+│  Form (7 parts)         │  Live Preview (8 parts)      │
+│                         │                              │
+│  Title field            │  [Renders the intervention   │
+│  Description field      │   or survey exactly as it    │
+│  Task list              │   appears in the app]        │
+│  Schedule config        │                              │
+└─────────────────────────┴──────────────────────────────┘
+```
+
+This allows researchers to see the participant-facing result of their configuration in real time while editing.

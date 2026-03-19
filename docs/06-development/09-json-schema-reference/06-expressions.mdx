@@ -1,0 +1,181 @@
+---
+sidebar_position: 6
+title: Expressions
+description: JSON schema for all expression types used in eligibility criteria and question conditionals
+---
+
+# Expressions
+
+Expressions are used in two places:
+1. `EligibilityCriterion.condition` — determines whether a participant qualifies for a study
+2. `QuestionConditional.condition` — determines whether a question is shown
+
+All expressions are polymorphic, discriminated by the `type` field.
+
+**File:** `core/lib/src/models/expressions/types/`
+
+---
+
+## EligibilityCriterion
+
+**File:** `core/lib/src/models/eligibility/eligibility_criterion.dart`
+
+```json
+{
+  "id": "uuid",
+  "reason": "You must be 18 or older",
+  "condition": { /* Expression */ }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `string` | UUID |
+| `reason` | `string?` | Human-readable message shown to participant if they fail this criterion |
+| `condition` | `Expression` | The logical condition that must be `true` to qualify |
+
+---
+
+## BooleanExpression — `"type": "boolean"`
+
+Tests whether a `BooleanQuestion` answer is `true`.
+
+```json
+{ "type": "boolean", "target": "question-uuid" }
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `target` | `string` | UUID of the `BooleanQuestion` being tested |
+
+Evaluates to `true` if the answer to `target` is `true`. Evaluates to `null` if the question has not been answered yet.
+
+---
+
+## ChoiceExpression — `"type": "choice"`
+
+Tests whether the selected choice(s) match the specified set.
+
+```json
+{ "type": "choice", "target": "question-uuid", "choices": ["choice-id-1", "choice-id-2"] }
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `target` | `string` | UUID of the `ChoiceQuestion` being tested |
+| `choices` | `string[]` | Choice IDs that satisfy the condition |
+
+---
+
+## NumericExpression — `"type": "numeric"`
+
+Tests a numeric answer with a comparison operator.
+
+```json
+{ "type": "numeric", "target": "question-uuid", "comparator": ">=", "value": 18 }
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `target` | `string` | UUID of the numeric question being tested |
+| `comparator` | `string` | Comparison operator |
+| `value` | `num` | The value to compare against |
+
+**`comparator` values:**
+
+| Value | Meaning |
+|-------|---------|
+| `"="` | Equal to |
+| `"!="` | Not equal to |
+| `">"` | Greater than |
+| `"<"` | Less than |
+| `">="` | Greater than or equal |
+| `"<="` | Less than or equal |
+
+---
+
+## TextExpression — `"type": "text"`
+
+Tests a text answer.
+
+```json
+{ "type": "text", "target": "question-uuid", "comparator": "contains", "value": "diabetes" }
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `target` | `string` | UUID of the `FreeTextQuestion` being tested |
+| `comparator` | `string` | Text comparison operator |
+| `value` | `string` | The value to compare against |
+
+**`comparator` values:**
+
+| Value | Meaning |
+|-------|---------|
+| `"="` | Exact match |
+| `"!="` | Not equal |
+| `"contains"` | Substring match |
+| `"does_not_contain"` | Substring absence |
+
+---
+
+## CompositeExpression — `"type": "composite"`
+
+Recursive boolean logic container.
+
+```json
+{
+  "type": "composite",
+  "logicType": "and | or",
+  "expressions": [
+    { "type": "boolean", "target": "q1" },
+    { "type": "numeric", "target": "q2", "comparator": ">=", "value": 18 }
+  ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `logicType` | `string` | `"and"` or `"or"` |
+| `expressions` | `Expression[]` | Sub-expressions (may include nested `CompositeExpression`) |
+
+An empty `expressions` array evaluates to `true`.
+
+**Example — non-smoker AND aged 18–65:**
+
+```json
+{
+  "type": "composite",
+  "logicType": "and",
+  "expressions": [
+    { "type": "boolean", "target": "q_smoker" },
+    {
+      "type": "composite",
+      "logicType": "and",
+      "expressions": [
+        { "type": "numeric", "target": "q_age", "comparator": ">=", "value": 18 },
+        { "type": "numeric", "target": "q_age", "comparator": "<=", "value": 65 }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## NotExpression — `"type": "not"`
+
+Logical negation of another expression.
+
+```json
+{
+  "type": "not",
+  "expression": { "type": "boolean", "target": "q1" }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `expression` | `Expression` | The expression to negate |
+
+Returns `true` when the inner expression returns `false`, and vice versa. Returns `null` if the inner expression returns `null`.

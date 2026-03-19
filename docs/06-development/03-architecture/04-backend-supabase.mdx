@@ -1,0 +1,270 @@
+---
+sidebar_position: 4
+title: Backend — Supabase
+description: Authentication, database schema, RLS policies, storage, and edge functions
+---
+
+# Backend — Supabase
+
+StudyU uses [Supabase](https://supabase.com/) as its backend, which provides PostgreSQL with Row Level Security, GoTrue authentication, file storage, and auto-generated REST APIs via PostgREST.
+
+## Authentication Flow
+
+**Supported method:** Email/password only (no OAuth or magic link).
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant FlutterApp as Flutter App
+    participant SecureStore as FlutterSecureStorage
+    participant GoTrue as Supabase GoTrue
+    participant DB as PostgreSQL
+
+    Note over User,DB: First-time signup
+    User->>FlutterApp: Enter email + password
+    FlutterApp->>GoTrue: signUp(email, password)
+    GoTrue-->>FlutterApp: Session (JWT + refresh token)
+    FlutterApp->>SecureStore: Persist session
+
+    Note over User,DB: Returning user (app launch)
+    FlutterApp->>SecureStore: Load persisted session
+    SecureStore-->>FlutterApp: Stored session
+    FlutterApp->>GoTrue: Restore session / refresh token
+    GoTrue-->>FlutterApp: New JWT
+    FlutterApp->>DB: Authenticated API calls (JWT in header)
+
+    Note over User,DB: Participant app (anonymous-style)
+    FlutterApp->>FlutterApp: Generate fake email + password
+    FlutterApp->>SecureStore: Store credentials
+    FlutterApp->>GoTrue: signUp(fakeEmail, fakePassword)
+    GoTrue-->>FlutterApp: Session
+```
+
+**Key implementation details:**
+
+- **Session persistence:** Uses `FlutterSecureStorage` (encrypted device storage) via a custom `SupabaseStorage` class. The session is serialized to JSON and stored under the key `supabasePersistSessionKey`. Access is synchronized via a `Lock` to prevent race conditions.
+  - File: `flutter_common/lib/src/utils/storage.dart`
+
+- **Auth repository (Designer):** Wraps Supabase auth in a reactive stream using RxDart's `BehaviorSubject<User?>`. The designer listens to auth state changes for route guards and UI updates.
+  - File: `designer_v2/lib/repositories/auth_repository.dart`
+
+- **Participant auth (App):** Participants are authenticated with auto-generated fake email/password credentials stored in `FlutterSecureStorage`. This provides a Supabase user identity for RLS without requiring participants to create real accounts.
+  - File: `flutter_common/lib/src/utils/user.dart`
+
+- **JWT expiry:** Configured at 3600 seconds (1 hour) with automatic refresh token rotation.
+
+---
+
+## Database Schema
+
+The database has 8 primary tables. Most study configuration is stored as JSONB columns on the `study` table (interventions, observations, schedule, etc.), while participant data is normalized into separate tables.
+
+```mermaid
+erDiagram
+    study {
+        uuid id PK
+        uuid user_id FK
+        text title
+        text description
+        enum status "draft | running | closed"
+        enum participation "open | invite"
+        enum result_sharing "public | private | organization"
+        jsonb interventions
+        jsonb observations
+        jsonb schedule
+        jsonb questionnaire
+        jsonb eligibility_criteria
+        jsonb consent
+        jsonb report_specification
+        jsonb results
+        jsonb contact
+        text_arr collaborator_emails
+        bool registry_published
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    study_subject {
+        uuid id PK
+        uuid study_id FK
+        uuid user_id FK
+        timestamp started_at
+        text_arr selected_intervention_ids
+        text invite_code
+        bool is_deleted
+    }
+
+    subject_progress {
+        uuid id PK
+        uuid study_id FK
+        uuid user_id FK
+        text taskId
+        jsonb result
+        timestamp taskInstanceUTC
+    }
+
+    study_invite {
+        text code PK
+        uuid study_id FK
+        text_arr preselected_intervention_ids
+    }
+
+    app_config {
+        text id PK
+        jsonb app_min_version
+        jsonb app_privacy
+        jsonb app_terms
+        jsonb designer_privacy
+        jsonb designer_terms
+        jsonb imprint
+        jsonb contact
+        jsonb analytics
+    }
+
+    users {
+        uuid id PK
+        text email
+        jsonb preferences
+    }
+
+    repo {
+        uuid id PK
+        uuid study_id FK
+        text url
+        enum git_provider "gitlab"
+    }
+
+    study_fitbit_credentials {
+        uuid study_id PK
+        text oauth_tokens
+    }
+
+    study ||--o{ study_subject : "participants"
+    study ||--o{ study_invite : "invite codes"
+    study ||--o| repo : "code repository"
+    study ||--o| study_fitbit_credentials : "fitbit config"
+    study_subject ||--o{ subject_progress : "task completions"
+```
+
+**Computed database functions** (exposed via PostgREST as virtual columns):
+
+| Function | Returns | Purpose |
+|---|---|---|
+| `study_participant_count()` | `int` | Count of non-deleted participants |
+| `study_ended_count()` | `int` | Count of completed participants |
+| `active_subject_count()` | `int` | Participants active within last 3 days |
+| `study_missed_days()` | `int` | Consecutive days with no activity |
+| `study_length()` | `int` | Total scheduled study duration |
+| `subject_current_day()` | `int` | Participant's current day in study |
+
+These functions are used by the Designer's monitoring dashboard to display participant activity without client-side computation.
+
+---
+
+## Row Level Security (RLS)
+
+RLS is enabled on all tables. Every query is filtered by `auth.uid()` — the JWT's user ID. This means **the API cannot return data the user is not authorized to see**, regardless of what the client requests.
+
+```mermaid
+flowchart TD
+    REQ["API Request with JWT"] --> RLS{"RLS Policy Check"}
+
+    RLS -->|"Study table"| STUDY_RULES
+    RLS -->|"study_subject table"| SUBJECT_RULES
+    RLS -->|"user table"| USER_RULES
+
+    subgraph STUDY_RULES["Study Access Rules"]
+        S1["Owner? (user_id = auth.uid())"]
+        S2["Collaborator? (email in collaborator_emails)"]
+        S3["Public? (status = running/closed AND registry_published)"]
+        S4["Enrolled participant? (is_study_subject_of)"]
+    end
+
+    subgraph SUBJECT_RULES["Subject Access Rules"]
+        SB1["Own record? (user_id = auth.uid())"]
+        SB2["Study editor? (can_edit on parent study)"]
+        SB3["Public results? (has_results_public)"]
+    end
+
+    subgraph USER_RULES["User Access Rules"]
+        U1["Own record only (id = auth.uid())"]
+    end
+
+    style RLS fill:#FFCDD2,color:#000
+```
+
+**Key RLS policies:**
+
+| Policy | Table | Operation | Rule |
+|---|---|---|---|
+| Editors can do everything | `study` | ALL | `can_edit(auth.uid(), study.*)` — checks ownership or collaborator email |
+| Public study visibility | `study` | SELECT | Status is `running`/`closed` AND (registry published OR open participation) |
+| Participants can view joined study | `study` | SELECT | `is_study_subject_of(auth.uid(), study.id)` |
+| Users manage own subjects | `study_subject` | ALL | `auth.uid() = user_id` |
+| Editors see subjects | `study_subject` | SELECT | `can_edit` on parent study |
+| App config is public | `app_config` | SELECT | Always `true` |
+
+**Security helper functions** (privileges restricted to `authenticated` role only):
+
+- `can_edit(user_id, study)` — returns `true` if the user owns the study or their email is in `collaborator_emails`
+- `is_study_subject_of(user_id, study_id)` — returns `true` if the user is enrolled in the study
+- `has_results_public(subject_id)` — checks if the study has public result sharing
+- `allow_updating_only_study()` — trigger that prevents modifying restricted fields on non-draft studies
+
+**Migration files:** `database/migration/` (16 migration files tracking schema evolution)
+
+---
+
+## Edge Functions & Storage
+
+### Edge Functions
+
+Two edge functions are defined but currently minimal/empty:
+- `create-study` — study creation helper
+- `study-import` — study import functionality
+
+Configuration: Deno 1 runtime, defined in `supabase/config.toml`.
+
+### Blob Storage
+
+Supabase Storage is used for multimodal observation data (audio recordings, images from `AudioRecordingQuestion` and `ImageCapturingQuestion`).
+
+- **Bucket:** `observations` (non-public)
+- **File size limit:** 50 MiB
+- **Path structure:** `{userId}_{studyId}_{timestamp}.{ext}`
+
+**File:** `core/lib/src/util/multimodal/blob_storage_handler.dart`
+
+```dart
+// BlobStorageHandler operations (simplified)
+Future<void> uploadObservation(String blobPath, File file)
+Future<Uint8List> downloadObservation(String blobPath)
+Future<List<FileObject>> removeObservation(List<String> blobPaths)
+```
+
+---
+
+## Environment Configuration
+
+The apps load configuration from `.env` files via `flutter_dotenv`:
+
+| Variable | Purpose |
+|---|---|
+| `STUDYU_SUPABASE_URLs` | Comma-separated list of Supabase instance URLs (supports failover) |
+| `STUDYU_SUPABASE_PUBLIC_ANON_KEY` | Public anonymous key for client access |
+| `STUDYU_APP_URL` | URL of the participant app |
+| `STUDYU_DESIGNER_URL` | URL of the designer app |
+| `STUDYU_PROJECT_GENERATOR_URL` | Project generation service (optional) |
+
+**URL failover logic** (`flutter_common/lib/src/utils/env_loader.dart`):
+
+The environment loader supports multiple Supabase URLs. On initialization, it attempts to connect to each URL sequentially (5-second timeout per attempt), validates the connection by querying the `app_config` table, and uses the first working URL. This provides resilience against individual instance outages.
+
+**Local development endpoints:**
+
+| Service | URL |
+|---|---|
+| Supabase Studio | `http://localhost:54323` |
+| Local REST API | `http://127.0.0.1:8082` |
+| Local DB | `localhost:54322` |
+| Test credentials | `user1@studyu.health` / `user1pass` |

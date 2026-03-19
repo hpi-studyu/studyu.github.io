@@ -1,0 +1,105 @@
+---
+sidebar_position: 1
+title: Screen Map
+description: Complete navigation map for the StudyU Designer researcher web app
+---
+
+# Designer Screen Map
+
+The StudyU Designer is a web application used by researchers to design, publish, monitor, and analyze N-of-1 studies. It uses GoRouter for navigation, Riverpod for state management, and Reactive Forms for form handling with debounced auto-save.
+
+## Full navigation map
+
+```mermaid
+flowchart TD
+    SPLASH["/splash<br/><code>SplashPage</code>"]
+    LOGIN["/login<br/><code>LoginForm</code>"]
+    SIGNUP["/signup<br/><code>SignupForm</code>"]
+    FORGOT["/forgot_password<br/><code>PasswordForgotForm</code>"]
+    RECOVER["/password_recovery<br/><code>PasswordRecoveryForm</code>"]
+    DASH["/studies<br/><code>DashboardScreen</code>"]
+
+    subgraph "Study Design Tabs"
+        INFO["/edit/info<br/><code>StudyDesignInfoFormView</code>"]
+        ENROLL["/edit/enrollment<br/><code>StudyDesignEnrollmentFormView</code>"]
+        INTERV["/edit/interventions<br/><code>StudyDesignInterventionsFormView</code>"]
+        INTERV_EDIT["/edit/interventions/:id<br/><code>InterventionFormView</code><br/>Two-column layout"]
+        MEASURE["/edit/measurements<br/><code>StudyDesignMeasurementsFormView</code>"]
+        MEASURE_EDIT["/edit/measurements/:id<br/><code>MeasurementSurveyFormView</code><br/>Two-column layout"]
+        REPORTS["/edit/reports<br/><code>StudyDesignReportsFormView</code>"]
+        FITBIT["/edit/fitbitCredentials<br/><code>StudyDesignFitbitCredentialsFormView</code>"]
+    end
+
+    subgraph "Study Management"
+        TEST["/test<br/><code>StudyTestScreen</code>"]
+        RECRUIT["/recruit<br/><code>StudyRecruitScreen</code>"]
+        MONITOR["/monitor<br/><code>StudyMonitorScreen</code>"]
+        ANALYZE["/analyze<br/><code>StudyAnalyzeScreen</code>"]
+        SETTINGS_S["/settings<br/><code>StudySettingsDialog</code>"]
+    end
+
+    SPLASH -->|"Auth check"| LOGIN
+    SPLASH -->|"Already authenticated"| DASH
+    LOGIN --> SIGNUP
+    LOGIN --> FORGOT
+    FORGOT --> RECOVER
+    LOGIN -->|"Success"| DASH
+
+    DASH -->|"Select study"| INFO
+    INFO --- ENROLL
+    ENROLL --- INTERV
+    INTERV --- MEASURE
+    MEASURE --- REPORTS
+    REPORTS --- FITBIT
+
+    INTERV -->|"Edit intervention"| INTERV_EDIT
+    MEASURE -->|"Edit survey"| MEASURE_EDIT
+
+    INFO --- TEST
+    INFO --- RECRUIT
+    INFO --- MONITOR
+    INFO --- ANALYZE
+
+    style SPLASH fill:#FFF9C4,color:#000
+    style DASH fill:#C8E6C9,color:#000
+    style INFO fill:#BBDEFB,color:#000
+    style ENROLL fill:#BBDEFB,color:#000
+    style INTERV fill:#BBDEFB,color:#000
+    style MEASURE fill:#BBDEFB,color:#000
+    style REPORTS fill:#BBDEFB,color:#000
+    style FITBIT fill:#BBDEFB,color:#000
+    style INTERV_EDIT fill:#E1BEE7,color:#000
+    style MEASURE_EDIT fill:#E1BEE7,color:#000
+```
+
+All study screens are wrapped in a `StudyScaffold` that provides:
+- Top navigation tabs for design sections (Info, Enrollment, Interventions, Measurements, Reports)
+- Study status badge (Draft / Running / Closed)
+- Publish / Close study actions
+- Sync indicator showing save status
+
+## Authentication screens
+
+| Route | Widget | File | Purpose |
+|-------|--------|------|---------|
+| `/login` | `LoginForm` | `designer_v2/lib/features/auth/login_form_view.dart` | Email + password login. Links to signup and forgot password |
+| `/signup` | `SignupForm` | `designer_v2/lib/features/auth/signup_form_view.dart` | Email, password, confirm password, ToS checkbox |
+| `/forgot_password` | `PasswordForgotForm` | `designer_v2/lib/features/auth/password_forgot_form_view.dart` | Request password reset email |
+| `/password_recovery` | `PasswordRecoveryForm` | `designer_v2/lib/features/auth/password_recovery_form_view.dart` | Set new password (after clicking email link) |
+
+**Controller:** All auth screens share `AuthFormController` (`designer_v2/lib/features/auth/auth_form_controller.dart`), differentiated by `AuthFormKey` enum (`login`, `signup`, `passwordForgot`, `passwordRecovery`, `passwordReset`).
+
+## Dashboard (Studies List)
+
+**Route:** `/studies`
+**Widget:** `DashboardScreen`
+**File:** `designer_v2/lib/features/dashboard/dashboard_page.dart`
+**Controller:** `DashboardController` (`designer_v2/lib/features/dashboard/dashboard_controller.dart`)
+
+The dashboard is the researcher's home screen after login. It displays:
+
+- **Studies table** — all studies owned by or shared with the researcher
+- **Search bar** — filter studies by title/description
+- **Status filter** — filter by Draft / Running / Closed
+- **Pin/unpin** — mark favorite studies for quick access
+- **"New Study" button** — create a new study (starts in Draft status)

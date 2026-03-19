@@ -1,0 +1,367 @@
+---
+sidebar_position: 3
+title: Entity Relationships
+description: ERD diagrams and class diagrams showing how StudyU entities connect
+---
+
+# Entity Relationships
+
+This page shows the relationships between all StudyU domain entities via diagrams. For field-by-field descriptions, see [Core Entities](./02-core-entities.mdx).
+
+## Entity Relationship Diagram
+
+The full domain model as an ERD. `Study` is the aggregate root — all other entities hang off it directly or indirectly.
+
+```mermaid
+erDiagram
+    Study {
+        string id PK
+        string userId
+        string title
+        StudyStatus status
+        Participation participation
+    }
+    Intervention {
+        string id PK
+        string name
+        string description
+        string icon
+    }
+    InterventionTask {
+        string id PK
+        string type
+        string title
+    }
+    Observation {
+        string id PK
+        string type
+        string title
+    }
+    StudyUQuestionnaire {
+        list questions
+    }
+    Question {
+        string id PK
+        string type
+        string prompt
+    }
+    StudySchedule {
+        int numberOfCycles
+        int phaseDuration
+        bool includeBaseline
+        PhaseSequence sequence
+        string sequenceCustom
+    }
+    EligibilityCriterion {
+        string id PK
+        string reason
+    }
+    Expression {
+        string type
+    }
+    ConsentItem {
+        string id PK
+        string title
+        string description
+        string iconName
+    }
+    StudySubject {
+        string id PK
+        string studyId FK
+        string userId
+        datetime startedAt
+        list selectedInterventionIds
+        string inviteCode
+    }
+    SubjectProgress {
+        string subjectId FK
+        string interventionId
+        string taskId
+        datetime completedAt
+        string resultType
+    }
+    Result {
+        string type
+        string periodId
+    }
+    ReportSpecification {
+        ReportSection primary
+        list secondary
+    }
+    ReportSection {
+        string id PK
+        string type
+        string title
+    }
+
+    Study ||--o{ Intervention : "interventions"
+    Study ||--o{ Observation : "observations"
+    Study ||--|| StudySchedule : "schedule"
+    Study ||--|| StudyUQuestionnaire : "eligibility questionnaire"
+    Study ||--o{ EligibilityCriterion : "eligibilityCriteria"
+    Study ||--o{ ConsentItem : "consent"
+    Study ||--|| ReportSpecification : "reportSpecification"
+    Study ||--o{ StudySubject : "participants"
+    Intervention ||--o{ InterventionTask : "tasks"
+    Observation ||--|| StudyUQuestionnaire : "questions"
+    StudyUQuestionnaire ||--o{ Question : "questions"
+    EligibilityCriterion ||--|| Expression : "condition"
+    ReportSpecification ||--o{ ReportSection : "secondary"
+    StudySubject ||--o{ SubjectProgress : "progress"
+    SubjectProgress ||--|| Result : "result"
+```
+
+## Task and Data Collection Model
+
+This class diagram shows the task type hierarchy and how task completions produce typed results.
+
+```mermaid
+classDiagram
+    class Task {
+        <<abstract>>
+        +String id
+        +String type
+        +String? title
+        +Schedule schedule
+        +extractPropertyResults()
+        +getAvailableProperties()
+    }
+
+    class Schedule {
+        +List~CompletionPeriod~ completionPeriods
+        +List~StudyUTimeOfDay~ reminders
+    }
+
+    class CompletionPeriod {
+        +String id
+        +StudyUTimeOfDay unlockTime
+        +StudyUTimeOfDay lockTime
+    }
+
+    class InterventionTask {
+        <<abstract>>
+    }
+
+    class CheckmarkTask {
+        +String taskType = "checkmark"
+    }
+
+    class Observation {
+        <<abstract>>
+    }
+
+    class QuestionnaireTask {
+        +String taskType = "questionnaire"
+        +StudyUQuestionnaire questions
+    }
+
+    class SubjectProgress {
+        +String subjectId
+        +String interventionId
+        +String taskId
+        +DateTime completedAt
+        +String resultType
+        +Result result
+    }
+
+    class Result~T~ {
+        +String type
+        +String? periodId
+        +T result
+    }
+
+    class QuestionnaireState {
+        +Map~String,Answer~ answers
+    }
+
+    Task <|-- InterventionTask
+    Task <|-- Observation
+    InterventionTask <|-- CheckmarkTask
+    Observation <|-- QuestionnaireTask
+    Task *-- Schedule
+    Schedule *-- CompletionPeriod
+    CheckmarkTask --> SubjectProgress : "produces\nResult<bool>"
+    QuestionnaireTask --> SubjectProgress : "produces\nResult<QuestionnaireState>"
+    SubjectProgress *-- Result
+    Result~QuestionnaireState~ *-- QuestionnaireState
+```
+
+## Eligibility Expression Tree
+
+The expression system is a recursive tree of conditions used for eligibility criteria and question conditionals.
+
+```mermaid
+classDiagram
+    class Expression {
+        <<abstract>>
+        +String? type
+        +evaluate(QuestionnaireState) bool?
+    }
+
+    class CompositeExpression {
+        +String type = "composite"
+        +LogicType logicType
+        +List~Expression~ expressions
+        +evaluate() bool?
+    }
+
+    class NotExpression {
+        +String type = "not"
+        +Expression expression
+        +evaluate() bool?
+    }
+
+    class BooleanExpression {
+        +String type = "boolean"
+        +String questionId
+        +bool value
+        +evaluate() bool?
+    }
+
+    class ChoiceExpression {
+        +String type = "choice"
+        +String questionId
+        +String choice
+        +evaluate() bool?
+    }
+
+    class NumericExpression {
+        +String type = "numeric"
+        +String questionId
+        +String comparator
+        +num value
+        +evaluate() bool?
+    }
+
+    class TextExpression {
+        +String type = "text"
+        +String questionId
+        +String text
+        +evaluate() bool?
+    }
+
+    class EligibilityCriterion {
+        +String id
+        +String? reason
+        +Expression condition
+        +isSatisfied(QuestionnaireState) bool
+        +isViolated(QuestionnaireState) bool
+    }
+
+    Expression <|-- CompositeExpression
+    Expression <|-- NotExpression
+    Expression <|-- BooleanExpression
+    Expression <|-- ChoiceExpression
+    Expression <|-- NumericExpression
+    Expression <|-- TextExpression
+    CompositeExpression o-- Expression : "sub-expressions\n(recursive)"
+    NotExpression o-- Expression : "negated expression"
+    EligibilityCriterion *-- Expression : "condition"
+```
+
+**Example expression tree** for the criterion "participant is a non-smoker AND is between 18 and 65 years old":
+
+```
+CompositeExpression (AND)
+├── BooleanExpression(questionId: "q_smoker", value: false)
+└── CompositeExpression (AND)
+    ├── NumericExpression(questionId: "q_age", comparator: ">=", value: 18)
+    └── NumericExpression(questionId: "q_age", comparator: "<=", value: 65)
+```
+
+An empty `CompositeExpression` evaluates to `true` (no conditions = always passes).
+
+## Database Table Relationships
+
+The database-level ERD showing how the Supabase tables map to each other:
+
+```mermaid
+erDiagram
+    study {
+        uuid id PK
+        uuid user_id FK
+        text title
+        text description
+        enum status "draft | running | closed"
+        enum participation "open | invite"
+        enum result_sharing "public | private | organization"
+        jsonb interventions
+        jsonb observations
+        jsonb schedule
+        jsonb questionnaire
+        jsonb eligibility_criteria
+        jsonb consent
+        jsonb report_specification
+        jsonb results
+        jsonb contact
+        text_arr collaborator_emails
+        bool registry_published
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    study_subject {
+        uuid id PK
+        uuid study_id FK
+        uuid user_id FK
+        timestamp started_at
+        text_arr selected_intervention_ids
+        text invite_code
+        bool is_deleted
+    }
+
+    subject_progress {
+        uuid id PK
+        uuid study_id FK
+        uuid user_id FK
+        text taskId
+        jsonb result
+        timestamp taskInstanceUTC
+    }
+
+    study_invite {
+        text code PK
+        uuid study_id FK
+        text_arr preselected_intervention_ids
+    }
+
+    app_config {
+        text id PK
+        jsonb app_min_version
+        jsonb app_privacy
+        jsonb app_terms
+        jsonb designer_privacy
+        jsonb designer_terms
+        jsonb imprint
+        jsonb contact
+        jsonb analytics
+    }
+
+    users {
+        uuid id PK
+        text email
+        jsonb preferences
+    }
+
+    repo {
+        uuid id PK
+        uuid study_id FK
+        text url
+        enum git_provider "gitlab"
+    }
+
+    study_fitbit_credentials {
+        uuid study_id PK
+        text oauth_tokens
+    }
+
+    study ||--o{ study_subject : "participants"
+    study ||--o{ study_invite : "invite codes"
+    study ||--o| repo : "code repository"
+    study ||--o| study_fitbit_credentials : "fitbit config"
+    study_subject ||--o{ subject_progress : "task completions"
+```
+
+:::info
+Most study configuration (interventions, observations, schedule, eligibility criteria, consent, report) is stored as **JSONB columns** on the `study` table. Only participant data (`study_subject`, `subject_progress`) is normalized into separate tables.
+:::

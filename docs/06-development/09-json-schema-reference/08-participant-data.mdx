@@ -1,0 +1,172 @@
+---
+sidebar_position: 8
+title: Participant Data
+description: JSON schema for StudySubject, SubjectProgress, StudyInvite, StudyUUser, and AppConfig
+---
+
+# Participant Data
+
+## StudySubject
+
+**Table:** `study_subject` | **File:** `core/lib/src/models/tables/study_subject.dart`
+
+```json
+{
+  "id": "uuid",
+  "study_id": "uuid",
+  "user_id": "uuid",
+  "started_at": "ISO-8601 datetime | null",
+  "selected_intervention_ids": ["uuid", "uuid"],
+  "invite_code": "string | null",
+  "is_deleted": false
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `id` | `string` | No | UUID primary key |
+| `study_id` | `string` | No | FK to `study.id` |
+| `user_id` | `string` | No | FK to `auth.users.id` |
+| `started_at` | `string` | Yes | UTC ISO-8601 datetime when the participant began the trial |
+| `selected_intervention_ids` | `string[]` | No | The two intervention UUIDs assigned to this participant |
+| `invite_code` | `string` | Yes | Code used to join an invite-only study |
+| `is_deleted` | `bool` | No | Soft-delete flag (participant withdrew) |
+
+---
+
+## SubjectProgress
+
+**Table:** `subject_progress` | **File:** `core/lib/src/models/tables/subject_progress.dart`
+
+One row per task completion event.
+
+```json
+{
+  "completed_at": "ISO-8601 datetime",
+  "subject_id": "uuid",
+  "intervention_id": "uuid",
+  "task_id": "uuid",
+  "result_type": "QuestionnaireState | bool",
+  "result": {
+    "type": "QuestionnaireState | bool",
+    "periodId": "completion-period-uuid | null",
+    "result": { /* varies by type */ }
+  }
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `completed_at` | `string` | No | UTC ISO-8601 timestamp of completion |
+| `subject_id` | `string` | No | FK to `study_subject.id` |
+| `intervention_id` | `string` | No | Which intervention was active when this was completed (or `'__baseline'`) |
+| `task_id` | `string` | No | UUID of the completed task |
+| `result_type` | `string` | No | `'QuestionnaireState'` or `'bool'` — discriminator |
+| `result` | `object` | No | The typed result payload |
+
+**Result payload by `result_type`:**
+
+| `result_type` | `result.result` Contains | Produced By |
+|---|---|---|
+| `"bool"` | `true` | `CheckmarkTask` — the record existing means the task was done |
+| `"QuestionnaireState"` | `{ "question-id": answer, ... }` | `QuestionnaireTask` — map of question IDs to answer values |
+
+**Complete `SubjectProgress` example — CheckmarkTask:**
+
+```json
+{
+  "completed_at": "2024-03-15T08:23:00.000Z",
+  "subject_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "intervention_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+  "task_id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+  "result_type": "bool",
+  "result": {
+    "type": "bool",
+    "periodId": "d4e5f6a7-b8c9-0123-defa-234567890123",
+    "result": true
+  }
+}
+```
+
+**Complete `SubjectProgress` example — QuestionnaireTask:**
+
+```json
+{
+  "completed_at": "2024-03-15T08:45:00.000Z",
+  "subject_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "intervention_id": "__baseline",
+  "task_id": "e5f6a7b8-c9d0-1234-efab-345678901234",
+  "result_type": "QuestionnaireState",
+  "result": {
+    "type": "QuestionnaireState",
+    "periodId": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+    "result": {
+      "q_sleep_quality": 4,
+      "q_woke_up": true
+    }
+  }
+}
+```
+
+---
+
+## StudyInvite
+
+**Table:** `study_invite` | **File:** `core/lib/src/models/tables/study_invite.dart`
+
+```json
+{
+  "code": "string",
+  "study_id": "uuid",
+  "preselected_intervention_ids": ["uuid", "uuid"]
+}
+```
+
+| JSON Key | Type | Description |
+|----------|------|-------------|
+| `code` | `string` | Primary key — the shareable code string |
+| `study_id` | `string` | FK to `study.id` |
+| `preselected_intervention_ids` | `string[]` | Optional pre-assignment of interventions to invitees |
+
+---
+
+## StudyUUser
+
+**Table:** `users` | **File:** `core/lib/src/models/tables/user.dart`
+
+```json
+{
+  "id": "uuid",
+  "email": "string",
+  "preferences": {
+    "lang": "en | de | ...",
+    "pinned_studies": ["study-uuid", "..."]
+  }
+}
+```
+
+---
+
+## AppConfig
+
+**Table:** `app_config` | **File:** `core/lib/src/models/tables/app_config.dart`
+
+```json
+{
+  "id": "string",
+  "app_min_version": { "android": "string", "ios": "string" },
+  "app_privacy": { "en": "url", "de": "url" },
+  "app_terms": { "en": "url", "de": "url" },
+  "designer_privacy": { "en": "url", "de": "url" },
+  "designer_terms": { "en": "url", "de": "url" },
+  "imprint": { "en": "url", "de": "url" },
+  "contact": { "email": "string", "phone": "string", "website": "string" },
+  "analytics": { "enabled": true, "dsn": "string", "samplingRate": 1.0 }
+}
+```
+
+The `app_config` table has a single row. The `app_min_version` field is checked on app startup — if the running app version is below the minimum, the app shows `AppOutdatedScreen` and prevents the user from proceeding.
+
+:::note
+`app_config` is the only table with a public SELECT RLS policy (no authentication required). All clients, including unauthenticated ones, can read it on startup.
+:::

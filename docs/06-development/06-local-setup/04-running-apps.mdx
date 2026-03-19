@@ -1,0 +1,56 @@
+---
+sidebar_position: 4
+title: Running the Apps
+description: Start the participant app and Designer locally using melos run commands
+---
+
+# Running the Apps
+
+Each app runs as a Flutter web app in Chrome on a fixed port.
+
+## Run both apps (local environment)
+
+Open two terminal windows:
+
+```bash
+# Terminal 1 — Participant app on http://localhost:8080
+melos run local:app
+```
+
+```bash
+# Terminal 2 — Designer on http://localhost:8081
+melos run local:designer_v2
+```
+
+## Test credentials
+
+The Designer command includes pre-set credentials for the test user seeded in the local database:
+
+| Field | Value |
+|---|---|
+| Email | `user1@studyu.health` |
+| Password | `user1pass` |
+| `AUTO_LOGIN` | `false` (set to `true` to skip the login screen) |
+
+## All run modes
+
+| Command | Environment | App | Port |
+|---|---|---|---|
+| `melos run local:app` | Local Supabase | App | 8080 |
+| `melos run local:designer_v2` | Local Supabase | Designer | 8081 |
+| `melos run dev:app` | Development database | App | 8080 |
+| `melos run dev:designer_v2` | Development database | Designer | 8081 |
+| `melos run app` | Production database | App | 8080 |
+| `melos run designer_v2` | Production database | Designer | 8081 |
+
+:::warning
+Do not use `melos run app` or `melos run designer_v2` (production environment) for development work. Use local or dev environments only. Mistakes against the production database affect real study data.
+:::
+
+## App URLs after startup
+
+| App | URL |
+|---|---|
+| StudyU App | `http://localhost:8080` |
+| StudyU Designer | `http://localhost:8081` |
+| Supabase Studio | `http://localhost:54323` |

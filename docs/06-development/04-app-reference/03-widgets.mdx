@@ -1,0 +1,63 @@
+---
+sidebar_position: 3
+title: Widgets Reference
+description: Reusable widgets used across multiple screens in the participant app
+---
+
+# Widgets Reference
+
+Key shared widgets used across multiple screens in the participant app.
+
+## Core reusable widgets
+
+| Widget | File | Used In |
+|--------|------|---------|
+| `StudyTile` | `app/lib/widgets/study_tile.dart` | Study selection, study overview |
+| `InterventionCard` | `app/lib/widgets/intervention_card.dart` | Intervention selection, journey overview |
+| `BottomOnboardingNavigation` | `app/lib/widgets/bottom_onboarding_navigation.dart` | All onboarding screens (Back/Next bar with progress indicator) |
+| `QuestionnaireWidget` | `app/lib/widgets/questionnaire/questionnaire_widget.dart` | Eligibility check, questionnaire task completion |
+| `QuestionContainer` | `app/lib/widgets/questionnaire/question_container.dart` | Wraps individual question widgets |
+| `HtmlText` | `app/lib/widgets/html_text.dart` | Consent items, task headers/footers |
+| `TaskBox` | `app/lib/screens/study/dashboard/task_overview_tab/task_box.dart` | Dashboard task list |
+| `ProgressRow` | `app/lib/screens/study/dashboard/task_overview_tab/progress_row.dart` | Dashboard progress indicator |
+
+## QuestionnaireWidget
+
+`QuestionnaireWidget` (`app/lib/widgets/questionnaire/questionnaire_widget.dart`) is the central rendering component for all questionnaire interactions. It:
+
+1. Receives a `StudyUQuestionnaire` containing the list of questions to display
+2. Evaluates `QuestionConditional` rules to determine which questions are visible
+3. Renders each question using the appropriate `*QuestionWidget` subclass
+4. Wraps each question in a `QuestionContainer` that provides consistent padding and layout
+5. Calls the `onComplete` callback with a `QuestionnaireState` map when all required questions are answered
+
+The same widget is used for:
+- The eligibility questionnaire during study onboarding
+- Individual `QuestionnaireTask` completion during the study
+
+## BottomOnboardingNavigation
+
+`BottomOnboardingNavigation` appears at the bottom of every onboarding screen. It provides:
+- A "Back" button that calls `Navigator.pop()`
+- A "Next" button that calls the screen's `onNext` callback
+- A step indicator showing current position in the onboarding flow
+- A `canProceed` flag that disables the "Next" button until required input is provided
+
+## HtmlText
+
+`HtmlText` renders HTML content using the `flutter_html` package. It is used wherever the researcher-provided content may include formatting (bold, links, lists). Usage:
+- Consent item descriptions
+- Task `header` and `footer` fields
+- Study description on the overview screen
+
+## Report widgets
+
+Chart widgets under `app/lib/widgets/report/` render the visual sections of the results report. Each corresponds to a `ReportSection` subtype:
+
+| Widget | ReportSection type | What it renders |
+|---|---|---|
+| `AverageSectionWidget` | `AverageSection` | Bar chart comparing phase averages |
+| `LinearRegressionSectionWidget` | `LinearRegressionSection` | Scatter plot with trend line |
+| `GaugeComparisonSectionWidget` | `GaugeComparisonSection` | Side-by-side gauge for two phases |
+| `DescriptiveStatsSectionWidget` | `DescriptiveStatsSection` | Table of min, max, mean, SD |
+| `TextualSummarySectionWidget` | `TextualSummarySection` | Formatted text block |

@@ -6,6 +6,10 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
   title: 'StudyU - Personalized Health Interventions',
   // Eine Plattform zum Erstellen und Durchführen von personalisierten N-of-1 Studien.
   tagline: 'StudyU is a user-friendly, open-source platform for publishing user-centric N-of-1 trials and enables participants to take part in them. Start your own study today with StudyU!',
@@ -18,7 +22,7 @@ const config = {
   // GitHub Pages Deployment
   projectName: 'docs',
   organizationName: 'hpi-studyu',
-  trailingSlash: false,
+  trailingSlash: true,
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -137,6 +141,11 @@ const config = {
          label: 'Deployment',
          activeBaseRegex: 'docs/deployment/selfhosting',
        },
+      {
+         to: 'docs/development/overview',
+         label: 'Development',
+         activeBaseRegex: 'docs/development/',
+       },
        ],
       },
       {
@@ -240,6 +249,15 @@ const config = {
         '@docusaurus/plugin-ideal-image',
         {
           disableInDev: false, // By default, the plugin is inactive in development
+        },
+      ],
+      [
+        'docusaurus-plugin-mcp-server',
+        {
+          server: {
+            name: 'studyu-docs',
+            version: '1.0.0',
+          },
         },
       ],
     ]/*,
