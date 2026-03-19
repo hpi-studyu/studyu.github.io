@@ -1,0 +1,107 @@
+---
+sidebar_position: 3
+title: Local Supabase
+description: Start Docker, run supabase start, and understand the seeded test data
+---
+
+# Local Supabase
+
+After this step you will have a fully functional Supabase stack running locally, seeded with test data.
+
+## Copy the local environment template
+
+```bash
+cp flutter_common/lib/envs/.env.local.example flutter_common/lib/envs/.env.local
+```
+
+This creates `flutter_common/lib/envs/.env.local`, which the apps read when you pass `--dart-define=STUDYU_ENV=.env.local`. The file contains the default local Supabase URL and the anonymous key that the Supabase CLI uses. Do not commit this file — it is already in `.gitignore`.
+
+## Start the Supabase stack
+
+```bash
+supabase start
+```
+
+This starts all Docker containers defined in `supabase/config.toml`. On first run it pulls images (~2 GB). Subsequent starts take ~10–15 seconds.
+
+When the command completes, it prints the local API URL and the `anon` key. These values match what is already in `.env.local.example`, so no editing is needed for a standard setup.
+
+## Verify the stack is running
+
+Open [http://localhost:54323](http://localhost:54323) in a browser. You should see the Supabase Studio dashboard connected to your local PostgreSQL instance.
+
+## Local service ports
+
+| Service | Port | URL |
+|---|---|---|
+| REST API (PostgREST) | 8082 | `http://127.0.0.1:8082` |
+| PostgreSQL 15 | 54322 | `postgresql://postgres:postgres@127.0.0.1:54322/postgres` |
+| Supabase Studio | 54323 | `http://localhost:54323` |
+| Inbucket (email testing) | 54324 | `http://localhost:54324` |
+| Edge Functions runtime | 8083 | Chrome DevTools inspector |
+
+## Stop the stack
+
+```bash
+supabase stop
+```
+
+Data is persisted in Docker volumes between stops and starts. To stop and discard all data:
+
+```bash
+supabase stop --no-backup
+```
+
+---
+
+## Database seeding
+
+The local database is automatically seeded when you run `supabase start` (for the first time) or `supabase db reset`.
+
+### How seeding works
+
+```mermaid
+flowchart TD
+    A([supabase start\nor supabase db reset]) --> B[Run migrations in order]
+    B --> C[0000000000001_studyu-schema.sql\nCreates public schema tables]
+    C --> D[0000000000002_mockup-schema.sql\nCreates mockup schema\nwith helper functions]
+    D --> E[Run seed.sql]
+    E --> F[INSERT app_config\nversion · privacy URLs · analytics]
+    F --> G[mockup.create_user\nuser1@studyu.health / user1pass\nInserts into auth.users with bcrypt hash]
+    G --> H[INSERT study\nPublic demo study of user1\nwith full protocol definition]
+    H --> I([Database ready])
+```
+
+### What the mockup schema provides
+
+Migration `0000000000002_mockup-schema.sql` creates a `mockup` schema with two helper functions used only in seeding and testing:
+
+| Function | Purpose |
+|---|---|
+| `mockup.create_user(email, password)` | Creates a user in `auth.users` with a properly bcrypt-hashed password. Returns the new user's UUID. |
+| `mockup.get_user(email)` | Retrieves a user record from `auth.users` by email. |
+
+These functions exist because `auth.users` is not directly accessible via the PostgREST API and requires special handling for password hashing.
+
+### What the seed data contains
+
+`supabase/seed.sql` populates the database with:
+
+- **`app_config`** — minimum app version (`2.6.0`), placeholder privacy/terms URLs, disabled analytics
+- **Test user** — `user1@studyu.health` / `user1pass`
+- **Demo study** — "Public demo study of user1" with a complete protocol:
+  - 3 eligibility questionnaire items (back pain history, pregnancy status, critical conditions checklist)
+  - 3 eligibility criteria rules derived from those items
+  - 1 daily observation (pain VAS 0–10, painkillers boolean, sleep VAS 0–10, mood annotated scale)
+  - 3 interventions: Willow-Bark tea, Arnika gel, Warming Pad — each with a checkmark task
+  - 6 consent items covering need, risks, data handling, issues, rights, and future research
+  - Schedule: alternating sequence (AB), 7-day phases, 2 cycles, with a baseline period
+  - Report: average pain score as the primary outcome
+
+### Reset the database
+
+```bash
+supabase db reset
+```
+
+This drops and recreates the database, re-runs all migrations, and re-runs `seed.sql`. Use this whenever you want a clean slate or after pulling migration changes from the remote.

@@ -1,0 +1,277 @@
+---
+sidebar_position: 3
+title: Frontend Architecture
+description: State management, routing, and data layer for the App and Designer
+---
+
+# Frontend Architecture
+
+The two Flutter apps serve fundamentally different users and use different architectural patterns optimized for their use cases.
+
+## Two apps, one core
+
+```mermaid
+graph LR
+    subgraph "StudyU App (Participants)"
+        direction TB
+        A1["Provider + ChangeNotifier"]
+        A2["Navigator 1.0"]
+        A3["Mobile-first UI"]
+        A4["Offline-capable"]
+    end
+
+    subgraph "StudyU Designer (Researchers)"
+        direction TB
+        D1["Riverpod + Code Gen"]
+        D2["GoRouter v17"]
+        D3["Two-column web layout"]
+        D4["Complex form workflows"]
+    end
+
+    subgraph "Shared"
+        direction TB
+        S1["studyu_core models"]
+        S2["studyu_flutter_common"]
+        S3["supabase_flutter SDK"]
+    end
+
+    A1 --> S1
+    D1 --> S1
+    A4 --> S2
+    D4 --> S2
+
+    style A1 fill:#4FC3F7,color:#000
+    style A2 fill:#4FC3F7,color:#000
+    style A3 fill:#4FC3F7,color:#000
+    style A4 fill:#4FC3F7,color:#000
+    style D1 fill:#81C784,color:#000
+    style D2 fill:#81C784,color:#000
+    style D3 fill:#81C784,color:#000
+    style D4 fill:#81C784,color:#000
+```
+
+| Aspect | App (Participants) | Designer (Researchers) |
+|---|---|---|
+| **State management** | Provider (`ChangeNotifier`) | Riverpod (`flutter_riverpod` + `riverpod_generator`) |
+| **Routing** | Navigator 1.0 (`onGenerateRoute`) | GoRouter v17 (declarative, route guards) |
+| **Target platforms** | iOS, Android, Web | Web only |
+| **Form handling** | Standard Flutter forms | `reactive_forms` |
+| **Layout** | Single-column, mobile-first | Responsive two-column |
+| **API pattern** | Direct `SupabaseQuery` calls | Repository pattern with `StudyUApiClient` |
+| **Code generation** | `json_serializable` | `json_serializable` + `riverpod_generator` |
+
+---
+
+## State Management
+
+### StudyU App — Provider
+
+The participant app uses [Provider](https://pub.dev/packages/provider) with `ChangeNotifier` classes. Two providers are configured at the app root.
+
+**Entry point:** `app/lib/main.dart`
+
+```dart
+// Simplified from main.dart
+MultiProvider(
+  providers: [
+    ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage()),
+    ChangeNotifierProvider<AppState>(create: (_) => AppState()),
+  ],
+  child: MyApp(),
+)
+```
+
+- **`AppLanguage`** (`flutter_common/lib/src/utils/app_language.dart`) — manages the application locale. Persists language preference to `FlutterSecureStorage`.
+- **`AppState`** (`app/lib/models/app_state.dart`) — the core state container. Holds the active `StudySubject`, selected study, active interventions, and preview mode flag. Screens access state via `Consumer<AppState>` or `context.read<AppState>()`.
+
+This is a lightweight approach — the participant app's state is essentially one object (`AppState`) that tracks which study the user is in and their current progress.
+
+### StudyU Designer — Riverpod
+
+The designer app uses [Riverpod](https://riverpod.dev/) with code generation for more complex state management needs.
+
+**Entry point:** `designer_v2/lib/main.dart`
+
+```dart
+// Simplified from main.dart
+ProviderScope(
+  child: App(),
+)
+```
+
+Key providers (defined in `designer_v2/lib/repositories/`):
+
+| Provider | Purpose |
+|---|---|
+| `supabaseClientProvider` | Singleton Supabase client instance |
+| `authRepositoryProvider` | Authentication state (login, signup, session) |
+| `apiClientProvider` | `StudyUApiClient` for all database operations |
+| `studyRepositoryProvider` | Study CRUD with caching and optimistic updates |
+| `routerProvider` | GoRouter instance with auth-aware redirects |
+
+The designer uses Riverpod because its study design workflow involves deeply nested forms (interventions, observations, schedules, eligibility criteria), where fine-grained reactivity and async state management are essential. Form controllers extend Riverpod's `ConsumerStatefulWidget` pattern.
+
+---
+
+## Routing & Navigation
+
+### StudyU App — Navigator 1.0
+
+The participant app uses Flutter's classic imperative navigation with named routes.
+
+**Route definitions:** `app/lib/routes.dart`
+
+```mermaid
+flowchart TD
+    LOAD["/loading<br/>LoadingScreen"] --> WELCOME["/welcome<br/>WelcomeScreen"]
+    WELCOME --> SELECT["/studySelection<br/>StudySelectionScreen"]
+    SELECT --> OVERVIEW["/studyOverview<br/>StudyOverviewScreen"]
+    OVERVIEW --> CONSENT["/consent<br/>ConsentScreen"]
+    CONSENT --> INTERVENTION["/interventionSelection<br/>InterventionSelectionScreen"]
+    INTERVENTION --> JOURNEY["/journey<br/>JourneyOverviewScreen"]
+    JOURNEY --> KICKOFF["/kickoff<br/>KickoffScreen"]
+    KICKOFF --> DASH["/dashboard<br/>DashboardScreen"]
+    DASH --> TASK["Task completion<br/>(various)"]
+    DASH --> REPORT["/reportDetails<br/>ReportDetailsScreen"]
+    DASH --> SETTINGS["/settings<br/>Settings"]
+
+    LOAD -->|"Returning user<br/>(cached subject)"| DASH
+
+    style LOAD fill:#FFF9C4,color:#000
+    style DASH fill:#C8E6C9,color:#000
+```
+
+Navigation is imperative — screens call `Navigator.pushNamedAndRemoveUntil()` or `Navigator.pushReplacementNamed()` to navigate. URL query parameters are supported for web (e.g., `?studyId=xxx&preview=true`).
+
+### StudyU Designer — GoRouter
+
+The designer app uses [GoRouter](https://pub.dev/packages/go_router) for declarative, URL-driven navigation with auth guards.
+
+**Router config:** `designer_v2/lib/routing/router.dart` and `designer_v2/lib/routing/router_config.dart`
+
+```mermaid
+flowchart TD
+    SPLASH["/splash"] --> AUTH_CHECK{"Authenticated?"}
+    AUTH_CHECK -->|No| LOGIN["/login"]
+    AUTH_CHECK -->|Yes| DASHBOARD["/studies<br/>Dashboard"]
+
+    LOGIN --> SIGNUP["/signup"]
+    LOGIN --> RECOVER["/recover-password"]
+    LOGIN -->|"Success"| DASHBOARD
+
+    DASHBOARD --> STUDY["/studies/:studyId"]
+
+    STUDY --> DESIGN["/design<br/>Study Design"]
+    STUDY --> MONITOR["/monitor<br/>Participant Monitoring"]
+    STUDY --> RECRUIT["/recruit<br/>Recruitment"]
+    STUDY --> ANALYZE["/analyze<br/>Data Analysis"]
+
+    DESIGN --> INFO["Info tab"]
+    DESIGN --> ENROLLMENT["Enrollment tab"]
+    DESIGN --> INTERVENTIONS["Interventions tab"]
+    DESIGN --> MEASUREMENTS["Measurements tab"]
+    DESIGN --> REPORTS["Reports tab"]
+
+    style SPLASH fill:#FFF9C4,color:#000
+    style DASHBOARD fill:#C8E6C9,color:#000
+    style DESIGN fill:#BBDEFB,color:#000
+```
+
+The router includes an **auth redirect guard** that:
+1. Redirects unauthenticated users to `/login`
+2. Preserves the intended destination via a `from` query parameter
+3. Handles password recovery deep links
+4. Redirects authenticated users away from login/signup pages
+
+---
+
+## Data Layer & API Communication
+
+Both apps communicate with Supabase through a layered data architecture, but the layers differ in complexity.
+
+```mermaid
+graph TB
+    subgraph "StudyU App (simpler)"
+        A_UI["Screens / Widgets"]
+        A_STATE["AppState (Provider)"]
+        A_QUERY["SupabaseQuery<br/>(static utility)"]
+    end
+
+    subgraph "StudyU Designer (richer)"
+        D_UI["Pages / Features"]
+        D_PROVIDERS["Riverpod Providers"]
+        D_REPO["Repositories<br/>(StudyRepository, AuthRepository)"]
+        D_API["StudyUApiClient<br/>(implements StudyUApi)"]
+    end
+
+    subgraph "Shared (studyu_core)"
+        SUPA_OBJ["SupabaseObject<br/>SupabaseObjectFunctions"]
+        SUPA_QUERY["SupabaseQuery<br/>(CRUD operations)"]
+    end
+
+    subgraph "Supabase"
+        REST["PostgREST API"]
+        GOTRUE["GoTrue Auth"]
+    end
+
+    A_UI --> A_STATE
+    A_STATE --> A_QUERY
+    A_QUERY --> SUPA_OBJ
+    A_QUERY --> REST
+
+    D_UI --> D_PROVIDERS
+    D_PROVIDERS --> D_REPO
+    D_REPO --> D_API
+    D_API --> SUPA_QUERY
+    SUPA_QUERY --> SUPA_OBJ
+    D_API --> REST
+    D_REPO --> GOTRUE
+
+    style SUPA_OBJ fill:#FFB74D,color:#000
+    style SUPA_QUERY fill:#FFB74D,color:#000
+```
+
+### Core ORM: SupabaseObject
+
+All database entities in `studyu_core` extend `SupabaseObjectFunctions<T>`, which provides:
+
+- `toJson()` — serialize to JSON for database writes
+- `fromJson()` (factory) — deserialize from JSON
+- `tableName` — static constant mapping to the Supabase table name
+- `primaryKeys` — map of primary key columns
+
+**File:** `core/lib/src/util/supabase_object.dart`
+
+`SupabaseQuery` provides static CRUD methods:
+
+```dart
+// Core query operations (simplified)
+SupabaseQuery.getAll<T extends SupabaseObject>()
+SupabaseQuery.getById<T extends SupabaseObject>(id)
+SupabaseQuery.getByColumn<T extends SupabaseObject>(column, value)
+// Writes use upsert by default
+object.save()    // Insert or update
+object.delete()  // Delete by primary key
+```
+
+### Designer API Client
+
+The designer wraps these primitives in a domain-specific API client.
+
+**File:** `designer_v2/lib/repositories/api_client.dart`
+
+```dart
+// Key StudyUApiClient methods (simplified)
+Future<Study> saveStudy(Study study)
+Future<Study> fetchStudy(StudyID studyId)
+Future<List<Study>> getUserStudies({withParticipantActivity, forDashboard})
+Future<void> deleteStudy(Study study)
+Future<StudyInvite> fetchStudyInvite(String code)
+Future<Study> fetchStudyFromInvite(String code)  // RPC call
+Future<List<StudySubject>> deleteParticipants(Study, List<StudySubject>)
+Future<AppConfig> fetchAppConfig()
+Future<StudyUUser> fetchUser(String userId)
+Future<StudyUUser> saveUser(StudyUUser user)
+```
+
+Error handling uses custom exception types (`StudyNotFoundException`, `UserNotFoundException`, etc.) that wrap Supabase's `PostgrestException`.

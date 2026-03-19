@@ -1,0 +1,144 @@
+---
+sidebar_position: 1
+title: What is an N-of-1 Trial?
+description: The clinical research concept at the heart of StudyU, explained for developers
+---
+
+# What is an N-of-1 Trial?
+
+This document is the entry point for developers joining the StudyU project who know Flutter but have no background in clinical research. Understanding the research concept behind the product is the key to understanding why the data model looks the way it does.
+
+## The problem with traditional clinical trials
+
+A standard Randomized Controlled Trial (RCT) enrolls hundreds or thousands of participants, randomly assigns them to a treatment or a placebo group, and then measures the *average* treatment effect across the group. This answers the question "does this drug work for people *on average*?" — but it says nothing about whether the drug will work for *you specifically*.
+
+## What an N-of-1 trial is
+
+An N-of-1 trial studies a **single participant** across time. Instead of comparing two groups of different people, it compares the *same person* across different treatment phases. The participant alternates between an active treatment (Intervention A) and a control or alternative treatment (Intervention B), repeating the cycle multiple times. Because the same person experiences both conditions, many sources of individual variability are controlled automatically.
+
+This answers a different question: **"Does this treatment work for this individual?"**
+
+## Why this matters for StudyU
+
+StudyU is a platform that lets researchers design and run N-of-1 trials digitally, using participants' smartphones. The clinical insight translates directly into product requirements:
+
+- A study must have **at least two intervention arms** to alternate between.
+- A study has a **schedule** that dictates which arm is active on which days.
+- Data is collected through **tasks** that participants complete on each study day.
+- Results are meaningful *per participant*, not only in aggregate.
+
+## How a typical N-of-1 trial runs
+
+```mermaid
+flowchart TD
+    A([Participant opens StudyU app]) --> B[Browse study registry\nor enter invite code]
+    B --> C[View study details]
+    C --> D{Has eligibility check?}
+    D -- No --> F
+    D -- Yes --> E[Complete eligibility questionnaire]
+    E --> EE{All criteria\nsatisfied?}
+    EE -- No --> Z1([Not eligible — exit])
+    EE -- Yes --> F
+    F{Has consent items?}
+    F -- No --> H
+    F -- Yes --> G[Review and agree to\neach consent item]
+    G --> GG{All items\nagreed?}
+    GG -- No --> Z2([Cannot enroll — exit])
+    GG -- Yes --> H
+    H[Enrolled as StudySubject\nstartedAt recorded] --> I
+    I{includeBaseline?}
+    I -- Yes --> J[Baseline phase\nObservations only — no intervention tasks]
+    I -- No --> K
+    J --> K[Intervention phase A\nIntervention tasks + Observations]
+    K --> L[Intervention phase B\nIntervention tasks + Observations]
+    L --> M{More cycles?}
+    M -- Yes --> K
+    M -- No --> N[Study complete]
+    N --> O[View personal results report]
+```
+
+## Phase sequences
+
+The order of intervention phases within each cycle is configurable by the researcher:
+
+```mermaid
+gantt
+    title Study Phase Sequences (phaseDuration = 7 days, numberOfCycles = 2, includeBaseline = true)
+    dateFormat  YYYY-MM-DD
+    axisFormat  Day %j
+
+    section Alternating (ABAB)
+    Baseline         :baseline1, 2024-01-01, 7d
+    Intervention A   :a1, after baseline1, 7d
+    Intervention B   :b1, after a1, 7d
+    Intervention A   :a2, after b1, 7d
+    Intervention B   :b2, after a2, 7d
+
+    section Counter-Balanced (ABBA)
+    Baseline         :baseline2, 2024-01-01, 7d
+    Intervention A   :c1, after baseline2, 7d
+    Intervention B   :c2, after c1, 7d
+    Intervention B   :c3, after c2, 7d
+    Intervention A   :c4, after c3, 7d
+
+    section Randomized
+    Baseline         :baseline3, 2024-01-01, 7d
+    Intervention A   :d1, after baseline3, 7d
+    Intervention B   :d2, after d1, 7d
+    Intervention B   :d3, after d2, 7d
+    Intervention A   :d4, after d3, 7d
+
+    section Customized (ABBA string)
+    Baseline         :baseline4, 2024-01-01, 7d
+    Intervention A   :e1, after baseline4, 7d
+    Intervention B   :e2, after e1, 7d
+    Intervention B   :e3, after e2, 7d
+    Intervention A   :e4, after e3, 7d
+```
+
+> **Note:** Each bar is one phase lasting `phaseDuration` days. The counter-balanced and customized sequences shown above happen to produce the same output (ABBA) — the difference is that `customized` takes a researcher-provided string, while `counterBalanced` is computed by the `_generateCounterBalancedCycle` algorithm.
+
+## The study lifecycle
+
+```mermaid
+flowchart LR
+    A([Start]) --> B[Draft]
+    B --> |"Researcher designs study\nin Designer app"| B
+    B --> |"Researcher publishes"| C[Running]
+    C --> |"Participants enroll\nand complete tasks"| C
+    C --> |"Researcher closes\nor study period ends"| D[Closed]
+    D --> E([Analyze results])
+
+    subgraph "Draft phase — what the researcher configures"
+        F[Define interventions]
+        G[Add observations and questionnaires]
+        H[Set eligibility criteria and consent]
+        I[Configure schedule]
+        J[Set up report specification]
+    end
+
+    subgraph "Running phase — what participants do"
+        K[Enroll via app]
+        L[Complete daily tasks]
+        M[SubjectProgress records accumulate]
+    end
+
+    B -.-> F
+    C -.-> K
+```
+
+## What this means in code
+
+The N-of-1 structure maps directly to the domain model:
+
+| Clinical concept | Code entity | Where to find it |
+|---|---|---|
+| The trial protocol | `Study` | `core/lib/src/models/tables/study.dart` |
+| A treatment arm | `Intervention` | `core/lib/src/models/interventions/intervention.dart` |
+| A task the participant does per phase | `CheckmarkTask` | `core/lib/src/models/interventions/tasks/checkmark_task.dart` |
+| A measurement taken every phase | `QuestionnaireTask` | `core/lib/src/models/observations/tasks/questionnaire_task.dart` |
+| The trial schedule | `StudySchedule` | `core/lib/src/models/study_schedule/study_schedule.dart` |
+| An enrolled participant | `StudySubject` | `core/lib/src/models/tables/study_subject.dart` |
+| A single task completion | `SubjectProgress` | `core/lib/src/models/tables/subject_progress.dart` |
+
+Continue to [Core Entities](./02-core-entities.mdx) for the full glossary of each domain object.

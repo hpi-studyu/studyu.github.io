@@ -1,0 +1,106 @@
+---
+sidebar_position: 4
+title: Observations
+description: JSON schema for QuestionnaireTask and Schedule
+---
+
+# Observations
+
+## Observation — QuestionnaireTask
+
+**File:** `core/lib/src/models/observations/tasks/questionnaire_task.dart`
+
+The only concrete `Observation` type. Discriminator: `"type": "questionnaire"`.
+
+```json
+{
+  "type": "questionnaire",
+  "id": "uuid",
+  "title": "string | null",
+  "header": "string | null",
+  "footer": "string | null",
+  "schedule": { /* Schedule */ },
+  "questions": { /* StudyUQuestionnaire — serialized as Question[] */ }
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `type` | `string` | No | Always `"questionnaire"` |
+| `id` | `string` | No | UUID |
+| `title` | `string` | Yes | Display name shown to participant |
+| `header` | `string` | Yes | Optional introductory text (supports HTML) |
+| `footer` | `string` | Yes | Optional closing text (supports HTML) |
+| `schedule` | `Schedule` | No | When the task is available and when reminders fire |
+| `questions` | `Question[]` | No | The questions in this survey (polymorphic) |
+
+:::note
+Observations run during **every phase** including baseline, unlike intervention tasks which only run during their assigned phase.
+:::
+
+---
+
+## Schedule
+
+**File:** `core/lib/src/models/tasks/schedule.dart`
+
+```json
+{
+  "completionPeriods": [
+    {
+      "id": "uuid",
+      "unlockTime": "08:00",
+      "lockTime": "20:00"
+    }
+  ],
+  "reminders": ["09:00", "18:00"]
+}
+```
+
+Time values use `"HH:MM"` 24-hour format (custom `StudyUTimeOfDay` serialization).
+
+| JSON Key | Type | Description |
+|----------|------|-------------|
+| `completionPeriods` | `CompletionPeriod[]` | One or more time windows when the task is available |
+| `reminders` | `string[]` | `"HH:MM"` times when push notifications are sent |
+
+A task with multiple `CompletionPeriod` entries requires completion in **each** window independently. Each completion produces a separate `SubjectProgress` record with the window's `id` in `result.periodId`.
+
+**Example — a morning questionnaire with evening reminder:**
+
+```json
+{
+  "type": "questionnaire",
+  "id": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+  "title": "Sleep Diary",
+  "header": null,
+  "footer": null,
+  "schedule": {
+    "completionPeriods": [
+      {
+        "id": "d4e5f6a7-b8c9-0123-defa-234567890123",
+        "unlockTime": "06:00",
+        "lockTime": "10:00"
+      }
+    ],
+    "reminders": ["08:00"]
+  },
+  "questions": [
+    {
+      "type": "scale",
+      "id": "e5f6a7b8-c9d0-1234-efab-345678901234",
+      "prompt": "How would you rate your sleep quality last night? (1–10)",
+      "minimum": 1,
+      "maximum": 10,
+      "initial": 5,
+      "step": 1,
+      "annotations": []
+    },
+    {
+      "type": "boolean",
+      "id": "f6a7b8c9-d0e1-2345-fabc-456789012345",
+      "prompt": "Did you wake up during the night?"
+    }
+  ]
+}
+```

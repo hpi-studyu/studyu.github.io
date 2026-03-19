@@ -1,0 +1,171 @@
+---
+sidebar_position: 7
+title: Reports
+description: JSON schema for ReportSpecification, ReportSection types, and StudyResult types
+---
+
+# Reports
+
+## ReportSpecification
+
+**File:** `core/lib/src/models/report/report_specification.dart`
+
+```json
+{
+  "primary": { /* ReportSection | null */ },
+  "secondary": [ /* ReportSection[] */ ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `primary` | `ReportSection?` | The headline analysis shown prominently at the top of the report |
+| `secondary` | `ReportSection[]` | Additional analyses shown below the primary section |
+
+---
+
+## ReportSection (base fields)
+
+All report sections share these base fields:
+
+```json
+{
+  "type": "...",
+  "id": "uuid",
+  "title": "string | null",
+  "description": "string | null",
+  "resultProperty": {
+    "task": "task-uuid",
+    "property": "property-name"
+  }
+}
+```
+
+The `resultProperty` links the report section to a specific task's data property (e.g., a specific question in a questionnaire — the question UUID is used as the `property` value).
+
+---
+
+## AverageSection — `"type": "average"`
+
+Shows mean value per intervention phase.
+
+```json
+{
+  "type": "average",
+  "id": "uuid",
+  "title": "Average Sleep Quality",
+  "description": null,
+  "resultProperty": { "task": "task-uuid", "property": "question-uuid" },
+  "aggregate": "day | phase | intervention"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `aggregate` | `enum` | Grouping level: `"day"`, `"phase"`, or `"intervention"` |
+
+---
+
+## LinearRegressionSection — `"type": "linearRegression"`
+
+Shows a trend line over time with statistical significance.
+
+```json
+{
+  "type": "linearRegression",
+  "id": "uuid",
+  "title": "Pain Trend Over Time",
+  "description": null,
+  "resultProperty": { "task": "task-uuid", "property": "question-uuid" },
+  "alpha": 0.05,
+  "improvement": "positive | negative"
+}
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `alpha` | `double` | `0.05` | Significance threshold for the regression |
+| `improvement` | `enum` | — | `"positive"` = higher is better, `"negative"` = lower is better |
+
+---
+
+## TextualSummarySection — `"type": "textual_summary"`
+
+Researcher-authored text interpretation.
+
+```json
+{
+  "type": "textual_summary",
+  "id": "uuid",
+  "title": "Interpretation",
+  "description": "This section shows...",
+  "resultProperty": { "task": "task-uuid", "property": "question-uuid" }
+}
+```
+
+No additional fields beyond base.
+
+---
+
+## GaugeComparisonSection — `"type": "gauge_comparison"`
+
+Side-by-side gauge comparing two phases.
+
+```json
+{
+  "type": "gauge_comparison",
+  "id": "uuid",
+  "title": "Phase Comparison",
+  "description": null,
+  "resultProperty": { "task": "task-uuid", "property": "question-uuid" }
+}
+```
+
+No additional fields beyond base.
+
+---
+
+## DescriptiveStatsSection — `"type": "descriptive_stats"`
+
+Shows min, max, mean, and standard deviation.
+
+```json
+{
+  "type": "descriptive_stats",
+  "id": "uuid",
+  "title": "Descriptive Statistics",
+  "description": null,
+  "resultProperty": { "task": "task-uuid", "property": "question-uuid" }
+}
+```
+
+No additional fields beyond base.
+
+---
+
+## StudyResult Types
+
+`StudyResult` objects define exportable result definitions for CSV export.
+
+**File:** `core/lib/src/models/study_results/`
+
+### InterventionResult — `"type": "intervention"`
+
+```json
+{ "type": "intervention", "id": "uuid", "filename": "results.csv" }
+```
+
+Exports which intervention was active on each day.
+
+### NumericResult — `"type": "numeric"`
+
+```json
+{
+  "type": "numeric",
+  "id": "uuid",
+  "filename": "results.csv",
+  "resultProperty": { "task": "task-uuid", "property": "property-name" }
+}
+```
+
+Exports aggregated numeric data from a specific task property.

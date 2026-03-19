@@ -1,0 +1,37 @@
+---
+sidebar_position: 3
+title: IDE Setup
+description: Android Studio and VS Code configuration for StudyU development
+---
+
+# IDE Setup
+
+## Android Studio
+
+1. Open the repo root folder (`studyu/`) as a project.
+2. Go to **Settings → Languages & Frameworks → Flutter**.
+3. Set **Flutter SDK path** to `<path to studyu>/.fvm/flutter_sdk`.
+4. Set **Dart SDK path** to `<path to studyu>/.fvm/flutter_sdk/bin/cache/dart-sdk`.
+5. After `melos bootstrap`, run configurations for `local:app`, `local:designer_v2`, and all Melos scripts appear in the run configuration dropdown.
+
+## VS Code
+
+1. Open the repo root folder.
+2. Follow the [FVM VS Code integration guide](https://fvm.app/documentation/guides/vscode) to point the Dart extension at `.fvm/flutter_sdk`.
+3. After `melos bootstrap`, launch configurations for all apps appear in `launch.json`.
+
+:::note
+If your IDE shows "Flutter SDK not found" after setup, verify that `.fvm/flutter_sdk` exists. If it is missing, run `fvm install` again from the repo root.
+:::
+
+## Recommended extensions
+
+**VS Code:**
+- Dart
+- Flutter
+- Flutter Intl (for localization support)
+
+**Android Studio:**
+- Dart
+- Flutter
+- Flutter Intl

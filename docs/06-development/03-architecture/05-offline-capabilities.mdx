@@ -1,0 +1,171 @@
+---
+sidebar_position: 5
+title: Offline Capabilities
+description: Local storage strategy, offline data entry, sync, and conflict resolution
+---
+
+# Offline Capabilities
+
+N-of-1 trials require participants to enter data daily, sometimes in environments with poor connectivity. StudyU handles this through an exception-based offline fallback with cache synchronization on reconnection.
+
+## Local storage strategy
+
+```mermaid
+graph TD
+    subgraph "Storage Layers"
+        SECURE["<b>FlutterSecureStorage</b><br/>(encrypted, primary)<br/>Subject cache, auth credentials,<br/>language preference, analytics config"]
+        FILES["<b>File System</b><br/>Multimodal staging directory<br/>Upload queue directory"]
+        MEMORY["<b>In-Memory</b><br/>AppState.activeSubject<br/>(ChangeNotifier)"]
+    end
+
+    subgraph "Storage Keys"
+        K1["cache_subject → Full StudySubject JSON"]
+        K2["selected_study_object_id → Active subject ID"]
+        K3["user_email / user_password → Participant credentials"]
+        K4["analytics_settings → Sentry config"]
+    end
+
+    SECURE --- K1
+    SECURE --- K2
+    SECURE --- K3
+    SECURE --- K4
+
+    MEMORY -->|"onSave stream"| SECURE
+    FILES -->|"sync trigger"| SECURE
+
+    style SECURE fill:#C8E6C9,color:#000
+    style FILES fill:#FFF9C4,color:#000
+    style MEMORY fill:#BBDEFB,color:#000
+```
+
+**Key files:**
+- Cache management: `app/lib/util/cache.dart`
+- Secure storage wrapper: `flutter_common/lib/src/utils/storage.dart`
+- File staging: `app/lib/util/temporary_storage_handler.dart`
+
+**What is cached:**
+- The full `StudySubject` object (including nested `Study` and all `SubjectProgress` records), serialized to JSON in `FlutterSecureStorage`
+- Multimodal files (audio recordings, images) in a local upload directory pending blob storage upload
+- Participant credentials for re-authentication
+
+**Cache write trigger:** The app listens to the `StudySubject.onSave` stream. Every time a subject is saved (locally or remotely), the cache is updated asynchronously.
+
+---
+
+## Offline Data Entry
+
+The app uses a **try-online-first, catch-and-cache** pattern for submitting task results:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant TaskWidget as Task Widget
+    participant Subject as StudySubject
+    participant Supabase
+    participant Cache
+
+    User->>TaskWidget: Complete task
+    TaskWidget->>Subject: addResult(offline: false)
+
+    alt Online — success
+        Subject->>Supabase: SubjectProgress.save() (upsert)
+        Supabase-->>Subject: OK
+        Subject->>Supabase: StudySubject.save(onlyUpdate: true)
+        Subject->>Cache: Update local cache
+        Note over Subject,Cache: Multimodal files uploaded immediately
+    else Offline — network error
+        Subject--xSupabase: SocketException / timeout
+        TaskWidget->>Subject: addResult(offline: true)
+        Subject->>Subject: Append to local progress list
+        Subject->>Cache: Store in SecureStorage
+        Note over Subject,Cache: Multimodal files queued in upload directory
+    end
+```
+
+**Implementation:** `app/lib/util/study_subject_extension.dart`
+
+The offline result submission:
+1. Adds the `SubjectProgress` record to the in-memory `StudySubject.progress` list
+2. Sets `completedAt` to `DateTime.now().toUtc()`
+3. Moves multimodal files from staging to the upload directory (but does **not** upload them)
+4. The result is persisted to `FlutterSecureStorage` via the cache, but **not** sent to Supabase
+
+---
+
+## Synchronization & Conflict Resolution
+
+Sync happens at a single point: **app startup** on the loading screen.
+
+```mermaid
+flowchart TD
+    START["App launches"] --> CHECK{"Stored subject ID?"}
+    CHECK -->|No| WELCOME["Welcome screen<br/>(new user)"]
+    CHECK -->|Yes| FETCH["Fetch subject from Supabase"]
+
+    FETCH -->|Success| SYNC["Cache.synchronize(remoteSubject)"]
+    FETCH -->|Auth error| REAUTH["Re-authenticate"]
+    FETCH -->|Network error| LOAD_CACHE["Load from cache"]
+
+    REAUTH -->|Success| FETCH
+    REAUTH -->|Failure| LOAD_CACHE
+
+    LOAD_CACHE -->|"Cache exists"| OFFLINE["Continue with cached data<br/>(offline mode)"]
+    LOAD_CACHE -->|"No cache"| ERROR["Error screen"]
+
+    SYNC --> HAS_CACHE{"Local cache exists?"}
+    HAS_CACHE -->|No| USE_REMOTE["Use remote subject"]
+    HAS_CACHE -->|Yes| COMPARE["Compare local vs remote"]
+
+    COMPARE --> IDENTICAL{"Identical?"}
+    IDENTICAL -->|Yes| DONE["No sync needed"]
+    IDENTICAL -->|No| MERGE["Merge progress records"]
+
+    MERGE --> DEDUP["Deduplicate by completedAt timestamp"]
+    DEDUP --> UPLOAD_NEW["Upload new local records to Supabase"]
+    UPLOAD_NEW --> UPLOAD_FILES["Upload queued multimodal files"]
+    UPLOAD_FILES --> SAVE["Save merged subject"]
+    SAVE --> DONE2["Dashboard"]
+
+    style START fill:#FFF9C4,color:#000
+    style DONE fill:#C8E6C9,color:#000
+    style DONE2 fill:#C8E6C9,color:#000
+    style OFFLINE fill:#FFCC80,color:#000
+    style ERROR fill:#FFCDD2,color:#000
+```
+
+**Implementation:** `app/lib/util/cache.dart` — `Cache.synchronize()`
+
+**Conflict resolution strategy:**
+
+| Scenario | Resolution |
+|---|---|
+| No local cache | Use remote subject as-is |
+| Local and remote identical | No action needed |
+| Remote has newer `startedAt` | Trust remote (study re-entry) |
+| Progress lists differ | **Union merge** — combine both lists, deduplicate by `completedAt` timestamp |
+| Multimodal files pending | Upload during sync |
+
+The merge algorithm:
+1. Combine all local `SubjectProgress` records with all remote records
+2. Use a `HashSet` on `completedAt` `DateTime` to remove exact duplicates
+3. Any records that exist locally but not remotely are batch-upserted to Supabase
+4. Pending multimodal files in the upload directory are uploaded to blob storage
+5. The merged `StudySubject` is saved both remotely and to the local cache
+
+A `Cache.isSynchronizing` flag prevents concurrent sync operations.
+
+---
+
+## Connectivity Detection
+
+StudyU does **not** use a dedicated connectivity package (like `connectivity_plus`). Instead, connectivity is detected implicitly through exception handling:
+
+- **`SocketException`** — caught when network requests fail, triggers offline fallback
+- **`PostgrestException`** — caught for database-level errors
+- **Generic exceptions** — caught as catch-all for timeouts and malformed responses
+
+There is no explicit online/offline indicator in the UI. The app silently falls back to cached data when network operations fail and syncs when connectivity is restored on the next app launch.
+
+:::note
+This implicit approach works because `SubjectProgress` records are append-only (no updates or deletes from the participant side), which makes the union-merge strategy safe. If the app ever needs to support editing or deleting progress records, a more sophisticated conflict resolution mechanism (such as vector clocks or CRDTs) would be needed.
+:::

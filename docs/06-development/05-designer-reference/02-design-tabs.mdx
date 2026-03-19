@@ -1,0 +1,120 @@
+---
+sidebar_position: 2
+title: Design Tabs
+description: Info, Enrollment, Interventions, Measurements, Reports, and Fitbit tabs in the Designer
+---
+
+# Design Tabs
+
+Once a study is selected, the designer shows a tabbed interface for configuring the study protocol. Each tab corresponds to a section of the `Study` model.
+
+## Info Tab
+
+**Route:** `/studies/:studyId/edit/info`
+**Widget:** `StudyDesignInfoFormView`
+**File:** `designer_v2/lib/features/design/info/study_info_form_view.dart`
+**Controller:** `StudyInfoFormViewModel` (`designer_v2/lib/features/design/info/study_info_form_controller.dart`)
+**Layout:** Single column (narrow)
+
+Configure study metadata:
+- **Title** (max 100 chars)
+- **Description** (free text)
+- **Icon** (Material Icons picker)
+- **Participation type** — public (anyone) or invite-only
+- **Contact information** — organization, email, researchers
+
+Auto-saves with 1000ms debounce.
+
+---
+
+## Enrollment Tab
+
+**Route:** `/studies/:studyId/edit/enrollment`
+**Widget:** `StudyDesignEnrollmentFormView`
+**File:** `designer_v2/lib/features/design/enrollment/enrollment_form_view.dart`
+**Controller:** `EnrollmentFormViewModel` (`designer_v2/lib/features/design/enrollment/enrollment_form_controller.dart`)
+**Layout:** Single column (narrow)
+
+Configure who can join the study:
+- **Consent items** — add/edit/delete/reorder consent statements. Each has a title, description, and icon. Participants must agree to all before enrolling.
+- **Screener questions** — eligibility questionnaire with conditional logic. Only shown if enrollment type requires screening.
+
+Sub-controllers: `ConsentItemFormController`, `ScreenerQuestionFormController`
+
+---
+
+## Interventions Tab
+
+**Route:** `/studies/:studyId/edit/interventions`
+**Widget:** `StudyDesignInterventionsFormView`
+**File:** `designer_v2/lib/features/design/interventions/interventions_form_view.dart`
+**Controller:** `InterventionsFormViewModel` (`designer_v2/lib/features/design/interventions/interventions_form_controller.dart`)
+**Layout:** Single column (narrow) for list, two-column for editing individual interventions
+
+Manage the treatment arms:
+- **Intervention list** — add/edit/delete/reorder interventions
+- **Schedule configuration** — phase duration, number of cycles, sequence type
+
+When editing a single intervention (`/studies/:studyId/edit/interventions/:interventionId`):
+- **Left column:** `InterventionFormView` — title, icon, description, tasks
+- **Right column:** `InterventionPreview` — live preview of how the intervention appears in the app
+
+Sub-controller: `InterventionFormViewModel` (`designer_v2/lib/features/design/interventions/intervention_form_controller.dart`)
+
+---
+
+## Measurements Tab
+
+**Route:** `/studies/:studyId/edit/measurements`
+**Widget:** `StudyDesignMeasurementsFormView`
+**File:** `designer_v2/lib/features/design/measurements/measurements_form_view.dart`
+**Controller:** `MeasurementsFormViewModel` (`designer_v2/lib/features/design/measurements/measurements_form_controller.dart`)
+**Layout:** Single column for list, two-column for editing individual surveys
+
+Define data collection instruments:
+- **Survey list** — add/edit/delete/reorder observation questionnaires
+- **Schedule per survey** — when each survey appears (time windows, reminders)
+
+When editing a single survey (`/studies/:studyId/edit/measurements/:measurementId`):
+- **Left column:** `MeasurementSurveyFormView` — title, intro text, questions, schedule
+- **Right column:** `SurveyPreview` — live preview of the questionnaire
+
+Questions support all types: boolean, choice (single/multi), scale, annotated scale, visual analogue, free text, image capture, audio recording, Fitbit data, and pain mapping.
+
+Sub-controller: `MeasurementSurveyFormViewModel`, `QuestionFormController`
+
+---
+
+## Reports Tab
+
+**Route:** `/studies/:studyId/edit/reports`
+**Widget:** `StudyDesignReportsFormView`
+**File:** `designer_v2/lib/features/design/reports/reports_form_view.dart`
+**Controller:** `ReportsFormViewModel` (`designer_v2/lib/features/design/reports/reports_form_controller.dart`)
+**Layout:** Single column (narrow)
+
+Configure how results are presented to participants:
+- **Report sections** — add/edit/delete/reorder analysis sections
+- **Section types:** Average, Descriptive Statistics, Linear Regression, Gauge Comparison, Textual Summary
+- Each section references a specific measurement and data property
+
+Sub-controller: `ReportItemFormController`
+
+---
+
+## Fitbit Credentials Tab
+
+**Route:** `/studies/:studyId/edit/fitbitCredentials`
+**Widget:** `StudyDesignFitbitCredentialsFormView`
+**File:** `designer_v2/lib/features/design/fitbit/fitbit_credentials_form_view.dart`
+**Controller:** `FitbitCredentialsFormController`
+**Layout:** Single column (narrow)
+
+Configure Fitbit wearable integration (only editable in Draft status):
+- **Client ID** — from Fitbit developer portal
+- **Client Secret** — OAuth secret
+- **Redirect URI** — callback URL
+
+:::warning
+Fitbit credentials can only be changed while the study is in `draft` status. Once published, the credentials are locked to protect ongoing participant data collection.
+:::

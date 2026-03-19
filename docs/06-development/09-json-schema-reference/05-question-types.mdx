@@ -1,0 +1,261 @@
+---
+sidebar_position: 5
+title: Question Types
+description: JSON schema for all 10 question types with examples
+---
+
+# Question Types
+
+All questions are polymorphic and share base fields. The `type` field discriminates between subtypes.
+
+**File:** `core/lib/src/models/questionnaire/questions/`
+
+## Base fields (all question types)
+
+```json
+{
+  "type": "...",
+  "id": "uuid",
+  "prompt": "string | null",
+  "rationale": "string | null",
+  "conditional": { /* QuestionConditional | null */ }
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `type` | `string` | No | Discriminator — see values below |
+| `id` | `string` | No | UUID |
+| `prompt` | `string` | Yes | The question text shown to the participant |
+| `rationale` | `string` | Yes | Optional explanation of why the question is asked |
+| `conditional` | `QuestionConditional` | Yes | If set, this question is only shown when the condition is met |
+
+---
+
+## BooleanQuestion — `"type": "boolean"`
+
+No additional fields beyond base.
+
+```json
+{ "type": "boolean", "id": "uuid", "prompt": "Are you over 18?" }
+```
+
+The participant sees a Yes/No toggle. Answer value: `bool`.
+
+---
+
+## ChoiceQuestion — `"type": "choice"`
+
+```json
+{
+  "type": "choice",
+  "id": "uuid",
+  "prompt": "Which best describes your sleep?",
+  "multiple": false,
+  "choices": [
+    { "id": "uuid", "text": "Good" },
+    { "id": "uuid", "text": "Fair" },
+    { "id": "uuid", "text": "Poor" }
+  ]
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `multiple` | `bool` | `false` = single select, `true` = multi-select |
+| `choices` | `Choice[]` | Each has `id` (UUID) and `text` (display string) |
+
+Answer value: `String` (single choice ID) or `List<String>` (multi-select choice IDs).
+
+---
+
+## ScaleQuestion — `"type": "scale"`
+
+```json
+{
+  "type": "scale",
+  "id": "uuid",
+  "prompt": "Rate your pain (1-10)",
+  "minimum": 1,
+  "maximum": 10,
+  "initial": 5,
+  "step": 1,
+  "annotations": [
+    { "value": 1, "annotation": "No pain" },
+    { "value": 10, "annotation": "Worst pain" }
+  ],
+  "min_color": null,
+  "max_color": null
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `minimum` | `num` | Scale minimum value |
+| `maximum` | `num` | Scale maximum value |
+| `initial` | `num` | Initial slider position |
+| `step` | `num` | Step increment |
+| `annotations` | `Annotation[]` | Labels at specific scale values |
+| `min_color` | `int?` | ARGB color code for minimum end (e.g., `4278190335` = blue) |
+| `max_color` | `int?` | ARGB color code for maximum end (e.g., `4294901760` = red) |
+
+Answer value: `num`.
+
+---
+
+## AnnotatedScaleQuestion — `"type": "annotatedScale"`
+
+Same structure as `ScaleQuestion` but every step has a label. No color fields.
+
+```json
+{
+  "type": "annotatedScale",
+  "id": "uuid",
+  "prompt": "How do you feel?",
+  "minimum": 1, "maximum": 5, "initial": 3, "step": 1,
+  "annotations": [
+    { "value": 1, "annotation": "Very bad" },
+    { "value": 2, "annotation": "Bad" },
+    { "value": 3, "annotation": "Neutral" },
+    { "value": 4, "annotation": "Good" },
+    { "value": 5, "annotation": "Very good" }
+  ]
+}
+```
+
+Answer value: `num`.
+
+---
+
+## VisualAnalogueQuestion — `"type": "visualAnalogue"`
+
+Continuous slider (not stepped).
+
+```json
+{
+  "type": "visualAnalogue",
+  "id": "uuid",
+  "prompt": "How intense is the pain?",
+  "minimum": 0, "maximum": 100, "initial": 50, "step": 1,
+  "minimumColor": 4278190335,
+  "maximumColor": 4294901760,
+  "minimumAnnotation": "No pain",
+  "maximumAnnotation": "Worst pain"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `minimumColor` | `int` | ARGB color for left end (default: blue `0xFF0000FF`) |
+| `maximumColor` | `int` | ARGB color for right end (default: red `0xFFFF0000`) |
+| `minimumAnnotation` | `string` | Label at left end |
+| `maximumAnnotation` | `string` | Label at right end |
+
+Answer value: `double`.
+
+---
+
+## FreeTextQuestion — `"type": "freeText"`
+
+```json
+{
+  "type": "freeText",
+  "id": "uuid",
+  "prompt": "Describe your symptoms",
+  "lengthRange": [0, 500],
+  "textType": "any | alphanumeric | numeric | custom",
+  "customTypeExpression": "^[a-zA-Z]+$"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `lengthRange` | `int[2]` | `[minLength, maxLength]` |
+| `textType` | `enum` | Input validation type |
+| `customTypeExpression` | `string?` | Regex pattern (only when `textType == "custom"`) |
+
+Answer value: `String`.
+
+---
+
+## ImageCapturingQuestion — `"type": "ImageCapturingQuestion"`
+
+No additional fields. Captures a photo and stores it as a blob reference.
+
+```json
+{
+  "type": "ImageCapturingQuestion",
+  "id": "uuid",
+  "prompt": "Take a photo of the affected area"
+}
+```
+
+Answer value: `String` (blob storage path in format `{userId}_{studyId}_{timestamp}.jpg`).
+
+---
+
+## AudioRecordingQuestion — `"type": "AudioRecordingQuestion"`
+
+```json
+{
+  "type": "AudioRecordingQuestion",
+  "id": "uuid",
+  "prompt": "Record your cough",
+  "maxRecordingDurationSeconds": 60
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `maxRecordingDurationSeconds` | `int` | Maximum recording length in seconds |
+
+Answer value: `String` (blob storage path in format `{userId}_{studyId}_{timestamp}.m4a`).
+
+---
+
+## FitbitQuestion — `"type": "FitbitQuestion"`
+
+```json
+{
+  "type": "FitbitQuestion",
+  "id": "uuid",
+  "prompt": "Sync Fitbit data",
+  "types": ["heartrate", "sleep", "steps"]
+}
+```
+
+| Field | Type | Allowed Values |
+|-------|------|----------------|
+| `types` | `string[]` | `"heartrate"`, `"sleep"`, `"steps"` |
+
+Answer value: varies by Fitbit data type.
+
+---
+
+## PainQuestion — `"type": "pain"`
+
+No additional fields. Renders a body map for pain location marking.
+
+```json
+{
+  "type": "pain",
+  "id": "uuid",
+  "prompt": "Mark where you feel pain"
+}
+```
+
+Answer value: varies (body region identifier).
+
+---
+
+## QuestionConditional
+
+Controls conditional display of a question based on a previous answer.
+
+```json
+{
+  "condition": { /* Expression (usually CompositeExpression) */ }
+}
+```
+
+When `conditional` is set on a question, the question is only shown if `condition.evaluate(currentAnswers)` returns `true`. See [Expressions](./06-expressions.mdx) for the full expression type reference.

@@ -1,0 +1,140 @@
+---
+sidebar_position: 1
+title: System Overview
+description: High-level architecture and technology stack for the StudyU platform
+---
+
+# System Overview
+
+StudyU is a platform for running N-of-1 clinical trials digitally. The system consists of two Flutter applications sharing a common core library, backed by Supabase (PostgreSQL + Auth + Storage).
+
+## System diagram
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        APP["<b>StudyU App</b><br/>Flutter (iOS, Android, Web)<br/>For participants"]
+        DESIGNER["<b>StudyU Designer</b><br/>Flutter Web<br/>For researchers"]
+    end
+
+    subgraph "Shared Code"
+        CORE["<b>studyu_core</b><br/>Domain models, serialization,<br/>Supabase ORM utilities"]
+        COMMON["<b>studyu_flutter_common</b><br/>Shared Flutter widgets,<br/>localization, secure storage"]
+    end
+
+    subgraph "Backend (Supabase)"
+        AUTH["Auth (GoTrue)<br/>Email/password"]
+        DB["PostgreSQL<br/>RLS-protected tables"]
+        STORAGE["Storage<br/>Blob bucket: observations"]
+        EDGE["Edge Functions<br/>(minimal usage)"]
+    end
+
+    APP --> COMMON
+    APP --> CORE
+    DESIGNER --> COMMON
+    DESIGNER --> CORE
+    COMMON --> CORE
+
+    APP -->|"supabase_flutter SDK"| AUTH
+    APP -->|"REST API (PostgREST)"| DB
+    APP -->|"File uploads"| STORAGE
+
+    DESIGNER -->|"supabase_flutter SDK"| AUTH
+    DESIGNER -->|"REST API (PostgREST)"| DB
+
+    style APP fill:#4FC3F7,color:#000
+    style DESIGNER fill:#81C784,color:#000
+    style CORE fill:#FFB74D,color:#000
+    style COMMON fill:#FFB74D,color:#000
+    style AUTH fill:#CE93D8,color:#000
+    style DB fill:#CE93D8,color:#000
+    style STORAGE fill:#CE93D8,color:#000
+    style EDGE fill:#CE93D8,color:#000
+```
+
+## Key architectural decisions
+
+| Decision | Choice | Rationale |
+|---|---|---|
+| Monorepo | Melos-managed workspace | Shared models and utilities across two apps |
+| Backend | Supabase (hosted PostgreSQL) | Auth, RLS, real-time, and storage out of the box |
+| State management (App) | Provider | Lightweight, sufficient for mobile-first participant flows |
+| State management (Designer) | Riverpod | Complex form workflows and async data management |
+| Serialization | json_serializable (code gen) | Compile-time safety for 30+ model classes |
+| Offline strategy | Exception-based fallback + cache sync | Pragmatic for clinical data entry in low-connectivity scenarios |
+
+## Technology stack
+
+```mermaid
+graph TB
+    subgraph "Frontend"
+        FLUTTER["Flutter / Dart 3.8+"]
+        PROVIDER["Provider (App)"]
+        RIVERPOD["Riverpod (Designer)"]
+        GOROUTER["GoRouter (Designer)"]
+        NAV1["Navigator 1.0 (App)"]
+        JSON_SER["json_serializable"]
+        REACTIVE["reactive_forms (Designer)"]
+    end
+
+    subgraph "Shared Libraries"
+        CORE_PKG["studyu_core<br/>Models, API, utilities"]
+        COMMON_PKG["studyu_flutter_common<br/>Storage, localization"]
+        SUPA_FL["supabase_flutter<br/>Client SDK"]
+    end
+
+    subgraph "Backend"
+        SUPA["Supabase"]
+        PG["PostgreSQL 15"]
+        GOTRUE2["GoTrue (Auth)"]
+        POSTGREST["PostgREST (API)"]
+        STORAGE2["Storage (Blobs)"]
+    end
+
+    subgraph "Tooling"
+        MELOS["Melos (monorepo)"]
+        BUILD_RUNNER["build_runner (code gen)"]
+        SENTRY["Sentry (error tracking)"]
+    end
+
+    FLUTTER --> PROVIDER
+    FLUTTER --> RIVERPOD
+    FLUTTER --> GOROUTER
+    FLUTTER --> NAV1
+    FLUTTER --> JSON_SER
+    FLUTTER --> REACTIVE
+
+    PROVIDER --> CORE_PKG
+    RIVERPOD --> CORE_PKG
+    CORE_PKG --> SUPA_FL
+    COMMON_PKG --> SUPA_FL
+    SUPA_FL --> SUPA
+
+    SUPA --> PG
+    SUPA --> GOTRUE2
+    SUPA --> POSTGREST
+    SUPA --> STORAGE2
+
+    MELOS --> FLUTTER
+    BUILD_RUNNER --> JSON_SER
+
+    style FLUTTER fill:#4FC3F7,color:#000
+    style SUPA fill:#CE93D8,color:#000
+    style PG fill:#CE93D8,color:#000
+    style CORE_PKG fill:#FFB74D,color:#000
+    style COMMON_PKG fill:#FFB74D,color:#000
+```
+
+## The two apps compared
+
+| Aspect | App (Participants) | Designer (Researchers) |
+|---|---|---|
+| **State management** | Provider (`ChangeNotifier`) | Riverpod (`flutter_riverpod` + `riverpod_generator`) |
+| **Routing** | Navigator 1.0 (`onGenerateRoute`) | GoRouter v17 (declarative, route guards) |
+| **Target platforms** | iOS, Android, Web | Web only |
+| **Form handling** | Standard Flutter forms | `reactive_forms` |
+| **Layout** | Single-column, mobile-first | Responsive two-column |
+| **API pattern** | Direct `SupabaseQuery` calls | Repository pattern with `StudyUApiClient` |
+| **Code generation** | `json_serializable` | `json_serializable` + `riverpod_generator` |
+
+Continue to [Monorepo Structure](./02-monorepo-structure.mdx) for the package dependency graph and Melos scripts.

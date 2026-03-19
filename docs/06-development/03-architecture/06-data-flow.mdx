@@ -1,0 +1,159 @@
+---
+sidebar_position: 6
+title: Data Flow
+description: End-to-end data flow from study design to result analysis, and the auth model
+---
+
+# Data Flow
+
+This page shows the complete data flow through the StudyU system: from a researcher designing a study to a participant submitting results to data export.
+
+## Full data flow: from study design to result analysis
+
+```mermaid
+flowchart LR
+    subgraph "Researcher (Designer App)"
+        R1["Design study protocol"]
+        R2["Publish study (draft → running)"]
+        R3["Monitor participants"]
+        R4["Analyze & export data"]
+    end
+
+    subgraph "Supabase Backend"
+        DB_STUDY["study table<br/>(JSONB protocol)"]
+        DB_SUBJECT["study_subject table"]
+        DB_PROGRESS["subject_progress table"]
+        DB_INVITE["study_invite table"]
+        BLOB["Storage: observations bucket"]
+    end
+
+    subgraph "Participant (StudyU App)"
+        P1["Browse / enter invite code"]
+        P2["Eligibility + consent"]
+        P3["Daily task completion"]
+        P4["View personal report"]
+    end
+
+    subgraph "Offline Layer"
+        CACHE["FlutterSecureStorage<br/>(cached subject + progress)"]
+        FILES["Local file queue<br/>(audio, images)"]
+    end
+
+    R1 -->|"save"| DB_STUDY
+    R2 -->|"status update"| DB_STUDY
+    R3 -->|"read"| DB_SUBJECT
+    R3 -->|"read"| DB_PROGRESS
+    R4 -->|"read + CSV export"| DB_PROGRESS
+
+    DB_STUDY -->|"read"| P1
+    DB_INVITE -->|"validate code"| P2
+    P2 -->|"create"| DB_SUBJECT
+    P3 -->|"write"| DB_PROGRESS
+    P3 -->|"upload media"| BLOB
+    DB_PROGRESS -->|"read"| P4
+
+    P3 -.->|"offline fallback"| CACHE
+    P3 -.->|"stage files"| FILES
+    CACHE -.->|"sync on reconnect"| DB_PROGRESS
+    FILES -.->|"upload on sync"| BLOB
+```
+
+## Authentication & authorization model
+
+```mermaid
+flowchart TD
+    subgraph "User Types"
+        RESEARCHER["Researcher<br/>Real email/password account"]
+        PARTICIPANT["Participant<br/>Auto-generated credentials"]
+    end
+
+    subgraph "Supabase Auth"
+        GOTRUE["GoTrue<br/>JWT issuance & refresh"]
+    end
+
+    subgraph "API Layer"
+        REST["PostgREST<br/>JWT → auth.uid()"]
+    end
+
+    subgraph "RLS Policies"
+        OWNER["Study owner?<br/>user_id = auth.uid()"]
+        COLLAB["Collaborator?<br/>email in collaborator_emails"]
+        ENROLLED["Enrolled?<br/>is_study_subject_of()"]
+        PUBLIC["Public study?<br/>registry_published"]
+    end
+
+    RESEARCHER --> GOTRUE
+    PARTICIPANT --> GOTRUE
+    GOTRUE -->|JWT| REST
+    REST --> OWNER
+    REST --> COLLAB
+    REST --> ENROLLED
+    REST --> PUBLIC
+
+    OWNER -->|"Full CRUD on own studies"| DB["study, study_subject,<br/>subject_progress"]
+    COLLAB -->|"Full CRUD on shared studies"| DB
+    ENROLLED -->|"Read study + Write own progress"| DB
+    PUBLIC -->|"Read-only study listing"| DB
+```
+
+## Task completion data flow (detailed)
+
+This sequence shows exactly what happens when a participant completes a task, online or offline:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant TaskWidget as Task Widget
+    participant Subject as StudySubject
+    participant Supabase
+    participant Cache
+
+    User->>TaskWidget: Complete task
+    TaskWidget->>Subject: addResult(offline: false)
+
+    alt Online — success
+        Subject->>Supabase: SubjectProgress.save() (upsert)
+        Supabase-->>Subject: OK
+        Subject->>Supabase: StudySubject.save(onlyUpdate: true)
+        Subject->>Cache: Update local cache
+        Note over Subject,Cache: Multimodal files uploaded immediately
+    else Offline — network error
+        Subject--xSupabase: SocketException / timeout
+        TaskWidget->>Subject: addResult(offline: true)
+        Subject->>Subject: Append to local progress list
+        Subject->>Cache: Store in SecureStorage
+        Note over Subject,Cache: Multimodal files queued in upload directory
+    end
+```
+
+## Study publishing flow
+
+```mermaid
+flowchart LR
+    DRAFT["Draft<br/>Researcher configures study"] -->|"Publish button"| RUNNING
+    RUNNING["Running<br/>Participants can enroll"] -->|"Close button"| CLOSED
+    CLOSED["Closed<br/>Data available for analysis"]
+
+    subgraph "What changes at publish"
+        P1["status: draft → running"]
+        P2["Study becomes visible in registry\n(if registry_published)"]
+        P3["Participants can create study_subject rows"]
+    end
+
+    subgraph "What is locked at running"
+        L1["Intervention structure"]
+        L2["Observation definitions"]
+        L3["Schedule configuration"]
+    end
+
+    RUNNING -.-> P1
+    RUNNING -.-> P2
+    RUNNING -.-> P3
+    RUNNING -.-> L1
+    RUNNING -.-> L2
+    RUNNING -.-> L3
+```
+
+:::note
+The `allow_updating_only_study()` database trigger prevents modification of locked fields on non-draft studies, enforcing this at the database level rather than relying on application-level guards.
+:::

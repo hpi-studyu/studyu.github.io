@@ -1,0 +1,50 @@
+---
+sidebar_position: 1
+title: Edit-Build-Test Cycle
+description: Daily development workflow and quality commands
+---
+
+# Edit-Build-Test Cycle
+
+## Typical workflow
+
+```mermaid
+flowchart TD
+    A([Checkout feature branch]) --> B[Edit code]
+    B --> C{Changed core\nmodels?}
+    C -->|Yes| D[melos run generate\nregenerate *.g.dart]
+    C -->|No| E[melos run qualitycheck\nformat + analyze]
+    D --> E
+    E --> F{Errors?}
+    F -->|Yes| G[Fix errors]
+    G --> E
+    F -->|No| H[melos run test]
+    H --> I{Tests pass?}
+    I -->|No| J[Fix tests]
+    J --> B
+    I -->|Yes| K[Commit with conventional commit message]
+    K --> L[Open PR against dev branch]
+```
+
+## Quality commands
+
+Run these from the repo root. All scripts are defined in `pubspec.yaml` under `melos.scripts`.
+
+| Command | What it does |
+|---|---|
+| `melos format` | Formats all Dart files using `dart format` |
+| `melos run fix` | Applies auto-fixable lint errors with `dart fix --apply` |
+| `melos run test` | Runs `flutter test` in every package that has a `test/` directory |
+| `melos run generate` | Regenerates `*.g.dart` files in `core` and `designer_v2` |
+| `melos run qualitycheck` | Runs format → generate → `flutter analyze` in sequence |
+| `melos run reset` | Full clean reset: `git clean`, `melos clean`, `flutter clean`, `melos bootstrap` |
+| `melos run outdated` | Lists outdated dependencies in all packages |
+| `melos run upgrade` | Upgrades all dependencies and re-bootstraps |
+
+Run `melos run qualitycheck` before opening a pull request. It is the closest equivalent to what CI checks.
+
+## Branch strategy
+
+- Base feature branches on `dev`, not `main`
+- Open pull requests against `dev`
+- `main` receives merges from `dev` on release

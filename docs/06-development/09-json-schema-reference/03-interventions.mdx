@@ -1,0 +1,97 @@
+---
+sidebar_position: 3
+title: Interventions
+description: JSON schema for Intervention and CheckmarkTask
+---
+
+# Interventions
+
+## Intervention
+
+**File:** `core/lib/src/models/interventions/intervention.dart`
+
+```json
+{
+  "id": "uuid",
+  "name": "string | null",
+  "description": "string | null",
+  "icon": "string",
+  "tasks": [ /* InterventionTask[] */ ]
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `id` | `string` | No | UUID |
+| `name` | `string` | Yes | Display name (e.g., "Vitamin D 2000 IU") |
+| `description` | `string` | Yes | Instructions shown to the participant |
+| `icon` | `string` | No | Icon identifier string |
+| `tasks` | `InterventionTask[]` | No | Activities the participant performs during this phase |
+
+---
+
+## InterventionTask — CheckmarkTask
+
+**File:** `core/lib/src/models/interventions/tasks/checkmark_task.dart`
+
+The only concrete `InterventionTask` type. Discriminator: `"type": "checkmark"`.
+
+```json
+{
+  "type": "checkmark",
+  "id": "uuid",
+  "title": "string | null",
+  "header": "string | null",
+  "footer": "string | null",
+  "schedule": {
+    "completionPeriods": [
+      {
+        "id": "uuid",
+        "unlockTime": "HH:MM",
+        "lockTime": "HH:MM"
+      }
+    ],
+    "reminders": ["HH:MM", "..."]
+  }
+}
+```
+
+| JSON Key | Type | Nullable | Description |
+|----------|------|----------|-------------|
+| `type` | `string` | No | Always `"checkmark"` |
+| `id` | `string` | No | UUID |
+| `title` | `string` | Yes | Display name shown to participant |
+| `header` | `string` | Yes | Optional instructional text shown above the task (supports HTML) |
+| `footer` | `string` | Yes | Optional text shown below the task (supports HTML) |
+| `schedule.completionPeriods` | `CompletionPeriod[]` | No | Time windows when the task can be completed |
+| `schedule.reminders` | `string[]` | No | `"HH:MM"` times for push notifications |
+
+### CompletionPeriod
+
+| JSON Key | Type | Description |
+|----------|------|-------------|
+| `id` | `string` | UUID — ties back to `SubjectProgress.result.periodId` |
+| `unlockTime` | `string` | `"HH:MM"` 24-hour time when the window opens |
+| `lockTime` | `string` | `"HH:MM"` 24-hour time when the window closes |
+
+**Example — a morning supplement task with reminder:**
+
+```json
+{
+  "type": "checkmark",
+  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "title": "Take your Vitamin D supplement",
+  "header": "<p>Take one 2000 IU tablet with breakfast.</p>",
+  "footer": null,
+  "schedule": {
+    "completionPeriods": [
+      {
+        "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+        "unlockTime": "07:00",
+        "lockTime": "10:00"
+      }
+    ],
+    "reminders": ["08:00"]
+  }
+}
+```

@@ -1,0 +1,100 @@
+---
+sidebar_position: 4
+title: Troubleshooting
+description: Common issues and solutions for StudyU local development
+---
+
+# Troubleshooting
+
+## `melos: command not found`
+
+```bash
+dart pub global activate melos
+export PATH="$PATH:$HOME/.pub-cache/bin"
+```
+
+Add the `PATH` export to your shell profile so it persists.
+
+---
+
+## `melos run` uses the wrong Flutter version
+
+You need `MELOS_SDK_PATH` set:
+
+```bash
+export MELOS_SDK_PATH=.fvm/flutter_sdk
+```
+
+Verify with `melos run local:app` — if it still uses the system Flutter, check that `.fvm/flutter_sdk` symlink exists:
+
+```bash
+ls .fvm/
+```
+
+If `.fvm/flutter_sdk` is missing, run `fvm install` from the repo root.
+
+---
+
+## `supabase start` fails with "Cannot connect to the Docker daemon"
+
+Docker Desktop is not running. Start it from the application menu or:
+
+```bash
+open -a Docker
+```
+
+Wait for the Docker engine to fully start (the whale icon in the menu bar stops animating), then retry `supabase start`.
+
+---
+
+## `supabase start` hangs or fails on port conflict
+
+Another process is using one of the required ports (8082, 54322, 54323, 54324). Find and stop it:
+
+```bash
+lsof -i :54322
+```
+
+Or change the conflicting port in `supabase/config.toml` and update `.env.local` to match.
+
+---
+
+## App shows "Invalid API key" or fails to connect to Supabase
+
+The `anon` key in `flutter_common/lib/envs/.env.local` does not match your running Supabase instance. Run `supabase status` to print the current keys and update `.env.local` accordingly.
+
+If you ran `supabase db reset` after a fresh start, the keys remain the same and do not need updating.
+
+---
+
+## Core compile errors after pulling from remote
+
+Someone changed a model in `core/` and committed updated `*.g.dart` files. Pull and run:
+
+```bash
+melos run generate
+```
+
+If the generated files conflict with uncommitted local changes, stash first:
+
+```bash
+git stash
+melos run generate
+git stash pop
+```
+
+---
+
+## `flutter analyze` reports errors in generated files
+
+Generated files occasionally contain analyzer hints. These are safe to ignore if they only appear in `*.g.dart` files. If `melos run qualitycheck` fails because of them, check whether `analysis_options.yaml` at the root already excludes generated files — if not, that is a bug worth raising.
+
+---
+
+## App loads but shows a blank screen
+
+Check the browser console (F12 → Console) for JavaScript errors. Common causes:
+
+- **CORS error** — the Supabase URL in `.env.local` is wrong or the local stack is not running
+- **Missing environment variable** — `STUDYU_ENV` was not passed to the `flutter run` command
+- **Outdated app version** — `app_config.app_min_version` in the database is higher than the running app version

@@ -1,0 +1,131 @@
+---
+sidebar_position: 2
+title: Study Model
+description: JSON schema for the Study root object, Contact, and StudySchedule
+---
+
+# Study Model
+
+## Study (root object)
+
+**Table:** `study` | **File:** `core/lib/src/models/tables/study.dart`
+
+```json
+{
+  "id": "uuid",
+  "title": "string | null",
+  "description": "string | null",
+  "user_id": "uuid",
+  "participation": "open | invite",
+  "result_sharing": "public | private | organization",
+  "contact": { /* Contact */ },
+  "icon_name": "string",
+  "published": false,
+  "status": "draft | running | closed",
+  "registry_published": false,
+  "collaborator_emails": ["string", "..."],
+  "questionnaire": [ /* Question[] — eligibility screening */ ],
+  "eligibility_criteria": [ /* EligibilityCriterion[] */ ],
+  "consent": [ /* ConsentItem[] */ ],
+  "interventions": [ /* Intervention[] */ ],
+  "observations": [ /* Observation[] */ ],
+  "schedule": { /* StudySchedule */ },
+  "report_specification": { /* ReportSpecification */ },
+  "results": [ /* StudyResult[] */ ]
+}
+```
+
+**Field reference:**
+
+| JSON Key | Type | Nullable | Default | Description |
+|----------|------|----------|---------|-------------|
+| `id` | `string` | No | UUID generated | Primary key |
+| `title` | `string` | Yes | `null` | Study display name |
+| `description` | `string` | Yes | `""` | Free-text description |
+| `user_id` | `string` | No | — | Owner's auth user ID |
+| `participation` | `enum` | No | `"invite"` | `"open"` = anyone can join, `"invite"` = invite code required |
+| `result_sharing` | `enum` | No | `"private"` | Controls who can see participant results |
+| `contact` | `object` | No | `{}` | Nested Contact object (see below) |
+| `icon_name` | `string` | No | `"accountHeart"` | Material icon identifier |
+| `published` | `bool` | No | `false` | Deprecated — use `status` instead |
+| `status` | `enum` | No | `"draft"` | Study lifecycle state |
+| `registry_published` | `bool` | No | `false` | Whether study appears in public registry |
+| `collaborator_emails` | `string[]` | No | `[]` | Co-researchers who can edit the study |
+| `questionnaire` | `Question[]` | No | `[]` | Eligibility screening questions (polymorphic) |
+| `eligibility_criteria` | `EligibilityCriterion[]` | No | `[]` | Rules evaluated against questionnaire answers |
+| `consent` | `ConsentItem[]` | No | `[]` | Informed consent statements |
+| `interventions` | `Intervention[]` | No | `[]` | Treatment arms (typically 2) |
+| `observations` | `Observation[]` | No | `[]` | Data collection tasks (run every phase) |
+| `schedule` | `StudySchedule` | No | `{}` | Temporal protocol structure |
+| `report_specification` | `ReportSpecification` | No | `{}` | Result visualization config |
+| `results` | `StudyResult[]` | No | `[]` | Exportable result definitions |
+
+**Fields loaded from relations but NOT serialized to Study JSON:**
+
+| Field | Type | Source |
+|-------|------|--------|
+| `participantCount` | `int` | Computed DB function `study_participant_count()` |
+| `endedCount` | `int` | Computed DB function `study_ended_count()` |
+| `activeSubjectCount` | `int` | Computed DB function `active_subject_count()` |
+| `missedDays` | `List<int>` | Computed DB function `study_missed_days()` |
+| `repo` | `Repo` | Joined from `repo` table |
+| `invites` | `List<StudyInvite>` | Joined from `study_invite` table |
+| `participants` | `List<StudySubject>` | Joined from `study_subject` table |
+| `participantsProgress` | `List<SubjectProgress>` | Joined from `subject_progress` table |
+| `createdAt` | `DateTime` | Database `created_at` column |
+
+---
+
+## Contact
+
+```json
+{
+  "organization": "string",
+  "institutionalReviewBoard": "string | null",
+  "institutionalReviewBoardNumber": "string | null",
+  "researchers": "string | null",
+  "email": "string",
+  "website": "string",
+  "phone": "string",
+  "additionalInfo": "string | null"
+}
+```
+
+---
+
+## StudySchedule
+
+**File:** `core/lib/src/models/study_schedule/study_schedule.dart`
+
+```json
+{
+  "numberOfCycles": 2,
+  "phaseDuration": 7,
+  "includeBaseline": true,
+  "sequence": "alternating | counterBalanced | randomized | customized",
+  "sequenceCustom": "ABAB"
+}
+```
+
+| JSON Key | Type | Default | Description |
+|----------|------|---------|-------------|
+| `numberOfCycles` | `int` | `2` | How many times the A/B cycle repeats |
+| `phaseDuration` | `int` | `7` | Days per phase |
+| `includeBaseline` | `bool` | `true` | Whether a baseline phase precedes interventions |
+| `sequence` | `enum` | `"alternating"` | Phase ordering strategy |
+| `sequenceCustom` | `string` | `"ABAB"` | Custom sequence string (only used when `sequence == "customized"`) |
+
+---
+
+## ConsentItem
+
+**File:** `core/lib/src/models/consent/consent_item.dart`
+
+```json
+{
+  "id": "uuid",
+  "title": "Data Storage",
+  "description": "Your data will be stored on secure servers...",
+  "iconName": "textBoxCheck"
+}
+```

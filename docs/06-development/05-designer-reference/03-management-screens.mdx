@@ -1,0 +1,97 @@
+---
+sidebar_position: 3
+title: Management Screens
+description: Test, Recruit, Monitor, and Analyze screens in the StudyU Designer
+---
+
+# Management Screens
+
+The management screens handle the operational lifecycle of a running study: testing before launch, recruiting participants, tracking engagement, and exporting data.
+
+## Test Screen
+
+**Route:** `/studies/:studyId/test`
+**Widget:** `StudyTestScreen`
+**File:** `designer_v2/lib/features/study/study_test_page.dart`
+
+Preview the study as a participant would see it:
+- Launches the participant app in an embedded frame (preview mode)
+- Select which intervention to preview
+- Validates study configuration before allowing test
+- Runs study validation checks
+
+---
+
+## Recruit Screen
+
+**Route:** `/studies/:studyId/recruit`
+**Widget:** `StudyRecruitScreen`
+**File:** `designer_v2/lib/features/recruit/study_recruit_page.dart`
+**Controller:** `StudyRecruitController` (`designer_v2/lib/features/recruit/study_recruit_controller.dart`)
+
+Manage participant recruitment (invite-only studies):
+- **Invite code table** — list of generated codes
+- **Create code** — generate new invite codes, optionally pre-assign interventions
+- **Copy/share** — copy code for distribution
+- **Enrollment tracking** — participant count per code
+- **Delete/revoke** — remove unused codes
+
+Sub-form: `InviteCodeFormController`
+
+---
+
+## Monitor Screen
+
+**Route:** `/studies/:studyId/monitor`
+**Widget:** `StudyMonitorScreen`
+**File:** `designer_v2/lib/features/monitor/study_monitor_page.dart`
+
+Track participant engagement:
+- **Summary statistics** — active, inactive, dropout, completed counts
+- **Participant table** — enrollment date, last activity, current phase, progress
+- **Detail sidesheet** — click a participant to see full progress details
+- **Status categories:**
+  - Active — currently engaged and on schedule
+  - Inactive — enrolled but not responding
+  - Dropout — explicitly withdrew
+  - Completed — finished all study phases
+
+The monitor uses computed database functions (`active_subject_count()`, `study_missed_days()`) to display participant activity without client-side computation. See [Database Reference: Schema](../08-database-reference/01-schema.mdx) for the full list.
+
+---
+
+## Analyze Screen
+
+**Route:** `/studies/:studyId/analyze`
+**Widget:** `StudyAnalyzeScreen`
+**File:** `designer_v2/lib/features/analyze/study_analyze_page.dart`
+**Controller:** `StudyAnalyzeController` (`designer_v2/lib/features/analyze/study_analyze_controller.dart`)
+
+Export study data:
+- **Export button** — download data as CSV
+- Only enabled when the study has participant data
+- Shows status banner for draft studies
+
+---
+
+## Study Settings Dialog
+
+**Route:** `/studies/:studyId/settings`
+**Widget:** `StudySettingsDialog`
+**File:** `designer_v2/lib/features/study/settings/study_settings_dialog.dart`
+
+Modal dialog for study visibility:
+- **Publish to registry** — toggle to list in the public study registry
+- **Publish results** — toggle to make results publicly accessible
+
+---
+
+## Account Settings Dialog
+
+**Route:** `/settings`
+**Widget:** `AccountSettingsDialog`
+**File:** `designer_v2/lib/features/account/account_settings.dart`
+
+Modal dialog for user account:
+- **Language picker** — switch locale
+- **Change password** — current password, new password, confirm

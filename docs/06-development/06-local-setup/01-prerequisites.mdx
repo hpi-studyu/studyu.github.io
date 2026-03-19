@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+title: Prerequisites
+description: Tools to install before setting up StudyU for local development
+---
+
+# Prerequisites
+
+Install these tools before following any setup steps. Version requirements are strict where noted.
+
+| Tool | Version | Why needed | Install |
+|---|---|---|---|
+| FVM (Flutter Version Manager) | Latest | Pins Flutter to 3.38.1 per `.fvmrc` | `brew install fvm` or [fvm.app](https://fvm.app) |
+| Flutter | **3.38.1** (via FVM) | App and Designer are Flutter web apps | Managed by FVM — do not install manually |
+| Dart SDK | &gt;=3.5.0 &lt;4.0.0 | Comes bundled with Flutter via FVM | — |
+| Docker Desktop | Latest | Supabase CLI uses Docker for all local services | [docker.com](https://www.docker.com/products/docker-desktop/) |
+| Supabase CLI | Latest | Runs local Postgres + Auth + Storage stack | `brew install supabase/tap/supabase` |
+| Melos | Latest | Monorepo bootstrapping and script runner | `dart pub global activate melos` |
+| Node.js | >=18 (optional) | Only needed if developing Edge Functions | [nodejs.org](https://nodejs.org) |
+
+:::warning
+Do not install Flutter via `brew` or the system package manager. FVM manages the Flutter version for this project. Installing Flutter independently and adding it to `PATH` will cause `melos` to use the wrong SDK version.
+:::
+
+:::warning
+Docker Desktop must be running before you execute `supabase start`. If Docker is not running, the command will fail immediately with a socket connection error.
+:::
+
+## Verify your environment
+
+After installing, confirm these commands resolve correctly:
+
+```bash
+fvm --version
+docker info
+supabase --version
+dart pub global list | grep melos
+```
+
+If `melos` is not found after `dart pub global activate melos`, add the pub cache bin directory to your PATH:
+
+```bash
+export PATH="$PATH:$HOME/.pub-cache/bin"
+```
+
+Add this export to your shell profile (`.zshrc` or `.bashrc`) so it persists across terminal sessions.
